@@ -75,9 +75,11 @@ return new class () implements ServiceProviderInterface {
                         $this->enablePlugin('wt_otpravkapochtaru', 'system');
                     }
 
-                    echo '<div class="alert alert-info">'
+                    $html = '<div class="alert alert-info">'
                         . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_INSTALLATION_FINISHED')
                         . '</div>';
+
+                    $this->app->enqueueMessage($html, 'info');
 
                     return true;
                 }
