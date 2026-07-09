@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package       WT Otpravkapochtaru
+ * @package     WT Otpravkapochtaru
  * @version     3.0.0
- * @author     Sergey Tolkachyov
- * @copyright  Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
+ * @author      Sergey Tolkachyov
+ * @copyright   Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
  * @license     GNU/GPL 3.0
  * @since       0.1.0
  */
@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -32,7 +33,7 @@ return new class () implements ServiceProviderInterface {
 
                 protected string $minimumJoomla = '5.0';
 
-                protected string $minimumPhp = '8.3';
+                protected string $minimumPhp = '8.1';
 
                 public function __construct(AdministratorApplication $app)
                 {
@@ -57,12 +58,20 @@ return new class () implements ServiceProviderInterface {
 
                 public function preflight(string $type, InstallerAdapter $adapter): bool
                 {
+                    if (!$this->checkJoomlaVersion()) {
+                        return false;
+                    }
+
+                    if (!$this->checkPhpVersion()) {
+                        return false;
+                    }
+
                     return true;
                 }
 
                 public function postflight(string $type, InstallerAdapter $adapter): bool
                 {
-                    if ($type === 'install') {
+                    if (in_array($type, ['install', 'discover_install', 'update'], true)) {
                         $this->enablePlugin('wt_otpravkapochtaru', 'system');
                     }
 
@@ -82,6 +91,42 @@ return new class () implements ServiceProviderInterface {
                     $plugin->enabled = 1;
 
                     $this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
+                }
+
+                protected function checkJoomlaVersion(): bool
+                {
+                    $version = new Version();
+
+                    if (version_compare($version->getShortVersion(), $this->minimumJoomla, '>=')) {
+                        return true;
+                    }
+
+                    $this->app->enqueueMessage(
+                        Text::sprintf(
+                            'PKG_LIB_WT_OTPRAVKAPOCHTARU_ERROR_MINIMUM_JOOMLA',
+                            $this->minimumJoomla
+                        ),
+                        'error'
+                    );
+
+                    return false;
+                }
+
+                protected function checkPhpVersion(): bool
+                {
+                    if (version_compare(PHP_VERSION, $this->minimumPhp, '>=')) {
+                        return true;
+                    }
+
+                    $this->app->enqueueMessage(
+                        Text::sprintf(
+                            'PKG_LIB_WT_OTPRAVKAPOCHTARU_ERROR_MINIMUM_PHP',
+                            $this->minimumPhp
+                        ),
+                        'error'
+                    );
+
+                    return false;
                 }
             }
         );
