@@ -1,0 +1,33 @@
+{
+  "name": "webtolk/wt-otpravkapochtaru-joomla-library",
+  "description": "Joomla package for Russian Post API integration.",
+  "type": "joomla-package",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "Webtolk\\Otpravkapochtaru\\": "lib_webtolk_otpravkapochtaru/src/",
+      "Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\": "plg_system_wt_otpravkapochtaru/src/"
+    }
+  },
+  "scripts": {
+    "qa:lint": "php -l script.php && powershell -NoProfile -ExecutionPolicy Bypass -File tools/qa/lint-php.ps1",
+    "qa:cs": "php D:/.agents/tools/php-qa/vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.dist.php",
+    "qa:cs:fix": "php D:/.agents/tools/php-qa/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+    "qa:phpcs": "php D:/.agents/tools/php-qa/vendor/bin/phpcs --standard=phpcs.xml",
+    "qa:stan": "php D:/.agents/tools/php-qa/vendor/bin/phpstan analyse --configuration=phpstan.neon",
+    "test": "php D:/.agents/tools/php-qa/vendor/bin/phpunit --configuration=phpunit.xml",
+    "qa": [
+      "@qa:lint",
+      "@qa:cs",
+      "@qa:phpcs",
+      "@qa:stan",
+      "@test"
+    ]
+  },
+  "config": {
+    "platform": {
+      "php": "8.1.0"
+    },
+    "sort-packages": true
+  }
+}

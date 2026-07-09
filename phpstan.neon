@@ -1,0 +1,15 @@
+parameters:
+    level: 1
+    paths:
+        - lib_webtolk_otpravkapochtaru/src
+        - plg_system_wt_otpravkapochtaru/services
+        - plg_system_wt_otpravkapochtaru/src
+        - script.php
+        - tests
+    bootstrapFiles:
+        - tests/bootstrap.php
+    scanDirectories:
+        - D:/.agents/docs/Joomla-core/6.x/6.1.0/libraries/src
+        - D:/.agents/docs/Joomla-core/6.x/6.1.0/libraries/vendor/joomla
+    tmpDir: .webtolk/tmp/phpstan
+    treatPhpDocTypesAsCertain: false

@@ -1,0 +1,14 @@
+.idea/
+.serena/
+.webtolk/
+.packages/
+.phpunit.result.cache
+.php-cs-fixer.cache
+vendor/
+node_modules/
+build/
+*.log
+*.tmp
+*.zip
+Thumbs.db
+.DS_Store

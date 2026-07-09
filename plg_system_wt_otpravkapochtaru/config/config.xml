@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <fields name="params" addfieldprefix="Webtolk\Plugin\System\WtOtpravkapochtaru\Field">
+        <fieldset name="basic">
+            <field
+                name="plugin_info"
+                type="Plugininfo"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_PLUGIN_INFO_LABEL"
+            />
+            <field
+                name="account_info"
+                addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
+                type="accountinfo"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_LABEL"
+                description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_DESC"
+            />
+            <field
+                name="access_token"
+                type="text"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_LABEL"
+                description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_DESC"
+            />
+            <field
+                name="auth_mode"
+                type="list"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_LABEL"
+                default="key"
+            >
+                <option value="key">PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_KEY</option>
+                <option value="login_password">PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_LOGIN_PASSWORD</option>
+            </field>
+            <field
+                name="user_key"
+                type="text"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_KEY_LABEL"
+                description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_KEY_DESC"
+                showon="auth_mode:key"
+            />
+            <field
+                name="user_login"
+                type="text"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_LOGIN_LABEL"
+                showon="auth_mode:login_password"
+            />
+            <field
+                name="user_password"
+                type="password"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_PASSWORD_LABEL"
+                showon="auth_mode:login_password"
+            />
+            <field
+                name="tracking_login"
+                type="text"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_TRACKING_LOGIN_LABEL"
+            />
+            <field
+                name="tracking_password"
+                type="password"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_TRACKING_PASSWORD_LABEL"
+            />
+            <field
+                name="http_timeout"
+                type="number"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_HTTP_TIMEOUT_LABEL"
+                default="60"
+                min="1"
+            />
+        </fieldset>
+    </fields>
+</config>

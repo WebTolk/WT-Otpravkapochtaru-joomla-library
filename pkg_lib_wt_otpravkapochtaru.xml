@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" method="upgrade">
+    <name>WT Otpravkapochtaru library package</name>
+    <author>Sergey Tolkachyov</author>
+    <creationDate>08.07.2026</creationDate>
+    <packagename>lib_wt_otpravkapochtaru</packagename>
+    <version>3.0.0</version>
+    <url>https://web-tolk.ru</url>
+    <packager>Sergey Tolkachyov</packager>
+    <packagerurl>https://web-tolk.ru</packagerurl>
+    <description>Russian Post integration library package for Joomla.</description>
+    <license>GNU GPL 3.0</license>
+    <scriptfile>script.php</scriptfile>
+    <languages>
+        <language tag="ru-RU">language/ru-RU/pkg_lib_wt_otpravkapochtaru.sys.ini</language>
+        <language tag="en-GB">language/en-GB/pkg_lib_wt_otpravkapochtaru.sys.ini</language>
+    </languages>
+    <files>
+        <folder type="library" id="Webtolk/Otpravkapochtaru">lib_webtolk_otpravkapochtaru</folder>
+        <folder type="plugin" id="wt_otpravkapochtaru" group="system">plg_system_wt_otpravkapochtaru</folder>
+    </files>
+</extension>
