@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * System plugin shell that provides configuration and language loading for the library package.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -17,5 +19,8 @@ use Joomla\CMS\Plugin\CMSPlugin;
 
 final class WtOtpravkapochtaru extends CMSPlugin
 {
+    /**
+     * Ask Joomla to load plugin language files when the plugin is instantiated.
+     */
     protected $autoloadLanguage = true;
 }

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Signals REST transport, HTTP status or Russian Post business-error failures.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov

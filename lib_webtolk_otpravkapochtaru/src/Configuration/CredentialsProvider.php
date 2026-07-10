@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Reads Russian Post credentials from explicit params or from the Joomla system plugin.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -24,6 +26,11 @@ final class CredentialsProvider
 
     private ?Registry $params = null;
 
+    /**
+     * Accept explicit params for tests/direct usage or defer loading to the Joomla plugin.
+     *
+     * @since 3.0.0
+     */
     public function __construct(array|Registry|null $params = null)
     {
         if ($params instanceof Registry) {
@@ -37,6 +44,11 @@ final class CredentialsProvider
         }
     }
 
+    /**
+     * Return the Otpravka API access token and support the legacy `AccessToken` parameter name.
+     *
+     * @since 3.0.0
+     */
     public function getAccessToken(): string
     {
         $value = trim((string) $this->params()->get('access_token', ''));
@@ -52,6 +64,13 @@ final class CredentialsProvider
         return $value;
     }
 
+    /**
+     * Return the selected user authorization mode.
+     *
+     * New `auth_mode` params and legacy `user_key_or_login_and_password` params are both supported.
+     *
+     * @since 3.0.0
+     */
     public function getAuthMode(): string
     {
         return (string) $this->params()->get(
@@ -60,36 +79,74 @@ final class CredentialsProvider
         );
     }
 
+    /**
+     * Return the raw user key value without validating that the selected auth mode uses it.
+     *
+     * @since 3.0.0
+     */
     public function getUserKey(): string
     {
         return (string) $this->params()->get('user_key', $this->params()->get('user_auth_key', ''));
     }
 
+    /**
+     * Return the raw Otpravka API login from plugin parameters.
+     *
+     * @since 3.0.0
+     */
     public function getUserLogin(): string
     {
         return $this->params()->get('user_login', '');
     }
 
+    /**
+     * Return the raw Otpravka API password from plugin parameters.
+     *
+     * @since 3.0.0
+     */
     public function getUserPassword(): string
     {
         return $this->params()->get('user_password', '');
     }
 
+    /**
+     * Return the SOAP tracking login used by Russian Post tracking services.
+     *
+     * @since 3.0.0
+     */
     public function getTrackingLogin(): string
     {
         return $this->params()->get('tracking_login', '');
     }
 
+    /**
+     * Return the SOAP tracking password used by Russian Post tracking services.
+     *
+     * @since 3.0.0
+     */
     public function getTrackingPassword(): string
     {
         return $this->params()->get('tracking_password', '');
     }
 
+    /**
+     * Return HTTP/SOAP timeout in seconds, falling back to one minute.
+     *
+     * @since 3.0.0
+     */
     public function getHttpTimeout(): int
     {
         return (int) $this->params()->get('http_timeout', 60);
     }
 
+    /**
+     * Build the `X-User-Authorization` header value.
+     *
+     * User-key mode returns the key as is; login/password mode returns a base64 encoded pair.
+     * Missing values fail early with ConfigurationException to avoid opaque API authorization errors.
+     *
+     * @since 3.0.0
+     */
     public function getUserAuthorizationHeader(): string
     {
         if ($this->getAuthMode() === 'key' || $this->getAuthMode() === 'user_key') {
@@ -117,6 +174,11 @@ final class CredentialsProvider
         return base64_encode($login . ':' . $password);
     }
 
+    /**
+     * Return cached params or load them from the enabled system plugin.
+     *
+     * @since 3.0.0
+     */
     public function params(): Registry
     {
         if ($this->params instanceof Registry) {

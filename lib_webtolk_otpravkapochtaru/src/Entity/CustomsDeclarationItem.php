@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * One item line inside a customs declaration payload.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -15,10 +17,20 @@ defined('_JEXEC') or die;
 
 final class CustomsDeclarationItem extends AbstractEntity
 {
+    /**
+     * Store normalized customs entry attributes.
+     *
+     * @since 3.0.0
+     */
     private function __construct(private readonly array $attributes)
     {
     }
 
+    /**
+     * Hydrate a declaration item and apply Russian Post defaults for missing numeric/text fields.
+     *
+     * @since 3.0.0
+     */
     public static function fromArray(array $data): self
     {
         $attributes = self::normalizePayloadKeys($data) + [
@@ -33,6 +45,11 @@ final class CustomsDeclarationItem extends AbstractEntity
         return new self($attributes);
     }
 
+    /**
+     * Export the declaration item without null values.
+     *
+     * @since 3.0.0
+     */
     public function toArray(): array
     {
         return self::filterNullValues($this->attributes);

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Joomla package installer script provider for compatibility checks and post-install messaging.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -22,6 +24,11 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
 return new class () implements ServiceProviderInterface {
+    /**
+     * Register the package installer script object in Joomla's dependency injection container.
+     *
+     * @since 3.0.0
+     */
     public function register(Container $container): void
     {
         $container->set(
@@ -35,27 +42,52 @@ return new class () implements ServiceProviderInterface {
 
                 protected string $minimumPhp = '8.1';
 
+                /**
+                 * Store Joomla application and database services used by installer lifecycle hooks.
+                 *
+                 * @since 3.0.0
+                 */
                 public function __construct(AdministratorApplication $app)
                 {
                     $this->app = $app;
                     $this->db  = Factory::getContainer()->get(DatabaseDriver::class);
                 }
 
+                /**
+                 * Accept a fresh package installation after preflight has passed.
+                 *
+                 * @since 3.0.0
+                 */
                 public function install(InstallerAdapter $adapter): bool
                 {
                     return true;
                 }
 
+                /**
+                 * Accept package uninstallation without deleting extra runtime data.
+                 *
+                 * @since 3.0.0
+                 */
                 public function uninstall(InstallerAdapter $adapter): bool
                 {
                     return true;
                 }
 
+                /**
+                 * Accept package update after preflight has passed.
+                 *
+                 * @since 3.0.0
+                 */
                 public function update(InstallerAdapter $adapter): bool
                 {
                     return true;
                 }
 
+                /**
+                 * Block installation or update when Joomla/PHP versions are below project requirements.
+                 *
+                 * @since 3.0.0
+                 */
                 public function preflight(string $type, InstallerAdapter $adapter): bool
                 {
                     if (!$this->checkJoomlaVersion()) {
@@ -69,6 +101,11 @@ return new class () implements ServiceProviderInterface {
                     return true;
                 }
 
+                /**
+                 * Enable the configuration plugin and queue the branded WebTolk installer message.
+                 *
+                 * @since 3.0.0
+                 */
                 public function postflight(string $type, InstallerAdapter $adapter): bool
                 {
                     if (in_array($type, ['install', 'discover_install', 'update'], true)) {
@@ -82,6 +119,13 @@ return new class () implements ServiceProviderInterface {
                     return true;
                 }
 
+                /**
+                 * Build the branded HTML message shown after install/update/uninstall.
+                 *
+                 * The method only returns markup; Joomla output is handled through enqueueMessage().
+                 *
+                 * @since 3.0.0
+                 */
                 protected function renderInstallationMessage(string $type, string $version): string
                 {
                     $smile = '';
@@ -117,6 +161,11 @@ return new class () implements ServiceProviderInterface {
                     </div>';
                 }
 
+                /**
+                 * Enable a plugin by element/folder in Joomla's extensions table.
+                 *
+                 * @since 3.0.0
+                 */
                 protected function enablePlugin(string $element, string $folder): void
                 {
                     $plugin          = new stdClass();
@@ -128,6 +177,11 @@ return new class () implements ServiceProviderInterface {
                     $this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
                 }
 
+                /**
+                 * Verify the current Joomla version and enqueue a localized installer error if it is too old.
+                 *
+                 * @since 3.0.0
+                 */
                 protected function checkJoomlaVersion(): bool
                 {
                     $version = new Version();
@@ -147,6 +201,11 @@ return new class () implements ServiceProviderInterface {
                     return false;
                 }
 
+                /**
+                 * Verify the current PHP version and enqueue a localized installer error if it is too old.
+                 *
+                 * @since 3.0.0
+                 */
                 protected function checkPhpVersion(): bool
                 {
                     if (version_compare(PHP_VERSION, $this->minimumPhp, '>=')) {

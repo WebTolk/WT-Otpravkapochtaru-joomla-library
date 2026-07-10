@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Joomla service provider for the system plugin configuration surface.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -20,6 +22,11 @@ use Joomla\Event\DispatcherInterface;
 use Webtolk\Plugin\System\WtOtpravkapochtaru\Extension\WtOtpravkapochtaru;
 
 return new class () implements ServiceProviderInterface {
+    /**
+     * Register the plugin extension class in Joomla's dependency injection container.
+     *
+     * @since 3.0.0
+     */
     public function register(Container $container): void
     {
         $container->set(

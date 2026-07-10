@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Signals SOAP tracking request or response failures.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov

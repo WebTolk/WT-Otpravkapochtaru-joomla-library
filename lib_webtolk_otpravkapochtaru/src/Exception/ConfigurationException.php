@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Signals missing or invalid plugin/library configuration values.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov

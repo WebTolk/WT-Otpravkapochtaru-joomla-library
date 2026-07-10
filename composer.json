@@ -3,6 +3,10 @@
   "description": "Joomla package for Russian Post API integration.",
   "type": "joomla-package",
   "license": "GPL-3.0-or-later",
+  "require": {
+    "ext-simplexml": "*",
+    "ext-soap": "*"
+  },
   "autoload": {
     "psr-4": {
       "Webtolk\\Otpravkapochtaru\\": "lib_webtolk_otpravkapochtaru/src/",

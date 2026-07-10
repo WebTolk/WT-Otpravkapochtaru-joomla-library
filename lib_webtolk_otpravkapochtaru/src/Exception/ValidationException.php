@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Signals invalid developer-provided entity or request payload data.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Factory for Russian Post SOAP tracking clients and SOAP credentials.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -21,30 +23,60 @@ final class SoapRequest
     private const SERVICE_SINGLE     = 'rtm34_wsdl.xml';
     private const SERVICE_PACK       = 'fc_wsdl.xml';
 
+    /**
+     * Store the credential provider used by both SOAP services.
+     *
+     * @since 3.0.0
+     */
     public function __construct(private readonly CredentialsProvider $credentialsProvider)
     {
     }
 
+    /**
+     * Create a SOAP 1.2 client for single RPO history and NPay requests.
+     *
+     * @since 3.0.0
+     */
     public function createSingleClient(): \SoapClient
     {
         return $this->createClient(self::SERVICE_SINGLE, SOAP_1_2);
     }
 
+    /**
+     * Create a SOAP 1.1 client for batch ticket requests.
+     *
+     * @since 3.0.0
+     */
     public function createPackClient(): \SoapClient
     {
         return $this->createClient(self::SERVICE_PACK, SOAP_1_1);
     }
 
+    /**
+     * Return tracking SOAP login from plugin/library parameters.
+     *
+     * @since 3.0.0
+     */
     public function getTrackingLogin(): string
     {
         return $this->credentialsProvider->getTrackingLogin();
     }
 
+    /**
+     * Return tracking SOAP password from plugin/library parameters.
+     *
+     * @since 3.0.0
+     */
     public function getTrackingPassword(): string
     {
         return $this->credentialsProvider->getTrackingPassword();
     }
 
+    /**
+     * Instantiate a SOAP client with project timeout and the SOAP mode required by the target service.
+     *
+     * @since 3.0.0
+     */
     private function createClient(string $serviceWSDL, int $soapVersion): \SoapClient
     {
         return new \SoapClient(

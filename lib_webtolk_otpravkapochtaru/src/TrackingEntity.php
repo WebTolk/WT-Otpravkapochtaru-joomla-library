@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * SOAP tracking facade for Russian Post single-access and batch tracking services.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -20,10 +22,20 @@ final class TrackingEntity
     private const NAMESPACE_DATA = 'http://russianpost.org/operationhistory/data';
     private const NPAY_NAMESPACE = 'http://www.russianpost.org/RTM/DataExchangeESPP/Data';
 
+    /**
+     * Store the SOAP client factory used by single and batch tracking calls.
+     *
+     * @since 3.0.0
+     */
     public function __construct(private readonly SoapRequest $soapRequest)
     {
     }
 
+    /**
+     * Request operation history for one RPO barcode and normalize SOAP records to plain arrays.
+     *
+     * @since 3.0.0
+     */
     public function getOperationsByRpo(string $rpo, string $lang = 'RUS'): array
     {
         try {
@@ -35,6 +47,11 @@ final class TrackingEntity
         return $this->normalizeCollection($response->OperationHistoryData->historyRecord ?? []);
     }
 
+    /**
+     * Request cash-on-delivery postal order events for one RPO barcode.
+     *
+     * @since 3.0.0
+     */
     public function getNpayInfo(string $rpo, string $lang = 'RUS'): array
     {
         try {
@@ -47,9 +64,16 @@ final class TrackingEntity
     }
 
     /**
+     * Create batch tracking tickets for RPO barcodes.
+     *
+     * Russian Post accepts up to 500 items per batch request, so the method splits input into chunks
+     * and separates successfully created ticket values from chunks that did not return a ticket.
+     *
      * @param list<string> $rpoList
      *
      * @return array{tickets: list<string>, not_create: list<string>}
+     *
+     * @since 3.0.0
      */
     public function getTickets(array $rpoList, string $lang = 'RUS'): array
     {
@@ -87,6 +111,11 @@ final class TrackingEntity
         return $result;
     }
 
+    /**
+     * Load completed batch tracking results by ticket and normalize every SOAP item.
+     *
+     * @since 3.0.0
+     */
     public function getOperationsByTicket(string $ticket): array
     {
         $requestPayload           = new \stdClass();
@@ -107,16 +136,34 @@ final class TrackingEntity
         return $this->normalizeCollection($response->value->Item);
     }
 
+    /**
+     * Create a SOAP client for single RPO history and NPay operations.
+     *
+     * @since 3.0.0
+     */
     private function singleClient(): \SoapClient
     {
         return $this->soapRequest->createSingleClient();
     }
 
+    /**
+     * Create a SOAP client for batch ticket operations.
+     *
+     * @since 3.0.0
+     */
     private function packClient(): \SoapClient
     {
         return $this->soapRequest->createPackClient();
     }
 
+    /**
+     * Build the SOAP payload expected by the single-access operation history service.
+     *
+     * The payload contains both `OperationHistoryRequest` and `AuthorizationHeader` nodes in the
+     * Russian Post operation-history namespace.
+     *
+     * @since 3.0.0
+     */
     private function buildHistoryPayload(string $rpo, string $lang): \SoapVar
     {
         return new \SoapVar(
@@ -149,6 +196,13 @@ final class TrackingEntity
         );
     }
 
+    /**
+     * Build the SOAP payload expected by the NPay postal order events service.
+     *
+     * The service expects authorization as SOAP nodes and the barcode/language request as raw XML.
+     *
+     * @since 3.0.0
+     */
     private function buildNpayPayload(string $rpo, string $lang): \SoapVar
     {
         return new \SoapVar(
@@ -178,7 +232,11 @@ final class TrackingEntity
     }
 
     /**
+     * Normalize a SOAP value or list of values into a list of associative arrays.
+     *
      * @return list<array<string, mixed>>
+     *
+     * @since 3.0.0
      */
     private function normalizeCollection(mixed $value): array
     {
@@ -196,6 +254,11 @@ final class TrackingEntity
         );
     }
 
+    /**
+     * Recursively convert SOAP objects to arrays while preserving scalar leaf values.
+     *
+     * @since 3.0.0
+     */
     private function normalizeNode(mixed $value): mixed
     {
         if (is_array($value)) {

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Base helpers for converting friendly PHP arrays into Russian Post API payload arrays.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -17,8 +19,16 @@ use Webtolk\Otpravkapochtaru\Exception\ValidationException;
 
 abstract class AbstractEntity
 {
+    /**
+     * Export the entity as an API-ready associative array.
+     */
     abstract public function toArray(): array;
 
+    /**
+     * Normalize associative payload keys recursively to the kebab-case names used by Russian Post.
+     *
+     * Numeric list keys are preserved; nested associative arrays are normalized in the same pass.
+     */
     final protected static function normalizePayloadKeys(array $data): array
     {
         $normalized = [];
@@ -36,6 +46,11 @@ abstract class AbstractEntity
         return $normalized;
     }
 
+    /**
+     * Remove null values recursively before sending payloads to the API.
+     *
+     * Empty associative child arrays are dropped, while list structure is preserved.
+     */
     final protected static function filterNullValues(array $data): array
     {
         $filtered = [];
@@ -68,6 +83,9 @@ abstract class AbstractEntity
         return $filtered;
     }
 
+    /**
+     * Assert that a required payload value is present and return it for inline use.
+     */
     final protected static function requireNonEmpty(mixed $value, string $message): mixed
     {
         if ($value === null || $value === '' || $value === []) {
@@ -77,6 +95,11 @@ abstract class AbstractEntity
         return $value;
     }
 
+    /**
+     * Normalize a scalar or nested array value while preserving list indexes.
+     *
+     * @since 3.0.0
+     */
     private static function normalizeValue(mixed $value): mixed
     {
         if (!is_array($value)) {
@@ -93,6 +116,11 @@ abstract class AbstractEntity
         return self::normalizePayloadKeys($value);
     }
 
+    /**
+     * Convert `camelCase` and `snake_case` input keys to Russian Post kebab-case keys.
+     *
+     * @since 3.0.0
+     */
     private static function normalizeKey(string $key): string
     {
         $key = preg_replace('/([a-z0-9])([A-Z])/', '$1-$2', $key) ?? $key;

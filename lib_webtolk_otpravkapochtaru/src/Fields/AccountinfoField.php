@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Joomla note field that checks and displays Russian Post account/API status in plugin settings.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -25,6 +27,14 @@ final class AccountinfoField extends NoteField
 {
     protected $type = 'accountinfo';
 
+    /**
+     * Render account information, API status and API limit details for the current form parameters.
+     *
+     * The field reports configuration, authorization and transport problems inline instead of breaking
+     * the plugin edit form.
+     *
+     * @since 3.0.0
+     */
     protected function getInput(): string
     {
         $apiClient = new Otpravkapochtaru(new CredentialsProvider($this->getFormParams()));
@@ -156,16 +166,31 @@ final class AccountinfoField extends NoteField
         return implode('', $html);
     }
 
+    /**
+     * Reuse the label text as the Joomla field title.
+     *
+     * @since 3.0.0
+     */
     protected function getTitle(): string
     {
         return $this->getLabel();
     }
 
+    /**
+     * Hide the regular label because the field renders a complete status card.
+     *
+     * @since 3.0.0
+     */
     protected function getLabel(): string
     {
         return '';
     }
 
+    /**
+     * Read unsaved plugin params from the current edit form.
+     *
+     * @since 3.0.0
+     */
     private function getFormParams(): Registry
     {
         $data = $this->form->getData();
@@ -173,6 +198,11 @@ final class AccountinfoField extends NoteField
         return new Registry($data->get('params', []));
     }
 
+    /**
+     * Render a Bootstrap alert for configuration or API status messages.
+     *
+     * @since 3.0.0
+     */
     private function renderState(string $level, string $message, ?string $details = null): string
     {
         $html   = [];
@@ -187,12 +217,23 @@ final class AccountinfoField extends NoteField
 
         return implode('', $html);
     }
+
+    /**
+     * Detect authorization failures from HTTP status or Russian Post error text.
+     *
+     * @since 3.0.0
+     */
     private function isUnauthorized(TransportException $exception): bool
     {
         return $exception->getCode() === 401
             || str_contains(strtoupper($exception->getMessage()), 'UNAUTHORIZED');
     }
 
+    /**
+     * Escape dynamic values before injecting them into Joomla administrator HTML.
+     *
+     * @since 3.0.0
+     */
     private function escape(mixed $value): string
     {
         return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');

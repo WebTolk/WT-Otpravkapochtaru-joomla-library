@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Order payload entity for creating or editing Russian Post backlog shipments.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -18,9 +20,13 @@ use Webtolk\Otpravkapochtaru\Exception\ValidationException;
 final class Order extends AbstractEntity
 {
     /**
+     * Store normalized order attributes and optional nested payload sections.
+     *
      * @param array<string, mixed> $attributes
      * @param array<string, mixed> $goodsAttributes
      * @param list<Item> $items
+     *
+     * @since 3.0.0
      */
     private function __construct(
         private readonly array $attributes,
@@ -31,6 +37,15 @@ final class Order extends AbstractEntity
     ) {
     }
 
+    /**
+     * Hydrate an order from a developer-friendly array.
+     *
+     * The method accepts both top-level `items` and nested `goods.items`, normalizes keys to
+     * Russian Post naming, hydrates nested goods/customs/e-commerce sections, and applies safe
+     * defaults for common shipment fields.
+     *
+     * @since 3.0.0
+     */
     public static function fromArray(array $data): self
     {
         $normalized      = self::normalizePayloadKeys($data);
@@ -90,6 +105,13 @@ final class Order extends AbstractEntity
         );
     }
 
+    /**
+     * Export an API-ready order payload and validate that destination index data is present.
+     *
+     * Optional goods, customs declaration and e-commerce sections are included only when populated.
+     *
+     * @since 3.0.0
+     */
     public function toArray(): array
     {
         if (($this->attributes['index-to'] ?? null) === null && ($this->attributes['str-index-to'] ?? null) === null) {
@@ -120,6 +142,11 @@ final class Order extends AbstractEntity
         return $payload;
     }
 
+    /**
+     * Convert a nested customs declaration array or object to a CustomsDeclaration entity.
+     *
+     * @since 3.0.0
+     */
     private static function hydrateCustomsDeclaration(mixed $value): ?CustomsDeclaration
     {
         if ($value === null) {
@@ -137,6 +164,11 @@ final class Order extends AbstractEntity
         return CustomsDeclaration::fromArray($value);
     }
 
+    /**
+     * Convert a nested e-commerce data array or object to an EcomData entity.
+     *
+     * @since 3.0.0
+     */
     private static function hydrateEcomData(mixed $value): ?EcomData
     {
         if ($value === null) {

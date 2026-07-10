@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Joomla list field that loads available Russian Post shipping points from the configured API account.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -26,6 +28,11 @@ final class OpslistField extends ListField
 {
     protected $type = 'opslist';
 
+    /**
+     * Build select options from `getShippingPoints()` and return user-facing error options on failures.
+     *
+     * @since 3.0.0
+     */
     protected function getOptions(): array
     {
         if (!PluginHelper::isEnabled('system', 'wt_otpravkapochtaru')) {

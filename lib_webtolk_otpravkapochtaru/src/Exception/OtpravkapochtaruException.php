@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Base runtime exception for the WT Otpravkapochtaru library.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Packaged Russian Post country dictionary used when the live country endpoint is unavailable.
+ *
+ * @package     WT Otpravkapochtaru
+ * @version     3.0.0
+ * @author      Sergey Tolkachyov
+ * @copyright   Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
+ * @license     GNU/GPL 3.0
+ * @since       0.1.0
+ */
+
 namespace Webtolk\Otpravkapochtaru\Dictionaries;
 
 defined('_JEXEC') or die;
@@ -10,7 +21,11 @@ defined('_JEXEC') or die;
 final class CountryDictionary
 {
     /**
+     * Return all supported country rows with Russian Post numeric code and localized names.
+     *
      * @return array<int, array{code:int, name:string, nameEn:string}>
+     *
+     * @since 3.0.0
      */
     public static function all(): array
     {

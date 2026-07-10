@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Customs declaration payload entity with optional declaration entries.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -18,7 +20,11 @@ use Webtolk\Otpravkapochtaru\Exception\ValidationException;
 final class CustomsDeclaration extends AbstractEntity
 {
     /**
+     * Store declaration attributes and hydrated entry entities.
+     *
      * @param list<CustomsDeclarationItem> $entries
+     *
+     * @since 3.0.0
      */
     private function __construct(
         private readonly array $attributes,
@@ -26,6 +32,13 @@ final class CustomsDeclaration extends AbstractEntity
     ) {
     }
 
+    /**
+     * Hydrate a customs declaration and normalize its `customs-entries` list.
+     *
+     * Missing currency and entry type are defaulted to RUB/GIFT for the common domestic setup.
+     *
+     * @since 3.0.0
+     */
     public static function fromArray(array $data): self
     {
         $normalized     = self::normalizePayloadKeys($data);
@@ -61,6 +74,11 @@ final class CustomsDeclaration extends AbstractEntity
         );
     }
 
+    /**
+     * Export declaration attributes and nested entry payloads for the order API.
+     *
+     * @since 3.0.0
+     */
     public function toArray(): array
     {
         $payload = self::filterNullValues($this->attributes);

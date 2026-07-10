@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Recipient reliability-check payload entity.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -15,10 +17,20 @@ defined('_JEXEC') or die;
 
 final class Recipient extends AbstractEntity
 {
+    /**
+     * Store normalized recipient reliability attributes.
+     *
+     * @since 3.0.0
+     */
     private function __construct(private readonly array $attributes)
     {
     }
 
+    /**
+     * Hydrate recipient data and map common aliases to Russian Post `raw-*` fields.
+     *
+     * @since 3.0.0
+     */
     public static function fromArray(array $data): self
     {
         $normalized = self::normalizePayloadKeys($data);
@@ -32,6 +44,11 @@ final class Recipient extends AbstractEntity
         );
     }
 
+    /**
+     * Export recipient reliability data without null aliases.
+     *
+     * @since 3.0.0
+     */
     public function toArray(): array
     {
         return self::filterNullValues($this->attributes);

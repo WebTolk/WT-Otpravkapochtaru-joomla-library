@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Return shipment payload entity for the separate-return API endpoints.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -17,6 +19,11 @@ use Webtolk\Otpravkapochtaru\Exception\ValidationException;
 
 final class ReturnShipment extends AbstractEntity
 {
+    /**
+     * Store return shipment attributes and optional nested address entities.
+     *
+     * @since 3.0.0
+     */
     private function __construct(
         private readonly array $attributes,
         private readonly ?AddressReturn $addressFrom,
@@ -24,6 +31,11 @@ final class ReturnShipment extends AbstractEntity
     ) {
     }
 
+    /**
+     * Hydrate a return shipment and convert nested `address-from` / `address-to` data.
+     *
+     * @since 3.0.0
+     */
     public static function fromArray(array $data): self
     {
         $normalized  = self::normalizePayloadKeys($data);
@@ -35,6 +47,11 @@ final class ReturnShipment extends AbstractEntity
         return new self($normalized, $addressFrom, $addressTo);
     }
 
+    /**
+     * Export an API-ready return shipment payload and validate required names, mail type and sender address.
+     *
+     * @since 3.0.0
+     */
     public function toArray(): array
     {
         self::requireNonEmpty($this->attributes['mail-type'] ?? null, 'Return shipment field "mail-type" is required.');
@@ -55,6 +72,11 @@ final class ReturnShipment extends AbstractEntity
         return $payload;
     }
 
+    /**
+     * Convert nested return address input to AddressReturn or keep an already hydrated entity.
+     *
+     * @since 3.0.0
+     */
     private static function hydrateAddress(mixed $value, string $field): ?AddressReturn
     {
         if ($value === null) {

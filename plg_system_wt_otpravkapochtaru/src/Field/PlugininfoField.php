@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Joomla note field that renders WebTolk plugin information in the plugin edit form.
+ *
  * @package     WT Otpravkapochtaru
  * @version     3.0.0
  * @author      Sergey Tolkachyov
@@ -21,8 +23,7 @@ class PlugininfoField extends NoteField
     protected $type = 'Plugininfo';
 
     /**
-     * Method to get the field input markup for a spacer.
-     * The spacer does not have accept input.
+     * Render the WebTolk info block with plugin version and manifest description.
      *
      * @return  string  The field input markup.
      *
@@ -70,6 +71,8 @@ class PlugininfoField extends NoteField
     }
 
     /**
+     * Hide the regular label because the field renders a full informational block.
+     *
      * @return  string  The field label markup.
      *
      * @since   1.7.0
@@ -80,7 +83,7 @@ class PlugininfoField extends NoteField
     }
 
     /**
-     * Method to get the field title.
+     * Return the hidden label as field title for Joomla form compatibility.
      *
      * @return  string  The field title.
      *
