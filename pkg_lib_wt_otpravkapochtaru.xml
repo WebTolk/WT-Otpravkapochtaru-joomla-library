@@ -10,6 +10,7 @@
     <packagerurl>https://web-tolk.ru</packagerurl>
     <description>Russian Post integration library package for Joomla.</description>
     <license>GNU GPL 3.0</license>
+    <changelogurl>https://web-tolk.ru/jchangelog?element=lib_wt_otpravkapochtaru&amp;debug=1</changelogurl>
     <scriptfile>script.php</scriptfile>
     <languages>
         <language tag="ru-RU">language/ru-RU/pkg_lib_wt_otpravkapochtaru.sys.ini</language>
@@ -19,4 +20,7 @@
         <folder type="library" id="Webtolk/Otpravkapochtaru">lib_webtolk_otpravkapochtaru</folder>
         <folder type="plugin" id="wt_otpravkapochtaru" group="system">plg_system_wt_otpravkapochtaru</folder>
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="WT Otpravkapochtaru">https://web-tolk.ru/component/swjprojects/jupdate?element=lib_wt_otpravkapochtaru&amp;debug=1</server>
+    </updateservers>
 </extension>
