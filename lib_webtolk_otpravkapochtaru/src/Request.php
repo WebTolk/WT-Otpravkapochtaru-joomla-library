@@ -15,7 +15,7 @@ namespace Webtolk\Otpravkapochtaru;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Http\HttpFactory;
+use Joomla\Http\HttpFactory;
 use Joomla\Http\Response;
 use Joomla\Uri\Uri;
 use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
@@ -355,13 +355,20 @@ final class Request
     }
 
     /**
-     * Trim quotes from a server-provided file name and fall back to a stable generic name.
+     * Reduce a server-provided file name to a safe cross-platform basename.
      *
      * @since 3.0.0
      */
     private function sanitizeFileName(string $fileName): string
     {
-        $value = trim($fileName, "\"'");
+        $value = trim($fileName, "\"' \t\n\r\0\x0B");
+        $value = basename(str_replace('\\', '/', $value));
+        $value = preg_replace('/[\x00-\x1F\x7F<>:\"|?*]/', '_', $value) ?? '';
+        $value = trim($value, " .\t\n\r\0\x0B");
+
+        if (preg_match('/^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?$/i', $value)) {
+            return 'document';
+        }
 
         return $value === '' ? 'document' : $value;
     }
