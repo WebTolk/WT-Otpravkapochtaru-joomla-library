@@ -1,0 +1,73 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./clean-address-to.response.schema.json",
+    "title": "cleanAddressTo observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/clean/address",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "address-guid": {
+                "type": "string"
+            },
+            "address-type": {
+                "type": "string"
+            },
+            "house": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "index": {
+                "type": "string"
+            },
+            "original-address": {
+                "type": "string"
+            },
+            "place": {
+                "type": "string"
+            },
+            "place-guid": {
+                "type": "string"
+            },
+            "quality-code": {
+                "type": "string"
+            },
+            "region": {
+                "type": "string"
+            },
+            "region-guid": {
+                "type": "string"
+            },
+            "street": {
+                "type": "string"
+            },
+            "street-guid": {
+                "type": "string"
+            },
+            "validation-code": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "address-guid",
+            "address-type",
+            "house",
+            "id",
+            "index",
+            "original-address",
+            "place",
+            "place-guid",
+            "quality-code",
+            "region",
+            "region-guid",
+            "street",
+            "street-guid",
+            "validation-code"
+        ],
+        "additionalProperties": true
+    }
+}

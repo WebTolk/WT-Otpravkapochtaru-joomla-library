@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-recipients-reliability.response.schema.json",
+    "title": "getRecipientsReliability observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/unreliable-recipient",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "raw-address": {
+                "type": "string"
+            },
+            "raw-full-name": {
+                "type": "string"
+            },
+            "raw-telephone": {
+                "type": "string"
+            },
+            "unreliability": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "raw-address",
+            "raw-full-name",
+            "raw-telephone",
+            "unreliability"
+        ],
+        "additionalProperties": true
+    }
+}

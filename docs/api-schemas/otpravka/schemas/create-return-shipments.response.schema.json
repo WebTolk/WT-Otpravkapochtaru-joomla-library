@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./create-return-shipments.response.schema.json",
+    "title": "createReturnShipments observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/returns/return-without-direct",
+    "x-observed-status": "error",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "errors": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "code",
+                        "description"
+                    ],
+                    "additionalProperties": true
+                }
+            },
+            "position": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "errors",
+            "position"
+        ],
+        "additionalProperties": true
+    }
+}

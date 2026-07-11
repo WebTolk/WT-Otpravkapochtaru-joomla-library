@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-post-office-services.response.schema.json",
+    "title": "getPostOfficeServices observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/postoffice/1.0/685000/services",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "code": {
+                "type": "string"
+            },
+            "group-id": {
+                "type": "integer"
+            },
+            "name": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "code",
+            "group-id",
+            "name"
+        ],
+        "additionalProperties": true
+    }
+}

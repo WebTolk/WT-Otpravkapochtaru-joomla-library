@@ -1,0 +1,100 @@
+{
+    "address-source": "<redacted-address>",
+    "is-closed": false,
+    "is-private-category": false,
+    "is-temporary-closed": false,
+    "latitude": 59.566678,
+    "longitude": 150.810194,
+    "postal-code": "685000",
+    "region": "Магаданская обл",
+    "settlement": "Магадан",
+    "type-code": "ГОПС",
+    "type-id": 0,
+    "working-hours": [
+        {
+            "begin-worktime": "10:00:00.000",
+            "end-worktime": "19:00:00.000",
+            "lunches": [
+                {
+                    "begin-lunchtime": "14:00:00.000",
+                    "end-lunchtime": "15:00:00.000"
+                }
+            ],
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "10:00:00.000",
+            "end-worktime": "19:00:00.000",
+            "lunches": [
+                {
+                    "begin-lunchtime": "14:00:00.000",
+                    "end-lunchtime": "15:00:00.000"
+                }
+            ],
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "10:00:00.000",
+            "end-worktime": "19:00:00.000",
+            "lunches": [
+                {
+                    "begin-lunchtime": "14:00:00.000",
+                    "end-lunchtime": "15:00:00.000"
+                }
+            ],
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "10:00:00.000",
+            "end-worktime": "19:00:00.000",
+            "lunches": [
+                {
+                    "begin-lunchtime": "14:00:00.000",
+                    "end-lunchtime": "15:00:00.000"
+                }
+            ],
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "10:00:00.000",
+            "end-worktime": "19:00:00.000",
+            "lunches": [
+                {
+                    "begin-lunchtime": "14:00:00.000",
+                    "end-lunchtime": "15:00:00.000"
+                }
+            ],
+            "weekday-id": 0
+        },
+        {
+            "weekday-id": 0
+        },
+        {
+            "weekday-id": 0
+        }
+    ],
+    "works-on-saturdays": false,
+    "works-on-sundays": false,
+    "phones": [
+        {
+            "is-fax": false,
+            "phone-number": "<redacted-phone>",
+            "phone-town-code": "<redacted-phone>",
+            "phone-type-name": "<redacted-phone>"
+        }
+    ],
+    "service-groups": [
+        {
+            "group-id": 0,
+            "group-name": "Почтовые услуги"
+        },
+        {
+            "group-id": 0,
+            "group-name": "Финансовые услуги"
+        },
+        {
+            "group-id": 0,
+            "group-name": "Коммерческие услуги"
+        }
+    ]
+}

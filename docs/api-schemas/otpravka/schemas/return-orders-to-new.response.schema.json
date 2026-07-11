@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./return-orders-to-new.response.schema.json",
+    "title": "returnOrdersToNew observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/user/backlog",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "result-ids": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        }
+    },
+    "required": [
+        "result-ids"
+    ],
+    "additionalProperties": true
+}

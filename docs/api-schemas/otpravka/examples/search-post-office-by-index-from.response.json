@@ -1,0 +1,74 @@
+{
+    "address-source": "<redacted-address>",
+    "is-closed": false,
+    "is-private-category": false,
+    "is-temporary-closed": false,
+    "latitude": 51.536125,
+    "longitude": 46.023872,
+    "postal-code": "410000",
+    "region": "Саратовская обл",
+    "settlement": "Саратов",
+    "type-code": "ГОПС",
+    "type-id": 0,
+    "working-hours": [
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        },
+        {
+            "begin-worktime": "08:00:00.000",
+            "end-worktime": "20:00:00.000",
+            "weekday-id": 0
+        }
+    ],
+    "works-on-saturdays": true,
+    "works-on-sundays": true,
+    "phones": [
+        {
+            "is-fax": false,
+            "phone-number": "<redacted-phone>",
+            "phone-town-code": "<redacted-phone>",
+            "phone-type-name": "<redacted-phone>"
+        }
+    ],
+    "service-groups": [
+        {
+            "group-id": 0,
+            "group-name": "Почтовые услуги"
+        },
+        {
+            "group-id": 0,
+            "group-name": "Финансовые услуги"
+        },
+        {
+            "group-id": 0,
+            "group-name": "Коммерческие услуги"
+        }
+    ]
+}

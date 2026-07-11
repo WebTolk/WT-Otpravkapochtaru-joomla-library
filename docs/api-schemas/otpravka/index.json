@@ -1,0 +1,323 @@
+{
+    "title": "Otpravka REST API observed response contracts",
+    "generated_at": "2026-07-11T05:40:04+00:00",
+    "capture_date": "2026-07-11",
+    "route": {
+        "from": {
+            "postal_code": "410000",
+            "locality": "Саратов"
+        },
+        "to": {
+            "postal_code": "685000",
+            "locality": "Магадан"
+        }
+    },
+    "requests_used": 29,
+    "request_cap": 40,
+    "get_api_limit_called": false,
+    "tracking_called": false,
+    "contracts": [
+        {
+            "method": "cleanAddressFrom",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/clean/address",
+            "aliases": [],
+            "raw_capture_sha256": "1c8869db9ec01b6883b90a68bd966b6ac7780e2fe57f11d5eff2760876734f5b",
+            "example": "examples/clean-address-from.response.json",
+            "schema": "schemas/clean-address-from.response.schema.json"
+        },
+        {
+            "method": "cleanAddressTo",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/clean/address",
+            "aliases": [],
+            "raw_capture_sha256": "f1f691e338df75a80c8dc9c736ff6ff59a36b559ec66891c87250dd2c8949892",
+            "example": "examples/clean-address-to.response.json",
+            "schema": "schemas/clean-address-to.response.schema.json"
+        },
+        {
+            "method": "cleanPhysical",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/clean/physical",
+            "aliases": [],
+            "raw_capture_sha256": "0e68399708c8e955473c4d6ed01a43b68c9658d835051224d4c2be52a9f1f5e5",
+            "example": "examples/clean-physical.response.json",
+            "schema": "schemas/clean-physical.response.schema.json"
+        },
+        {
+            "method": "cleanPhone",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/clean/phone",
+            "aliases": [],
+            "raw_capture_sha256": "75edceb498be52b1b85f83fb2cb45fbf1a94d56b14619073c8b6323a3d5baf7b",
+            "example": "examples/clean-phone.response.json",
+            "schema": "schemas/clean-phone.response.schema.json"
+        },
+        {
+            "method": "getAccountInfo",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/settings",
+            "aliases": [
+                "getSettings"
+            ],
+            "raw_capture_sha256": "fcd2c35316238b45c207dae27625a96a23206c6bf5338ec470ec0b00d31d39b0",
+            "example": "examples/get-account-info.response.json",
+            "schema": "schemas/get-account-info.response.schema.json"
+        },
+        {
+            "method": "getShippingPoints",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/user-shipping-points",
+            "aliases": [],
+            "raw_capture_sha256": "742eaf37fea531432feac3096e758dc608d99caa01d4d50e2737a60945c20ae5",
+            "example": "examples/get-shipping-points.response.json",
+            "schema": "schemas/get-shipping-points.response.schema.json"
+        },
+        {
+            "method": "getRecipientReliability",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/unreliable-recipient",
+            "aliases": [],
+            "raw_capture_sha256": "1349ef192244ca7b58e1dbbad193b7f6dc3e9c4768e12c512a03e80ce1331ae9",
+            "example": "examples/get-recipient-reliability.response.json",
+            "schema": "schemas/get-recipient-reliability.response.schema.json"
+        },
+        {
+            "method": "getRecipientsReliability",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/unreliable-recipient",
+            "aliases": [],
+            "raw_capture_sha256": "edc89f885df22f56e210c7a6cba62aacd3779af49516557859a6241cb7c63be9",
+            "example": "examples/get-recipients-reliability.response.json",
+            "schema": "schemas/get-recipients-reliability.response.schema.json"
+        },
+        {
+            "method": "getTariffAndDeliveryPeriod",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/tariff",
+            "aliases": [
+                "getTariff"
+            ],
+            "raw_capture_sha256": "bd308f2d32e4bf497aa0b180bbafd368e99c385e0071af2b140d4d77893e8083",
+            "example": "examples/get-tariff-and-delivery-period.response.json",
+            "schema": "schemas/get-tariff-and-delivery-period.response.schema.json"
+        },
+        {
+            "method": "searchPostOfficeByIndexFrom",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/410000",
+            "aliases": [],
+            "raw_capture_sha256": "2328e687c52c2e6bd358d0738b3212f12d0163987faf6f435b3cd07964243d32",
+            "example": "examples/search-post-office-by-index-from.response.json",
+            "schema": "schemas/search-post-office-by-index-from.response.schema.json"
+        },
+        {
+            "method": "searchPostOfficeByIndexTo",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/685000",
+            "aliases": [],
+            "raw_capture_sha256": "01c6884951bb7a549d1bedc9688f288a1f72f3dcf7a4794253ffd62b05acf6eb",
+            "example": "examples/search-post-office-by-index-to.response.json",
+            "schema": "schemas/search-post-office-by-index-to.response.schema.json"
+        },
+        {
+            "method": "searchPostOfficeByAddress",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/by-address",
+            "aliases": [],
+            "raw_capture_sha256": "7f0de861b8ff6880dd7adbd27b1414153ab327f328ba10dc0bb6f1753cf5bc03",
+            "example": "examples/search-post-office-by-address.response.json",
+            "schema": "schemas/search-post-office-by-address.response.schema.json"
+        },
+        {
+            "method": "searchPostOfficeByCoordinates",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/nearby",
+            "aliases": [],
+            "raw_capture_sha256": "b817e86af0b3c35ad5e94cc0b8d2cbf27c9e4bdb4693ed6e63d56832b8105c82",
+            "example": "examples/search-post-office-by-coordinates.response.json",
+            "schema": "schemas/search-post-office-by-coordinates.response.schema.json"
+        },
+        {
+            "method": "getPostOfficeServices",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/685000/services",
+            "aliases": [],
+            "raw_capture_sha256": "0a6750d3ee1b6c5754bd2abd1956769baf35482fcf4556b730fd7714dc30b07c",
+            "example": "examples/get-post-office-services.response.json",
+            "schema": "schemas/get-post-office-services.response.schema.json"
+        },
+        {
+            "method": "getPostalCodesInLocality",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/postoffice/1.0/postal-codes",
+            "aliases": [],
+            "raw_capture_sha256": "795fe2e09c6369163e1f472d283ab6c1fc67bfe3a6dc645b7bc861694167f42c",
+            "example": "examples/get-postal-codes-in-locality.response.json",
+            "schema": "schemas/get-postal-codes-in-locality.response.schema.json"
+        },
+        {
+            "method": "createOrders",
+            "status": "ok",
+            "http_method": "PUT",
+            "endpoint": "/1.0/user/backlog",
+            "aliases": [],
+            "raw_capture_sha256": "c579857684949429caaa57601ca11e3ae2fc8049907de49ffd488ca2f2ef58a6",
+            "example": "examples/create-orders.response.json",
+            "schema": "schemas/create-orders.response.schema.json"
+        },
+        {
+            "method": "editOrder",
+            "status": "ok",
+            "http_method": "PUT",
+            "endpoint": "/1.0/backlog/2319421774",
+            "aliases": [],
+            "raw_capture_sha256": "ef957bfffa22812c5f654ac84c71f9fa1b7ed31b0b24403a34b7eab2682a7e5c",
+            "example": "examples/edit-order.response.json",
+            "schema": "schemas/edit-order.response.schema.json"
+        },
+        {
+            "method": "findOrderById",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/backlog/2319421774",
+            "aliases": [],
+            "raw_capture_sha256": "6a7d8c696554eb4d47336ff2f2a0ee13832389563105c6c24ae609969efd6430",
+            "example": "examples/find-order-by-id.response.json",
+            "schema": "schemas/find-order-by-id.response.schema.json"
+        },
+        {
+            "method": "findOrderByShopId",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/backlog/search",
+            "aliases": [],
+            "raw_capture_sha256": "1e03cbbb4657d3504ce408921a69b05f002e787908dc2e980b98ff0183f08c72",
+            "example": "examples/find-order-by-shop-id.response.json",
+            "schema": "schemas/find-order-by-shop-id.response.schema.json"
+        },
+        {
+            "method": "createBatch",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/user/shipment",
+            "aliases": [],
+            "raw_capture_sha256": "948c971492651a257097ef7bdaa73cf12d5bb60feac1b9afdeb0da99b649c3c8",
+            "example": "examples/create-batch.response.json",
+            "schema": "schemas/create-batch.response.schema.json"
+        },
+        {
+            "method": "getAllBatches",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/batch",
+            "aliases": [],
+            "raw_capture_sha256": "5d032948f28ff86b33d6c9098cdddfebafd5184999b15c572ee5d1ef0bca016d",
+            "example": "examples/get-all-batches.response.json",
+            "schema": "schemas/get-all-batches.response.schema.json"
+        },
+        {
+            "method": "getOrdersInBatch",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/batch/{batchName}/shipment",
+            "aliases": [],
+            "raw_capture_sha256": "21f9eaf46da8ec715274002888e3b3dd8be0127365ca11caf68d5d870451acfc",
+            "example": "examples/get-orders-in-batch.response.json",
+            "schema": "schemas/get-orders-in-batch.response.schema.json"
+        },
+        {
+            "method": "findOrderByRpo",
+            "status": "ok",
+            "http_method": "GET",
+            "endpoint": "/1.0/shipment/{rpo}",
+            "aliases": [],
+            "raw_capture_sha256": "2e6721d500d5f680a1eee626f96e75a0319c45aca2caba2511126b167ccd0f7e",
+            "example": "examples/find-order-by-rpo.response.json",
+            "schema": "schemas/find-order-by-rpo.response.schema.json"
+        },
+        {
+            "method": "generateDocumentPackage",
+            "status": "error",
+            "http_method": "GET",
+            "endpoint": "/1.0/forms/{batchName}/zip-all",
+            "aliases": [],
+            "raw_capture_sha256": "352ef5e1c6b306e1d25ee155a4421104b7d314b7f3ccc8d05da9f1580917c320",
+            "capture_error": {
+                "class": "Webtolk\\Otpravkapochtaru\\Exception\\TransportException",
+                "code": 400,
+                "message": "GET /1.0/forms/506/zip-all failed with status 400."
+            },
+            "response_captured": false
+        },
+        {
+            "method": "generateDocumentF103",
+            "status": "error",
+            "http_method": "GET",
+            "endpoint": "/1.0/forms/{batchName}/f103pdf",
+            "aliases": [],
+            "raw_capture_sha256": "b20e02b74809d0bf5ec7d1cf142ef4d63f042f329cb116dc45201352294dacaf",
+            "capture_error": {
+                "class": "Webtolk\\Otpravkapochtaru\\Exception\\TransportException",
+                "code": 400,
+                "message": "GET /1.0/forms/506/f103pdf failed with status 400."
+            },
+            "response_captured": false
+        },
+        {
+            "method": "createReturnShipment",
+            "status": "error",
+            "http_method": "PUT",
+            "endpoint": "/1.0/returns",
+            "aliases": [],
+            "raw_capture_sha256": "3d514d7cbeb98435fcecd9fadd5a41ae25d4c7e1893e5d50bbbd56eb59b1a70d",
+            "example": "examples/create-return-shipment.response.json",
+            "schema": "schemas/create-return-shipment.response.schema.json"
+        },
+        {
+            "method": "createReturnShipments",
+            "status": "error",
+            "http_method": "PUT",
+            "endpoint": "/1.0/returns/return-without-direct",
+            "aliases": [],
+            "raw_capture_sha256": "f6649454d026fc8d92c2618bd7226a96f3e9cf5ea5ccd6e268014f4d2b219819",
+            "example": "examples/create-return-shipments.response.json",
+            "schema": "schemas/create-return-shipments.response.schema.json"
+        },
+        {
+            "method": "returnOrdersToNew",
+            "status": "ok",
+            "http_method": "POST",
+            "endpoint": "/1.0/user/backlog",
+            "aliases": [],
+            "raw_capture_sha256": "e56eb67b3f89c13d2b0e960e4b01a6b2fc78a8e9cbd1a51b6a5eec3a6aa62c39",
+            "example": "examples/return-orders-to-new.response.json",
+            "schema": "schemas/return-orders-to-new.response.schema.json"
+        },
+        {
+            "method": "deleteOrders",
+            "status": "ok",
+            "http_method": "DELETE",
+            "endpoint": "/1.0/backlog",
+            "aliases": [],
+            "raw_capture_sha256": "7de32817872449503e620c815d645640ae6797ea21d2dc83c03901afe95e5e8d",
+            "example": "examples/delete-orders.response.json",
+            "schema": "schemas/delete-orders.response.schema.json"
+        }
+    ]
+}

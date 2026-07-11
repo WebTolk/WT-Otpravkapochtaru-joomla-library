@@ -1,0 +1,294 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./create-batch.response.schema.json",
+    "title": "createBatch observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/user/shipment",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "batches": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "batch-name": {
+                        "type": "string"
+                    },
+                    "batch-status": {
+                        "type": "string"
+                    },
+                    "batch-status-date": {
+                        "type": "string"
+                    },
+                    "can-be-unarchived": {
+                        "type": "boolean"
+                    },
+                    "combined-batch-mail-types": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "courier-order-statuses": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "delivery-notice-payment-method": {
+                        "type": "string"
+                    },
+                    "delivery-to-door": {
+                        "type": "boolean"
+                    },
+                    "delivery-to-door-rate-sum": {
+                        "type": "integer"
+                    },
+                    "delivery-to-door-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "electronic-f103": {
+                        "type": "boolean"
+                    },
+                    "form-document-id": {
+                        "type": "string"
+                    },
+                    "has-timeslots": {
+                        "type": "boolean"
+                    },
+                    "international": {
+                        "type": "boolean"
+                    },
+                    "is-postoffice-ukd": {
+                        "type": "boolean"
+                    },
+                    "list-number-date": {
+                        "type": "string"
+                    },
+                    "mail-category": {
+                        "type": "string"
+                    },
+                    "mail-category-text": {
+                        "type": "string"
+                    },
+                    "mail-rank": {
+                        "type": "string"
+                    },
+                    "mail-type": {
+                        "type": "string"
+                    },
+                    "mail-type-text": {
+                        "type": "string"
+                    },
+                    "payment-method": {
+                        "type": "string"
+                    },
+                    "postmarks": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "postoffice-code": {
+                        "type": "string"
+                    },
+                    "postoffice-name": {
+                        "type": "string"
+                    },
+                    "ppk-total-rate": {
+                        "type": "integer"
+                    },
+                    "ppk-total-rate-vat": {
+                        "type": "integer"
+                    },
+                    "pre-postal-preparation": {
+                        "type": "boolean"
+                    },
+                    "shipment-avia-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-avia-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-completeness-checking-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-completeness-checking-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-contents-checking-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-contents-checking-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-count": {
+                        "type": "integer"
+                    },
+                    "shipment-functionality-checking-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-functionality-checking-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-ground-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-ground-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-insure-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-insure-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-inventory-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-inventory-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-mass": {
+                        "type": "integer"
+                    },
+                    "shipment-mass-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-mass-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-notice-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-notice-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-partial-redemption-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-partial-redemption-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-pre-postal-preparation-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-pre-postal-preparation-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-sms-notice-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-sms-notice-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-unloading-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-unloading-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-with-fitting-rate-sum": {
+                        "type": "integer"
+                    },
+                    "shipment-with-fitting-rate-vat-sum": {
+                        "type": "integer"
+                    },
+                    "shipping-notice-type": {
+                        "type": "string"
+                    },
+                    "transport-type": {
+                        "type": "string"
+                    },
+                    "ukd": {
+                        "type": "boolean"
+                    },
+                    "use-online-balance": {
+                        "type": "boolean"
+                    },
+                    "wo-mass": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "batch-name",
+                    "batch-status",
+                    "batch-status-date",
+                    "can-be-unarchived",
+                    "combined-batch-mail-types",
+                    "courier-order-statuses",
+                    "delivery-notice-payment-method",
+                    "delivery-to-door",
+                    "delivery-to-door-rate-sum",
+                    "delivery-to-door-rate-vat-sum",
+                    "electronic-f103",
+                    "form-document-id",
+                    "has-timeslots",
+                    "international",
+                    "is-postoffice-ukd",
+                    "list-number-date",
+                    "mail-category",
+                    "mail-category-text",
+                    "mail-rank",
+                    "mail-type",
+                    "mail-type-text",
+                    "payment-method",
+                    "postmarks",
+                    "postoffice-code",
+                    "postoffice-name",
+                    "ppk-total-rate",
+                    "ppk-total-rate-vat",
+                    "pre-postal-preparation",
+                    "shipment-avia-rate-sum",
+                    "shipment-avia-rate-vat-sum",
+                    "shipment-completeness-checking-rate-sum",
+                    "shipment-completeness-checking-rate-vat-sum",
+                    "shipment-contents-checking-rate-sum",
+                    "shipment-contents-checking-rate-vat-sum",
+                    "shipment-count",
+                    "shipment-functionality-checking-rate-sum",
+                    "shipment-functionality-checking-rate-vat-sum",
+                    "shipment-ground-rate-sum",
+                    "shipment-ground-rate-vat-sum",
+                    "shipment-insure-rate-sum",
+                    "shipment-insure-rate-vat-sum",
+                    "shipment-inventory-rate-sum",
+                    "shipment-inventory-rate-vat-sum",
+                    "shipment-mass",
+                    "shipment-mass-rate-sum",
+                    "shipment-mass-rate-vat-sum",
+                    "shipment-notice-rate-sum",
+                    "shipment-notice-rate-vat-sum",
+                    "shipment-partial-redemption-rate-sum",
+                    "shipment-partial-redemption-rate-vat-sum",
+                    "shipment-pre-postal-preparation-rate-sum",
+                    "shipment-pre-postal-preparation-rate-vat-sum",
+                    "shipment-sms-notice-rate-sum",
+                    "shipment-sms-notice-rate-vat-sum",
+                    "shipment-unloading-rate-sum",
+                    "shipment-unloading-rate-vat-sum",
+                    "shipment-with-fitting-rate-sum",
+                    "shipment-with-fitting-rate-vat-sum",
+                    "shipping-notice-type",
+                    "transport-type",
+                    "ukd",
+                    "use-online-balance",
+                    "wo-mass"
+                ],
+                "additionalProperties": true
+            }
+        },
+        "result-ids": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        }
+    },
+    "required": [
+        "batches",
+        "result-ids"
+    ],
+    "additionalProperties": true
+}

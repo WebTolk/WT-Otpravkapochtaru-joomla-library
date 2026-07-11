@@ -1,0 +1,21 @@
+{
+    "delivery-time": {
+        "max-days": 40,
+        "min-days": 38
+    },
+    "ground-rate": {
+        "rate": 61148,
+        "vat": 13453
+    },
+    "no-counters-coupon": false,
+    "notice-payment-method": "CASHLESS",
+    "payment-method": "CASHLESS",
+    "tariff-count": 1,
+    "tariffAdditionalFieldsJson": {
+        "is-size": 0,
+        "weight-pay": 1000
+    },
+    "total-rate": 61148,
+    "total-vat": 13453,
+    "with-discount": false
+}

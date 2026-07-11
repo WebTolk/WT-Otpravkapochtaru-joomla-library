@@ -1,0 +1,17 @@
+[
+    {
+        "address-type": "<redacted-address>",
+        "house": "<redacted-value>",
+        "id": "<redacted-id>",
+        "index": "410002",
+        "original-address": "<redacted-address>",
+        "place": "г. Саратов",
+        "place-guid": "<redacted-id>",
+        "quality-code": "GOOD",
+        "region": "обл. Саратовская",
+        "region-guid": "<redacted-id>",
+        "street": "<redacted-address>",
+        "street-guid": "<redacted-address>",
+        "validation-code": "VALIDATED"
+    }
+]

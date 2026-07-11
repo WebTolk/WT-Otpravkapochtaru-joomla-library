@@ -1,0 +1,12 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-postal-codes-in-locality.response.schema.json",
+    "title": "getPostalCodesInLocality observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/postoffice/1.0/postal-codes",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "string"
+    }
+}

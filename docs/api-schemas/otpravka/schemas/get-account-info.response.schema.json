@@ -1,0 +1,1401 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-account-info.response.schema.json",
+    "title": "getAccountInfo observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/settings",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "account-admin": {
+            "type": "boolean"
+        },
+        "account-declaration-enabled": {
+            "type": "boolean"
+        },
+        "account-erl-enabled": {
+            "type": "boolean"
+        },
+        "account-esignature-enabled": {
+            "type": "boolean"
+        },
+        "accounts": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "blocked": {
+                        "type": "boolean"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "is-admin": {
+                        "type": "boolean"
+                    },
+                    "legal-hid": {
+                        "type": "string"
+                    },
+                    "org-inn": {
+                        "type": "string"
+                    },
+                    "org-name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "blocked",
+                    "email",
+                    "is-admin",
+                    "legal-hid",
+                    "org-inn",
+                    "org-name"
+                ],
+                "additionalProperties": true
+            }
+        },
+        "address": {
+            "type": "object",
+            "properties": {
+                "address-type": {
+                    "type": "string"
+                },
+                "manual-address-input": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "address-type",
+                "manual-address-input"
+            ],
+            "additionalProperties": true
+        },
+        "address-book-enabled": {
+            "type": "boolean"
+        },
+        "address-change-enabled": {
+            "type": "boolean"
+        },
+        "admin-hid": {
+            "type": "string"
+        },
+        "agreement-date": {
+            "type": "string"
+        },
+        "agreement-expired": {
+            "type": "boolean"
+        },
+        "agreement-kind": {
+            "type": "string"
+        },
+        "agreement-number": {
+            "type": "string"
+        },
+        "anyRegionPostalOperator": {
+            "type": "boolean"
+        },
+        "api_enabled": {
+            "type": "boolean"
+        },
+        "apig_access_token": {
+            "type": "string"
+        },
+        "available-shipping-points": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "additional-operator-postcode": {
+                                "type": "string"
+                            },
+                            "additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "courier-call": {
+                                "type": "boolean"
+                            },
+                            "enabled": {
+                                "type": "boolean"
+                            },
+                            "is-agreement": {
+                                "type": "boolean"
+                            },
+                            "operator-postcode": {
+                                "type": "string"
+                            },
+                            "ops-address": {
+                                "type": "string"
+                            },
+                            "ops-region-code": {
+                                "type": "string"
+                            },
+                            "ops-region-name": {
+                                "type": "string"
+                            },
+                            "pre-postal-preparation": {
+                                "type": "boolean"
+                            },
+                            "return-address-type": {
+                                "type": "string"
+                            },
+                            "temporary": {
+                                "type": "boolean"
+                            },
+                            "user-available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "user-available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "user-return-address": {
+                                "type": "object",
+                                "properties": {
+                                    "manual-address-input": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "manual-address-input"
+                                ],
+                                "additionalProperties": true
+                            },
+                            "vsd-enabled": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "additional-operator-postcode",
+                            "additional-operator-postcodes",
+                            "available-mail-types",
+                            "available-products",
+                            "courier-call",
+                            "enabled",
+                            "is-agreement",
+                            "operator-postcode",
+                            "ops-address",
+                            "ops-region-code",
+                            "ops-region-name",
+                            "pre-postal-preparation",
+                            "return-address-type",
+                            "temporary",
+                            "user-available-mail-types",
+                            "user-available-products",
+                            "user-return-address",
+                            "vsd-enabled"
+                        ],
+                        "additionalProperties": true
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "additional-operator-postcode": {
+                                "type": "string"
+                            },
+                            "additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "courier-call": {
+                                "type": "boolean"
+                            },
+                            "enabled": {
+                                "type": "boolean"
+                            },
+                            "is-agreement": {
+                                "type": "boolean"
+                            },
+                            "operator-postcode": {
+                                "type": "string"
+                            },
+                            "ops-address": {
+                                "type": "string"
+                            },
+                            "ops-region-code": {
+                                "type": "string"
+                            },
+                            "ops-region-name": {
+                                "type": "string"
+                            },
+                            "pre-postal-preparation": {
+                                "type": "boolean"
+                            },
+                            "return-address-type": {
+                                "type": "string"
+                            },
+                            "temporary": {
+                                "type": "boolean"
+                            },
+                            "user-available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "user-available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "user-return-address": {
+                                "type": "object",
+                                "properties": {
+                                    "manual-address-input": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "manual-address-input"
+                                ],
+                                "additionalProperties": true
+                            },
+                            "vsd-enabled": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "additional-operator-postcode",
+                            "additional-operator-postcodes",
+                            "available-additional-operator-postcodes",
+                            "available-mail-types",
+                            "available-products",
+                            "courier-call",
+                            "enabled",
+                            "is-agreement",
+                            "operator-postcode",
+                            "ops-address",
+                            "ops-region-code",
+                            "ops-region-name",
+                            "pre-postal-preparation",
+                            "return-address-type",
+                            "temporary",
+                            "user-available-mail-types",
+                            "user-available-products",
+                            "user-return-address",
+                            "vsd-enabled"
+                        ],
+                        "additionalProperties": true
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "additional-operator-postcode": {
+                                "type": "string"
+                            },
+                            "additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "available-return-addresses": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "address": {
+                                            "type": "object",
+                                            "properties": {
+                                                "address-type": {
+                                                    "type": "string"
+                                                },
+                                                "house": {
+                                                    "type": "string"
+                                                },
+                                                "index": {
+                                                    "type": "string"
+                                                },
+                                                "manual-address-input": {
+                                                    "type": "boolean"
+                                                },
+                                                "place": {
+                                                    "type": "string"
+                                                },
+                                                "region": {
+                                                    "type": "string"
+                                                },
+                                                "street": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "address-type",
+                                                "house",
+                                                "index",
+                                                "manual-address-input",
+                                                "place",
+                                                "region",
+                                                "street"
+                                            ],
+                                            "additionalProperties": true
+                                        },
+                                        "return-address-id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "address",
+                                        "return-address-id"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "courier-call": {
+                                "type": "boolean"
+                            },
+                            "enabled": {
+                                "type": "boolean"
+                            },
+                            "is-agreement": {
+                                "type": "boolean"
+                            },
+                            "operator-postcode": {
+                                "type": "string"
+                            },
+                            "ops-address": {
+                                "type": "string"
+                            },
+                            "ops-region-code": {
+                                "type": "string"
+                            },
+                            "ops-region-name": {
+                                "type": "string"
+                            },
+                            "pre-postal-preparation": {
+                                "type": "boolean"
+                            },
+                            "return-address-type": {
+                                "type": "string"
+                            },
+                            "temporary": {
+                                "type": "boolean"
+                            },
+                            "user-available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "user-available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "user-return-address": {
+                                "type": "object",
+                                "properties": {
+                                    "manual-address-input": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "manual-address-input"
+                                ],
+                                "additionalProperties": true
+                            },
+                            "vsd-enabled": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "additional-operator-postcode",
+                            "additional-operator-postcodes",
+                            "available-additional-operator-postcodes",
+                            "available-mail-types",
+                            "available-products",
+                            "available-return-addresses",
+                            "courier-call",
+                            "enabled",
+                            "is-agreement",
+                            "operator-postcode",
+                            "ops-address",
+                            "ops-region-code",
+                            "ops-region-name",
+                            "pre-postal-preparation",
+                            "return-address-type",
+                            "temporary",
+                            "user-available-mail-types",
+                            "user-available-products",
+                            "user-return-address",
+                            "vsd-enabled"
+                        ],
+                        "additionalProperties": true
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "additional-operator-postcode": {
+                                "type": "string"
+                            },
+                            "additional-operator-postcodes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "available-return-addresses": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "address": {
+                                            "type": "object",
+                                            "properties": {
+                                                "address-type": {
+                                                    "type": "string"
+                                                },
+                                                "house": {
+                                                    "type": "string"
+                                                },
+                                                "index": {
+                                                    "type": "string"
+                                                },
+                                                "manual-address-input": {
+                                                    "type": "boolean"
+                                                },
+                                                "place": {
+                                                    "type": "string"
+                                                },
+                                                "region": {
+                                                    "type": "string"
+                                                },
+                                                "street": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "address-type",
+                                                "house",
+                                                "index",
+                                                "manual-address-input",
+                                                "place",
+                                                "region",
+                                                "street"
+                                            ],
+                                            "additionalProperties": true
+                                        },
+                                        "return-address-id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": [
+                                        "address",
+                                        "return-address-id"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "courier-call": {
+                                "type": "boolean"
+                            },
+                            "enabled": {
+                                "type": "boolean"
+                            },
+                            "is-agreement": {
+                                "type": "boolean"
+                            },
+                            "operator-postcode": {
+                                "type": "string"
+                            },
+                            "ops-address": {
+                                "type": "string"
+                            },
+                            "ops-region-code": {
+                                "type": "string"
+                            },
+                            "ops-region-name": {
+                                "type": "string"
+                            },
+                            "pre-postal-preparation": {
+                                "type": "boolean"
+                            },
+                            "return-address-type": {
+                                "type": "string"
+                            },
+                            "temporary": {
+                                "type": "boolean"
+                            },
+                            "user-available-mail-types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "user-available-products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mail-category": {
+                                            "type": "string"
+                                        },
+                                        "mail-type": {
+                                            "type": "string"
+                                        },
+                                        "product-type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "mail-category",
+                                        "mail-type",
+                                        "product-type"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "user-return-address": {
+                                "type": "object",
+                                "properties": {
+                                    "manual-address-input": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "manual-address-input"
+                                ],
+                                "additionalProperties": true
+                            },
+                            "vsd-enabled": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "additional-operator-postcode",
+                            "additional-operator-postcodes",
+                            "available-mail-types",
+                            "available-products",
+                            "available-return-addresses",
+                            "courier-call",
+                            "enabled",
+                            "is-agreement",
+                            "operator-postcode",
+                            "ops-address",
+                            "ops-region-code",
+                            "ops-region-name",
+                            "pre-postal-preparation",
+                            "return-address-type",
+                            "temporary",
+                            "user-available-mail-types",
+                            "user-available-products",
+                            "user-return-address",
+                            "vsd-enabled"
+                        ],
+                        "additionalProperties": true
+                    }
+                ]
+            }
+        },
+        "blocked": {
+            "type": "boolean"
+        },
+        "cargo": {
+            "type": "boolean"
+        },
+        "client-category": {
+            "type": "string"
+        },
+        "client-return": {
+            "type": "boolean"
+        },
+        "codLending": {
+            "type": "boolean"
+        },
+        "contact-email": {
+            "type": "string"
+        },
+        "contact-phone": {
+            "type": "integer"
+        },
+        "courier-template-enable": {
+            "type": "boolean"
+        },
+        "debt-sum": {
+            "type": "integer"
+        },
+        "declaration-enabled": {
+            "type": "boolean"
+        },
+        "deliveryToDoorAllowed": {
+            "type": "boolean"
+        },
+        "deliveryToMarketplaceAllowed": {
+            "type": "boolean"
+        },
+        "delivery_with-cod_enabled": {
+            "type": "boolean"
+        },
+        "direct-addition-to-batch-enabled": {
+            "type": "boolean"
+        },
+        "earning-category": {
+            "type": "string"
+        },
+        "easy-return": {
+            "type": "boolean"
+        },
+        "ems-tender-payment-enabled": {
+            "type": "boolean"
+        },
+        "erl-enabled": {
+            "type": "boolean"
+        },
+        "esignature-agreement-accepted": {
+            "type": "boolean"
+        },
+        "esignature-enabled": {
+            "type": "boolean"
+        },
+        "espp-code": {
+            "type": "string"
+        },
+        "extension-shelf-life-ecom": {
+            "type": "boolean"
+        },
+        "farma": {
+            "type": "boolean"
+        },
+        "favoriteTnvedAllowed": {
+            "type": "boolean"
+        },
+        "first-name": {
+            "type": "string"
+        },
+        "forbidden-esp-admin": {
+            "type": "boolean"
+        },
+        "ftsRegistryAllowed": {
+            "type": "boolean"
+        },
+        "fulfillment-enabled": {
+            "type": "boolean"
+        },
+        "hid": {
+            "type": "string"
+        },
+        "hyper-local-delivery": {
+            "type": "boolean"
+        },
+        "is-alcoholic-beverages": {
+            "type": "boolean"
+        },
+        "is-cargo": {
+            "type": "boolean"
+        },
+        "is-cod-lending": {
+            "type": "boolean"
+        },
+        "is-delivery-to-door-allowed": {
+            "type": "boolean"
+        },
+        "is-delivery-to-marketplace-allowed": {
+            "type": "boolean"
+        },
+        "is-farma": {
+            "type": "boolean"
+        },
+        "is-favorite-tnved-allowed": {
+            "type": "boolean"
+        },
+        "is-filled-questionnaire": {
+            "type": "boolean"
+        },
+        "is-fts-registry-allowed": {
+            "type": "boolean"
+        },
+        "is-judicial-cashless": {
+            "type": "boolean"
+        },
+        "is-partial-redemption-allowed": {
+            "type": "boolean"
+        },
+        "is-postpayment-allowed": {
+            "type": "boolean"
+        },
+        "is-range-zoo-allowed": {
+            "type": "boolean"
+        },
+        "is_any_region_postal_operator": {
+            "type": "boolean"
+        },
+        "judicialCashless": {
+            "type": "boolean"
+        },
+        "last-name": {
+            "type": "string"
+        },
+        "legal-address": {
+            "type": "string"
+        },
+        "legal-hid": {
+            "type": "string"
+        },
+        "mail-rank": {
+            "type": "string"
+        },
+        "mailing-option": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "key",
+                                "value"
+                            ],
+                            "additionalProperties": true
+                        }
+                    }
+                },
+                "required": [
+                    "key",
+                    "value"
+                ],
+                "additionalProperties": true
+            }
+        },
+        "middle-name": {
+            "type": "string"
+        },
+        "mmo-auto-enabled": {
+            "type": "boolean"
+        },
+        "mmo-enabled": {
+            "type": "boolean"
+        },
+        "offer-creation-system": {
+            "type": "integer"
+        },
+        "online-balance-enabled": {
+            "type": "boolean"
+        },
+        "only-signature": {
+            "type": "boolean"
+        },
+        "org-inn": {
+            "type": "string"
+        },
+        "org-kpp": {
+            "type": "string"
+        },
+        "org-name": {
+            "type": "string"
+        },
+        "partialRedemptionAllowed": {
+            "type": "boolean"
+        },
+        "planned-monthly-number": {
+            "type": "integer"
+        },
+        "postal-groups": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "postpaymentAllowed": {
+            "type": "boolean"
+        },
+        "print-from-backlog": {
+            "type": "boolean"
+        },
+        "rangeZooAllowed": {
+            "type": "boolean"
+        },
+        "raw_tel_address_enabled": {
+            "type": "boolean"
+        },
+        "regions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "report-version": {
+            "type": "integer"
+        },
+        "sender-category": {
+            "type": "string"
+        },
+        "shipping-points": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "additional-operator-postcode": {
+                        "type": "string"
+                    },
+                    "additional-operator-postcodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "available-additional-operator-postcodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "available-mail-types": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "available-products": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "mail-category": {
+                                    "type": "string"
+                                },
+                                "mail-type": {
+                                    "type": "string"
+                                },
+                                "product-type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "mail-category",
+                                "mail-type",
+                                "product-type"
+                            ],
+                            "additionalProperties": true
+                        }
+                    },
+                    "available-return-addresses": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "address": {
+                                    "type": "object",
+                                    "properties": {
+                                        "address-type": {
+                                            "type": "string"
+                                        },
+                                        "house": {
+                                            "type": "string"
+                                        },
+                                        "index": {
+                                            "type": "string"
+                                        },
+                                        "manual-address-input": {
+                                            "type": "boolean"
+                                        },
+                                        "place": {
+                                            "type": "string"
+                                        },
+                                        "region": {
+                                            "type": "string"
+                                        },
+                                        "street": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "address-type",
+                                        "house",
+                                        "index",
+                                        "manual-address-input",
+                                        "place",
+                                        "region",
+                                        "street"
+                                    ],
+                                    "additionalProperties": true
+                                },
+                                "return-address-id": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "address",
+                                "return-address-id"
+                            ],
+                            "additionalProperties": true
+                        }
+                    },
+                    "courier-call": {
+                        "type": "boolean"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "is-agreement": {
+                        "type": "boolean"
+                    },
+                    "is-default": {
+                        "type": "boolean"
+                    },
+                    "is_favorite": {
+                        "type": "boolean"
+                    },
+                    "operator-postcode": {
+                        "type": "string"
+                    },
+                    "ops-address": {
+                        "type": "string"
+                    },
+                    "ops-region-code": {
+                        "type": "string"
+                    },
+                    "ops-region-name": {
+                        "type": "string"
+                    },
+                    "pre-postal-preparation": {
+                        "type": "boolean"
+                    },
+                    "return-address": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "object",
+                                "properties": {
+                                    "address-type": {
+                                        "type": "string"
+                                    },
+                                    "house": {
+                                        "type": "string"
+                                    },
+                                    "index": {
+                                        "type": "string"
+                                    },
+                                    "manual-address-input": {
+                                        "type": "boolean"
+                                    },
+                                    "place": {
+                                        "type": "string"
+                                    },
+                                    "region": {
+                                        "type": "string"
+                                    },
+                                    "street": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "address-type",
+                                    "house",
+                                    "index",
+                                    "manual-address-input",
+                                    "place",
+                                    "region",
+                                    "street"
+                                ],
+                                "additionalProperties": true
+                            },
+                            "return-address-id": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "address",
+                            "return-address-id"
+                        ],
+                        "additionalProperties": true
+                    },
+                    "return-address-type": {
+                        "type": "string"
+                    },
+                    "temporary": {
+                        "type": "boolean"
+                    },
+                    "user-available-mail-types": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "user-available-products": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "mail-category": {
+                                    "type": "string"
+                                },
+                                "mail-type": {
+                                    "type": "string"
+                                },
+                                "product-type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "mail-category",
+                                "mail-type",
+                                "product-type"
+                            ],
+                            "additionalProperties": true
+                        }
+                    },
+                    "user-return-address": {
+                        "type": "object",
+                        "properties": {
+                            "manual-address-input": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "manual-address-input"
+                        ],
+                        "additionalProperties": true
+                    },
+                    "vsd-enabled": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "additional-operator-postcode",
+                    "additional-operator-postcodes",
+                    "available-additional-operator-postcodes",
+                    "available-mail-types",
+                    "available-products",
+                    "available-return-addresses",
+                    "courier-call",
+                    "enabled",
+                    "is-agreement",
+                    "is-default",
+                    "is_favorite",
+                    "operator-postcode",
+                    "ops-address",
+                    "ops-region-code",
+                    "ops-region-name",
+                    "pre-postal-preparation",
+                    "return-address",
+                    "return-address-type",
+                    "temporary",
+                    "user-available-mail-types",
+                    "user-available-products",
+                    "user-return-address",
+                    "vsd-enabled"
+                ],
+                "additionalProperties": true
+            }
+        },
+        "show-returns": {
+            "type": "boolean"
+        },
+        "tel-address-custom-cleaning": {
+            "type": "boolean"
+        },
+        "template-notification-area": {
+            "type": "string"
+        },
+        "use-branch-name": {
+            "type": "boolean"
+        },
+        "use-person-code": {
+            "type": "boolean"
+        },
+        "zoo-simple": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "account-admin",
+        "account-declaration-enabled",
+        "account-erl-enabled",
+        "account-esignature-enabled",
+        "accounts",
+        "address",
+        "address-book-enabled",
+        "address-change-enabled",
+        "admin-hid",
+        "agreement-date",
+        "agreement-expired",
+        "agreement-kind",
+        "agreement-number",
+        "anyRegionPostalOperator",
+        "api_enabled",
+        "apig_access_token",
+        "available-shipping-points",
+        "blocked",
+        "cargo",
+        "client-category",
+        "client-return",
+        "codLending",
+        "contact-email",
+        "contact-phone",
+        "courier-template-enable",
+        "debt-sum",
+        "declaration-enabled",
+        "deliveryToDoorAllowed",
+        "deliveryToMarketplaceAllowed",
+        "delivery_with-cod_enabled",
+        "direct-addition-to-batch-enabled",
+        "earning-category",
+        "easy-return",
+        "ems-tender-payment-enabled",
+        "erl-enabled",
+        "esignature-agreement-accepted",
+        "esignature-enabled",
+        "espp-code",
+        "extension-shelf-life-ecom",
+        "farma",
+        "favoriteTnvedAllowed",
+        "first-name",
+        "forbidden-esp-admin",
+        "ftsRegistryAllowed",
+        "fulfillment-enabled",
+        "hid",
+        "hyper-local-delivery",
+        "is-alcoholic-beverages",
+        "is-cargo",
+        "is-cod-lending",
+        "is-delivery-to-door-allowed",
+        "is-delivery-to-marketplace-allowed",
+        "is-farma",
+        "is-favorite-tnved-allowed",
+        "is-filled-questionnaire",
+        "is-fts-registry-allowed",
+        "is-judicial-cashless",
+        "is-partial-redemption-allowed",
+        "is-postpayment-allowed",
+        "is-range-zoo-allowed",
+        "is_any_region_postal_operator",
+        "judicialCashless",
+        "last-name",
+        "legal-address",
+        "legal-hid",
+        "mail-rank",
+        "mailing-option",
+        "middle-name",
+        "mmo-auto-enabled",
+        "mmo-enabled",
+        "offer-creation-system",
+        "online-balance-enabled",
+        "only-signature",
+        "org-inn",
+        "org-kpp",
+        "org-name",
+        "partialRedemptionAllowed",
+        "planned-monthly-number",
+        "postal-groups",
+        "postpaymentAllowed",
+        "print-from-backlog",
+        "rangeZooAllowed",
+        "raw_tel_address_enabled",
+        "regions",
+        "report-version",
+        "sender-category",
+        "shipping-points",
+        "show-returns",
+        "tel-address-custom-cleaning",
+        "template-notification-area",
+        "use-branch-name",
+        "use-person-code",
+        "zoo-simple"
+    ],
+    "additionalProperties": true
+}

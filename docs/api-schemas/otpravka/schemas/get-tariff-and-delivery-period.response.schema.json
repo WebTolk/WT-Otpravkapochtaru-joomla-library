@@ -1,0 +1,93 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-tariff-and-delivery-period.response.schema.json",
+    "title": "getTariffAndDeliveryPeriod observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/tariff",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "delivery-time": {
+            "type": "object",
+            "properties": {
+                "max-days": {
+                    "type": "integer"
+                },
+                "min-days": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "max-days",
+                "min-days"
+            ],
+            "additionalProperties": true
+        },
+        "ground-rate": {
+            "type": "object",
+            "properties": {
+                "rate": {
+                    "type": "integer"
+                },
+                "vat": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "rate",
+                "vat"
+            ],
+            "additionalProperties": true
+        },
+        "no-counters-coupon": {
+            "type": "boolean"
+        },
+        "notice-payment-method": {
+            "type": "string"
+        },
+        "payment-method": {
+            "type": "string"
+        },
+        "tariff-count": {
+            "type": "integer"
+        },
+        "tariffAdditionalFieldsJson": {
+            "type": "object",
+            "properties": {
+                "is-size": {
+                    "type": "integer"
+                },
+                "weight-pay": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "is-size",
+                "weight-pay"
+            ],
+            "additionalProperties": true
+        },
+        "total-rate": {
+            "type": "integer"
+        },
+        "total-vat": {
+            "type": "integer"
+        },
+        "with-discount": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "delivery-time",
+        "ground-rate",
+        "no-counters-coupon",
+        "notice-payment-method",
+        "payment-method",
+        "tariff-count",
+        "tariffAdditionalFieldsJson",
+        "total-rate",
+        "total-vat",
+        "with-discount"
+    ],
+    "additionalProperties": true
+}

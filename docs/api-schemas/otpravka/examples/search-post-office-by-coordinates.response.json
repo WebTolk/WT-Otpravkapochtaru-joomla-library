@@ -1,0 +1,217 @@
+[
+    {
+        "address-source": "<redacted-address>",
+        "distance": 190.91972612890348,
+        "is-closed": false,
+        "is-private-category": false,
+        "is-temporary-closed": false,
+        "latitude": 59.566678,
+        "longitude": 150.810194,
+        "postal-code": "685000",
+        "region": "Магаданская обл",
+        "settlement": "Магадан",
+        "type-code": "ГОПС",
+        "type-id": 0,
+        "working-hours": [
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "weekday-id": 0
+            },
+            {
+                "weekday-id": 0
+            }
+        ],
+        "works-on-saturdays": false,
+        "works-on-sundays": false
+    },
+    {
+        "address-source": "<redacted-address>",
+        "distance": 190.91972612890348,
+        "is-closed": false,
+        "is-private-category": false,
+        "is-temporary-closed": false,
+        "latitude": 59.566678,
+        "longitude": 150.810194,
+        "postal-code": "685990",
+        "region": "Магаданская обл",
+        "settlement": "Магадан",
+        "type-code": "УКД",
+        "type-id": 0,
+        "working-hours": [
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "16:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "16:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "16:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "16:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "19:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "16:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "10:00:00.000",
+                "end-worktime": "17:00:00.000",
+                "lunches": [
+                    {
+                        "begin-lunchtime": "14:00:00.000",
+                        "end-lunchtime": "15:00:00.000"
+                    }
+                ],
+                "weekday-id": 0
+            },
+            {
+                "weekday-id": 0
+            }
+        ],
+        "works-on-saturdays": true,
+        "works-on-sundays": false
+    },
+    {
+        "address-source": "<redacted-address>",
+        "distance": 827.4778288016379,
+        "is-closed": false,
+        "is-private-category": false,
+        "is-temporary-closed": false,
+        "latitude": 59.566158,
+        "longitude": 150.794366,
+        "postal-code": "685017",
+        "region": "Магаданская обл",
+        "settlement": "Магадан",
+        "type-code": "ГОПС",
+        "type-id": 0,
+        "working-hours": [
+            {
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "15:00:00.000",
+                "end-worktime": "18:00:00.000",
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "15:00:00.000",
+                "end-worktime": "18:00:00.000",
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "15:00:00.000",
+                "end-worktime": "18:00:00.000",
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "15:00:00.000",
+                "end-worktime": "18:00:00.000",
+                "weekday-id": 0
+            },
+            {
+                "begin-worktime": "11:00:00.000",
+                "end-worktime": "14:00:00.000",
+                "weekday-id": 0
+            },
+            {
+                "weekday-id": 0
+            }
+        ],
+        "works-on-saturdays": true,
+        "works-on-sundays": false
+    }
+]

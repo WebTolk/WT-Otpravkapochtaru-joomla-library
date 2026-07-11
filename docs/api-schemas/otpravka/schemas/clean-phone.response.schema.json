@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./clean-phone.response.schema.json",
+    "title": "cleanPhone observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/clean/phone",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "original-phone": {
+                "type": "string"
+            },
+            "phone-city-code": {
+                "type": "string"
+            },
+            "phone-country-code": {
+                "type": "string"
+            },
+            "phone-extension": {
+                "type": "string"
+            },
+            "phone-number": {
+                "type": "string"
+            },
+            "quality-code": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "id",
+            "original-phone",
+            "phone-city-code",
+            "phone-country-code",
+            "phone-extension",
+            "phone-number",
+            "quality-code"
+        ],
+        "additionalProperties": true
+    }
+}

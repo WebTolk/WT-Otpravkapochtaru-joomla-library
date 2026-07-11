@@ -1,0 +1,385 @@
+[
+    {
+        "additional-operator-postcode": "<redacted-value>",
+        "additional-operator-postcodes": [
+            "<redacted-value>"
+        ],
+        "available-additional-operator-postcodes": [
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>"
+        ],
+        "available-mail-types": [
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>"
+        ],
+        "available-products": [
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            }
+        ],
+        "courier-call": false,
+        "enabled": true,
+        "is-agreement": true,
+        "operator-postcode": "<redacted-value>",
+        "ops-address": "<redacted-address>",
+        "pre-postal-preparation": true,
+        "return-address-type": "<redacted-address>",
+        "temporary": false,
+        "user-available-mail-types": [
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>",
+            "<redacted-value>"
+        ],
+        "user-available-products": [
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            },
+            {
+                "mail-category": "<redacted-value>",
+                "mail-type": "<redacted-value>",
+                "product-type": "<redacted-value>"
+            }
+        ],
+        "user-return-address": {
+            "manual-address-input": false
+        },
+        "vsd-enabled": true
+    }
+]

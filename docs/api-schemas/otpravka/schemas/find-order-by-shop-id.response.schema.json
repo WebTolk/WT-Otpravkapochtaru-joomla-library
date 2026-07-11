@@ -1,0 +1,237 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./find-order-by-shop-id.response.schema.json",
+    "title": "findOrderByShopId observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/backlog/search",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "add-to-mmo": {
+                "type": "boolean"
+            },
+            "address-changed": {
+                "type": "boolean"
+            },
+            "address-type-from": {
+                "type": "string"
+            },
+            "address-type-to": {
+                "type": "string"
+            },
+            "barcode": {
+                "type": "string"
+            },
+            "completeness-checking": {
+                "type": "boolean"
+            },
+            "delivery-time": {
+                "type": "object",
+                "properties": {
+                    "max-days": {
+                        "type": "integer"
+                    },
+                    "min-days": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "max-days",
+                    "min-days"
+                ],
+                "additionalProperties": true
+            },
+            "delivery-to-door": {
+                "type": "boolean"
+            },
+            "easy-return-recipient-payment": {
+                "type": "boolean"
+            },
+            "forbidden-esp": {
+                "type": "boolean"
+            },
+            "given-name": {
+                "type": "string"
+            },
+            "ground-rate": {
+                "type": "integer"
+            },
+            "ground-rate-with-vat": {
+                "type": "integer"
+            },
+            "ground-rate-wo-vat": {
+                "type": "integer"
+            },
+            "house-to": {
+                "type": "string"
+            },
+            "id": {
+                "type": "integer"
+            },
+            "in-mmo": {
+                "type": "boolean"
+            },
+            "index-to": {
+                "type": "integer"
+            },
+            "mail-category": {
+                "type": "string"
+            },
+            "mail-direct": {
+                "type": "integer"
+            },
+            "mail-rank": {
+                "type": "string"
+            },
+            "mail-type": {
+                "type": "string"
+            },
+            "manual-address-input": {
+                "type": "boolean"
+            },
+            "mass": {
+                "type": "integer"
+            },
+            "mass-rate": {
+                "type": "integer"
+            },
+            "mass-rate-with-vat": {
+                "type": "integer"
+            },
+            "mass-rate-wo-vat": {
+                "type": "integer"
+            },
+            "middle-name": {
+                "type": "string"
+            },
+            "order-num": {
+                "type": "string"
+            },
+            "payment-method": {
+                "type": "string"
+            },
+            "place-to": {
+                "type": "string"
+            },
+            "postmarks": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "postoffice-code": {
+                "type": "string"
+            },
+            "pre-postal-preparation": {
+                "type": "boolean"
+            },
+            "prepayment-return": {
+                "type": "boolean"
+            },
+            "recipient-name": {
+                "type": "string"
+            },
+            "region-to": {
+                "type": "string"
+            },
+            "str-index-to": {
+                "type": "string"
+            },
+            "street-to": {
+                "type": "string"
+            },
+            "surname": {
+                "type": "string"
+            },
+            "tariff-count": {
+                "type": "integer"
+            },
+            "tariff-type": {
+                "type": "string"
+            },
+            "tel-address": {
+                "type": "integer"
+            },
+            "total-rate-wo-vat": {
+                "type": "integer"
+            },
+            "total-vat": {
+                "type": "integer"
+            },
+            "transport-type": {
+                "type": "string"
+            },
+            "unloading": {
+                "type": "boolean"
+            },
+            "version": {
+                "type": "integer"
+            },
+            "weight-pay": {
+                "type": "integer"
+            },
+            "with-client-return": {
+                "type": "boolean"
+            },
+            "with-discount": {
+                "type": "boolean"
+            }
+        },
+        "required": [
+            "add-to-mmo",
+            "address-changed",
+            "address-type-from",
+            "address-type-to",
+            "barcode",
+            "completeness-checking",
+            "delivery-time",
+            "delivery-to-door",
+            "easy-return-recipient-payment",
+            "forbidden-esp",
+            "given-name",
+            "ground-rate",
+            "ground-rate-with-vat",
+            "ground-rate-wo-vat",
+            "house-to",
+            "id",
+            "in-mmo",
+            "index-to",
+            "mail-category",
+            "mail-direct",
+            "mail-rank",
+            "mail-type",
+            "manual-address-input",
+            "mass",
+            "mass-rate",
+            "mass-rate-with-vat",
+            "mass-rate-wo-vat",
+            "middle-name",
+            "order-num",
+            "payment-method",
+            "place-to",
+            "postmarks",
+            "postoffice-code",
+            "pre-postal-preparation",
+            "prepayment-return",
+            "recipient-name",
+            "region-to",
+            "str-index-to",
+            "street-to",
+            "surname",
+            "tariff-count",
+            "tariff-type",
+            "tel-address",
+            "total-rate-wo-vat",
+            "total-vat",
+            "transport-type",
+            "unloading",
+            "version",
+            "weight-pay",
+            "with-client-return",
+            "with-discount"
+        ],
+        "additionalProperties": true
+    }
+}

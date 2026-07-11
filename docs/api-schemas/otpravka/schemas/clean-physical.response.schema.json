@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./clean-physical.response.schema.json",
+    "title": "cleanPhysical observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/clean/physical",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "original-fio": {
+                "type": "string"
+            },
+            "quality-code": {
+                "type": "string"
+            },
+            "surname": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "id",
+            "original-fio",
+            "quality-code",
+            "surname"
+        ],
+        "additionalProperties": true
+    }
+}

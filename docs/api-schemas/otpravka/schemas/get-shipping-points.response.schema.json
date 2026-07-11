@@ -1,0 +1,146 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./get-shipping-points.response.schema.json",
+    "title": "getShippingPoints observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/user-shipping-points",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "additional-operator-postcode": {
+                "type": "string"
+            },
+            "additional-operator-postcodes": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "available-additional-operator-postcodes": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "available-mail-types": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "available-products": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "mail-category": {
+                            "type": "string"
+                        },
+                        "mail-type": {
+                            "type": "string"
+                        },
+                        "product-type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "mail-category",
+                        "mail-type",
+                        "product-type"
+                    ],
+                    "additionalProperties": true
+                }
+            },
+            "courier-call": {
+                "type": "boolean"
+            },
+            "enabled": {
+                "type": "boolean"
+            },
+            "is-agreement": {
+                "type": "boolean"
+            },
+            "operator-postcode": {
+                "type": "string"
+            },
+            "ops-address": {
+                "type": "string"
+            },
+            "pre-postal-preparation": {
+                "type": "boolean"
+            },
+            "return-address-type": {
+                "type": "string"
+            },
+            "temporary": {
+                "type": "boolean"
+            },
+            "user-available-mail-types": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "user-available-products": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "mail-category": {
+                            "type": "string"
+                        },
+                        "mail-type": {
+                            "type": "string"
+                        },
+                        "product-type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "mail-category",
+                        "mail-type",
+                        "product-type"
+                    ],
+                    "additionalProperties": true
+                }
+            },
+            "user-return-address": {
+                "type": "object",
+                "properties": {
+                    "manual-address-input": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "manual-address-input"
+                ],
+                "additionalProperties": true
+            },
+            "vsd-enabled": {
+                "type": "boolean"
+            }
+        },
+        "required": [
+            "additional-operator-postcode",
+            "additional-operator-postcodes",
+            "available-additional-operator-postcodes",
+            "available-mail-types",
+            "available-products",
+            "courier-call",
+            "enabled",
+            "is-agreement",
+            "operator-postcode",
+            "ops-address",
+            "pre-postal-preparation",
+            "return-address-type",
+            "temporary",
+            "user-available-mail-types",
+            "user-available-products",
+            "user-return-address",
+            "vsd-enabled"
+        ],
+        "additionalProperties": true
+    }
+}

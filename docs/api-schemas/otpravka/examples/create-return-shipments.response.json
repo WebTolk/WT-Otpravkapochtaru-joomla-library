@@ -1,0 +1,11 @@
+[
+    {
+        "errors": [
+            {
+                "code": "FREE_ER_ADDRESS_NOT_ENABLED",
+                "description": "Свободный ввод адреса не доступен"
+            }
+        ],
+        "position": 0
+    }
+]

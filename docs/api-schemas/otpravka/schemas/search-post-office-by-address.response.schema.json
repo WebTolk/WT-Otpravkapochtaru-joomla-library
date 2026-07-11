@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./search-post-office-by-address.response.schema.json",
+    "title": "searchPostOfficeByAddress observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/postoffice/1.0/by-address",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "is-matched": {
+            "type": "boolean"
+        },
+        "postoffices": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "is-matched",
+        "postoffices"
+    ],
+    "additionalProperties": true
+}

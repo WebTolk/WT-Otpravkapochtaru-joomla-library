@@ -1,0 +1,174 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./search-post-office-by-index-to.response.schema.json",
+    "title": "searchPostOfficeByIndexTo observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/postoffice/1.0/685000",
+    "x-observed-status": "ok",
+    "type": "object",
+    "properties": {
+        "address-source": {
+            "type": "string"
+        },
+        "is-closed": {
+            "type": "boolean"
+        },
+        "is-private-category": {
+            "type": "boolean"
+        },
+        "is-temporary-closed": {
+            "type": "boolean"
+        },
+        "latitude": {
+            "type": "number"
+        },
+        "longitude": {
+            "type": "number"
+        },
+        "postal-code": {
+            "type": "string"
+        },
+        "region": {
+            "type": "string"
+        },
+        "settlement": {
+            "type": "string"
+        },
+        "type-code": {
+            "type": "string"
+        },
+        "type-id": {
+            "type": "integer"
+        },
+        "working-hours": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "begin-worktime": {
+                                "type": "string"
+                            },
+                            "end-worktime": {
+                                "type": "string"
+                            },
+                            "lunches": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "begin-lunchtime": {
+                                            "type": "string"
+                                        },
+                                        "end-lunchtime": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "begin-lunchtime",
+                                        "end-lunchtime"
+                                    ],
+                                    "additionalProperties": true
+                                }
+                            },
+                            "weekday-id": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "begin-worktime",
+                            "end-worktime",
+                            "lunches",
+                            "weekday-id"
+                        ],
+                        "additionalProperties": true
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "weekday-id": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "weekday-id"
+                        ],
+                        "additionalProperties": true
+                    }
+                ]
+            }
+        },
+        "works-on-saturdays": {
+            "type": "boolean"
+        },
+        "works-on-sundays": {
+            "type": "boolean"
+        },
+        "phones": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "is-fax": {
+                        "type": "boolean"
+                    },
+                    "phone-number": {
+                        "type": "string"
+                    },
+                    "phone-town-code": {
+                        "type": "string"
+                    },
+                    "phone-type-name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "is-fax",
+                    "phone-number",
+                    "phone-town-code",
+                    "phone-type-name"
+                ],
+                "additionalProperties": true
+            }
+        },
+        "service-groups": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "group-id": {
+                        "type": "integer"
+                    },
+                    "group-name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "group-id",
+                    "group-name"
+                ],
+                "additionalProperties": true
+            }
+        }
+    },
+    "required": [
+        "address-source",
+        "is-closed",
+        "is-private-category",
+        "is-temporary-closed",
+        "latitude",
+        "longitude",
+        "postal-code",
+        "region",
+        "settlement",
+        "type-code",
+        "type-id",
+        "working-hours",
+        "works-on-saturdays",
+        "works-on-sundays",
+        "phones",
+        "service-groups"
+    ],
+    "additionalProperties": true
+}

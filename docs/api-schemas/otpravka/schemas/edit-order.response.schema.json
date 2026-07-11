@@ -1,0 +1,10 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./edit-order.response.schema.json",
+    "title": "editOrder observed response",
+    "description": "Schema inferred from one real response captured on 2026-07-11. It describes the observed shape, not the complete upstream contract.",
+    "x-observed-endpoint": "/1.0/backlog/2319421774",
+    "x-observed-status": "ok",
+    "type": "array",
+    "items": {}
+}

@@ -1,0 +1,18 @@
+[
+    {
+        "address-guid": "<redacted-address>",
+        "address-type": "<redacted-address>",
+        "house": "<redacted-value>",
+        "id": "<redacted-id>",
+        "index": "685000",
+        "original-address": "<redacted-address>",
+        "place": "г. Магадан",
+        "place-guid": "<redacted-id>",
+        "quality-code": "GOOD",
+        "region": "обл. Магаданская",
+        "region-guid": "<redacted-id>",
+        "street": "<redacted-address>",
+        "street-guid": "<redacted-address>",
+        "validation-code": "VALIDATED"
+    }
+]
