@@ -24,12 +24,20 @@ final class CredentialsProvider
     private const PLUGIN_GROUP = 'system';
     private const PLUGIN_NAME  = 'wt_otpravkapochtaru';
 
+    /**
+     * Explicit or lazily loaded Joomla plugin parameters.
+     *
+     * @var    Registry|null
+     * @since  3.0.0
+     */
     private ?Registry $params = null;
 
     /**
      * Accept explicit params for tests/direct usage or defer loading to the Joomla plugin.
      *
-     * @since 3.0.0
+     * @param   array<string, mixed>|Registry|null  $params  Explicit credentials source.
+     *
+     * @since   3.0.0
      */
     public function __construct(array|Registry|null $params = null)
     {

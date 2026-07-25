@@ -21,6 +21,9 @@ final class WtOtpravkapochtaru extends CMSPlugin
 {
     /**
      * Ask Joomla to load plugin language files when the plugin is instantiated.
+     *
+     * @var    bool
+     * @since  3.0.0
      */
     protected $autoloadLanguage = true;
 }

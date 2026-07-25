@@ -20,6 +20,12 @@ use Joomla\CMS\Form\Field\NoteField;
 
 class PlugininfoField extends NoteField
 {
+    /**
+     * Field type used by Joomla when resolving XML field definitions.
+     *
+     * @var    string
+     * @since  1.7.0
+     */
     protected $type = 'Plugininfo';
 
     /**
@@ -27,9 +33,11 @@ class PlugininfoField extends NoteField
      *
      * @return  string  The field input markup.
      *
-     * @since 1.7.0
+     * @since   1.7.0
+     *
+     * @throws  \Exception
      */
-    protected function getInput()
+    protected function getInput(): string
     {
         $data    = $this->form->getData();
         $element = $data->get('element');
@@ -45,7 +53,7 @@ class PlugininfoField extends NoteField
 
         $wt_plugin_info = simplexml_load_file(JPATH_SITE . '/plugins/' . $folder . '/' . $element . '/' . $element . '.xml');
 
-        return $html = '<div class="d-flex shadow p-4">
+        return '<div class="d-flex shadow p-4">
 			<div class="flex-shrink-0">
 				<a href="https://web-tolk.ru" target="_blank" rel="noopener noreferrer">
 					<svg class="plugin-info-img-svg" width="200" height="50" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +85,7 @@ class PlugininfoField extends NoteField
      *
      * @since   1.7.0
      */
-    protected function getLabel()
+    protected function getLabel(): string
     {
         return '';
     }
@@ -89,7 +97,7 @@ class PlugininfoField extends NoteField
      *
      * @since   1.7.0
      */
-    protected function getTitle()
+    protected function getTitle(): string
     {
         return $this->getLabel();
     }

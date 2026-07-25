@@ -26,8 +26,20 @@ final class Otpravkapochtaru
 {
     private const TRACKING_DEFAULT_LANG = 'RUS';
 
+    /**
+     * REST request helper for Otpravka and post office endpoints.
+     *
+     * @var    Request
+     * @since  3.0.0
+     */
     private Request $request;
 
+    /**
+     * SOAP tracking helper.
+     *
+     * @var    TrackingEntity
+     * @since  3.0.0
+     */
     private TrackingEntity $tracking;
 
     /**

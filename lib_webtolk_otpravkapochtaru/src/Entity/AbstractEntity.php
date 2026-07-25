@@ -21,6 +21,10 @@ abstract class AbstractEntity
 {
     /**
      * Export the entity as an API-ready associative array.
+     *
+     * @return  array<string, mixed>
+     *
+     * @since   3.0.0
      */
     abstract public function toArray(): array;
 
@@ -28,6 +32,12 @@ abstract class AbstractEntity
      * Normalize associative payload keys recursively to the kebab-case names used by Russian Post.
      *
      * Numeric list keys are preserved; nested associative arrays are normalized in the same pass.
+     *
+     * @param   array<string|int, mixed>  $data  Payload data to normalize.
+     *
+     * @return  array<string|int, mixed>
+     *
+     * @since   3.0.0
      */
     final protected static function normalizePayloadKeys(array $data): array
     {
@@ -50,6 +60,12 @@ abstract class AbstractEntity
      * Remove null values recursively before sending payloads to the API.
      *
      * Empty associative child arrays are dropped, while list structure is preserved.
+     *
+     * @param   array<string|int, mixed>  $data  Payload data to filter.
+     *
+     * @return  array<string|int, mixed>
+     *
+     * @since   3.0.0
      */
     final protected static function filterNullValues(array $data): array
     {
@@ -85,6 +101,15 @@ abstract class AbstractEntity
 
     /**
      * Assert that a required payload value is present and return it for inline use.
+     *
+     * @param   mixed   $value    Value to validate.
+     * @param   string  $message  Exception message used when the value is empty.
+     *
+     * @return  mixed
+     *
+     * @since   3.0.0
+     *
+     * @throws  ValidationException
      */
     final protected static function requireNonEmpty(mixed $value, string $message): mixed
     {
@@ -98,7 +123,11 @@ abstract class AbstractEntity
     /**
      * Normalize a scalar or nested array value while preserving list indexes.
      *
-     * @since 3.0.0
+     * @param   mixed  $value  Value to normalize.
+     *
+     * @return  mixed
+     *
+     * @since   3.0.0
      */
     private static function normalizeValue(mixed $value): mixed
     {
@@ -119,7 +148,11 @@ abstract class AbstractEntity
     /**
      * Convert `camelCase` and `snake_case` input keys to Russian Post kebab-case keys.
      *
-     * @since 3.0.0
+     * @param   string  $key  Payload key to normalize.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
      */
     private static function normalizeKey(string $key): string
     {

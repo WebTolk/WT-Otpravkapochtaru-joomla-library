@@ -27,25 +27,55 @@ return new class () implements ServiceProviderInterface {
     /**
      * Register the package installer script object in Joomla's dependency injection container.
      *
-     * @since 3.0.0
+     * @param   Container  $container  Joomla dependency injection container.
+     *
+     * @return  void
+     *
+     * @since   3.0.0
      */
     public function register(Container $container): void
     {
         $container->set(
             InstallerScriptInterface::class,
             new class ($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
+                /**
+                 * Joomla administrator application used for installer messages.
+                 *
+                 * @var    AdministratorApplication
+                 * @since  3.0.0
+                 */
                 protected AdministratorApplication $app;
 
+                /**
+                 * Joomla database driver used for extension state changes.
+                 *
+                 * @var    DatabaseDriver
+                 * @since  3.0.0
+                 */
                 protected DatabaseDriver $db;
 
+                /**
+                 * Minimum supported Joomla version.
+                 *
+                 * @var    string
+                 * @since  3.0.0
+                 */
                 protected string $minimumJoomla = '5.0';
 
+                /**
+                 * Minimum supported PHP version.
+                 *
+                 * @var    string
+                 * @since  3.0.0
+                 */
                 protected string $minimumPhp = '8.1';
 
                 /**
                  * Store Joomla application and database services used by installer lifecycle hooks.
                  *
-                 * @since 3.0.0
+                 * @param   AdministratorApplication  $app  Joomla administrator application.
+                 *
+                 * @since   3.0.0
                  */
                 public function __construct(AdministratorApplication $app)
                 {
@@ -56,7 +86,11 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Accept a fresh package installation after preflight has passed.
                  *
-                 * @since 3.0.0
+                 * @param   InstallerAdapter  $adapter  Joomla installer adapter.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 public function install(InstallerAdapter $adapter): bool
                 {
@@ -66,7 +100,11 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Accept package uninstallation without deleting extra runtime data.
                  *
-                 * @since 3.0.0
+                 * @param   InstallerAdapter  $adapter  Joomla installer adapter.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 public function uninstall(InstallerAdapter $adapter): bool
                 {
@@ -76,7 +114,11 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Accept package update after preflight has passed.
                  *
-                 * @since 3.0.0
+                 * @param   InstallerAdapter  $adapter  Joomla installer adapter.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 public function update(InstallerAdapter $adapter): bool
                 {
@@ -86,7 +128,12 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Block installation or update when Joomla/PHP versions are below project requirements.
                  *
-                 * @since 3.0.0
+                 * @param   string            $type     Installer lifecycle type.
+                 * @param   InstallerAdapter  $adapter  Joomla installer adapter.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 public function preflight(string $type, InstallerAdapter $adapter): bool
                 {
@@ -104,7 +151,12 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Enable the configuration plugin and queue the branded WebTolk installer message.
                  *
-                 * @since 3.0.0
+                 * @param   string            $type     Installer lifecycle type.
+                 * @param   InstallerAdapter  $adapter  Joomla installer adapter.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 public function postflight(string $type, InstallerAdapter $adapter): bool
                 {
@@ -124,7 +176,12 @@ return new class () implements ServiceProviderInterface {
                  *
                  * The method only returns markup; Joomla output is handled through enqueueMessage().
                  *
-                 * @since 3.0.0
+                 * @param   string  $type     Installer lifecycle type.
+                 * @param   string  $version  Installed package version.
+                 *
+                 * @return  string
+                 *
+                 * @since   3.0.0
                  */
                 protected function renderInstallationMessage(string $type, string $version): string
                 {
@@ -164,7 +221,12 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Enable a plugin by element/folder in Joomla's extensions table.
                  *
-                 * @since 3.0.0
+                 * @param   string  $element  Plugin element.
+                 * @param   string  $folder   Plugin folder.
+                 *
+                 * @return  void
+                 *
+                 * @since   3.0.0
                  */
                 protected function enablePlugin(string $element, string $folder): void
                 {
@@ -180,7 +242,9 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Verify the current Joomla version and enqueue a localized installer error if it is too old.
                  *
-                 * @since 3.0.0
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 protected function checkJoomlaVersion(): bool
                 {
@@ -204,7 +268,9 @@ return new class () implements ServiceProviderInterface {
                 /**
                  * Verify the current PHP version and enqueue a localized installer error if it is too old.
                  *
-                 * @since 3.0.0
+                 * @return  bool
+                 *
+                 * @since   3.0.0
                  */
                 protected function checkPhpVersion(): bool
                 {

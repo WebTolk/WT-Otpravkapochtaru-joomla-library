@@ -26,7 +26,9 @@ final class SoapRequest
     /**
      * Store the credential provider used by both SOAP services.
      *
-     * @since 3.0.0
+     * @param   CredentialsProvider  $credentialsProvider  Credentials source for SOAP clients.
+     *
+     * @since   3.0.0
      */
     public function __construct(private readonly CredentialsProvider $credentialsProvider)
     {
@@ -35,7 +37,11 @@ final class SoapRequest
     /**
      * Create a SOAP 1.2 client for single RPO history and NPay requests.
      *
-     * @since 3.0.0
+     * @return  \SoapClient
+     *
+     * @since   3.0.0
+     *
+     * @throws  \SoapFault
      */
     public function createSingleClient(): \SoapClient
     {
@@ -45,7 +51,11 @@ final class SoapRequest
     /**
      * Create a SOAP 1.1 client for batch ticket requests.
      *
-     * @since 3.0.0
+     * @return  \SoapClient
+     *
+     * @since   3.0.0
+     *
+     * @throws  \SoapFault
      */
     public function createPackClient(): \SoapClient
     {
@@ -55,7 +65,9 @@ final class SoapRequest
     /**
      * Return tracking SOAP login from plugin/library parameters.
      *
-     * @since 3.0.0
+     * @return  string
+     *
+     * @since   3.0.0
      */
     public function getTrackingLogin(): string
     {
@@ -65,7 +77,9 @@ final class SoapRequest
     /**
      * Return tracking SOAP password from plugin/library parameters.
      *
-     * @since 3.0.0
+     * @return  string
+     *
+     * @since   3.0.0
      */
     public function getTrackingPassword(): string
     {
@@ -75,7 +89,14 @@ final class SoapRequest
     /**
      * Instantiate a SOAP client with project timeout and the SOAP mode required by the target service.
      *
-     * @since 3.0.0
+     * @param   string  $serviceWSDL  SOAP service WSDL file name.
+     * @param   int     $soapVersion  SOAP protocol version constant.
+     *
+     * @return  \SoapClient
+     *
+     * @since   3.0.0
+     *
+     * @throws  \SoapFault
      */
     private function createClient(string $serviceWSDL, int $soapVersion): \SoapClient
     {

@@ -25,6 +25,12 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 final class AccountinfoField extends NoteField
 {
+    /**
+     * Field type used by Joomla when resolving XML field definitions.
+     *
+     * @var    string
+     * @since  3.0.0
+     */
     protected $type = 'accountinfo';
 
     /**
@@ -33,7 +39,9 @@ final class AccountinfoField extends NoteField
      * The field reports configuration, authorization and transport problems inline instead of breaking
      * the plugin edit form.
      *
-     * @since 3.0.0
+     * @return  string  Rendered administrator HTML.
+     *
+     * @since   3.0.0
      */
     protected function getInput(): string
     {
@@ -169,7 +177,9 @@ final class AccountinfoField extends NoteField
     /**
      * Reuse the label text as the Joomla field title.
      *
-     * @since 3.0.0
+     * @return  string  The field title.
+     *
+     * @since   3.0.0
      */
     protected function getTitle(): string
     {
@@ -179,7 +189,9 @@ final class AccountinfoField extends NoteField
     /**
      * Hide the regular label because the field renders a complete status card.
      *
-     * @since 3.0.0
+     * @return  string  The field label markup.
+     *
+     * @since   3.0.0
      */
     protected function getLabel(): string
     {
@@ -189,7 +201,9 @@ final class AccountinfoField extends NoteField
     /**
      * Read unsaved plugin params from the current edit form.
      *
-     * @since 3.0.0
+     * @return  Registry  Current form parameters.
+     *
+     * @since   3.0.0
      */
     private function getFormParams(): Registry
     {
@@ -201,7 +215,13 @@ final class AccountinfoField extends NoteField
     /**
      * Render a Bootstrap alert for configuration or API status messages.
      *
-     * @since 3.0.0
+     * @param   string       $level    Bootstrap alert level.
+     * @param   string       $message  Main status message.
+     * @param   string|null  $details  Optional raw details already prepared for output.
+     *
+     * @return  string  Rendered alert markup.
+     *
+     * @since   3.0.0
      */
     private function renderState(string $level, string $message, ?string $details = null): string
     {
@@ -221,7 +241,11 @@ final class AccountinfoField extends NoteField
     /**
      * Detect authorization failures from HTTP status or Russian Post error text.
      *
-     * @since 3.0.0
+     * @param   TransportException  $exception  Transport error raised by the API client.
+     *
+     * @return  bool
+     *
+     * @since   3.0.0
      */
     private function isUnauthorized(TransportException $exception): bool
     {
@@ -232,7 +256,11 @@ final class AccountinfoField extends NoteField
     /**
      * Escape dynamic values before injecting them into Joomla administrator HTML.
      *
-     * @since 3.0.0
+     * @param   mixed  $value  Dynamic value to escape.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
      */
     private function escape(mixed $value): string
     {

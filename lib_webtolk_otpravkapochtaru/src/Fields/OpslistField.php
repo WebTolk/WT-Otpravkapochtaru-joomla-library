@@ -26,12 +26,20 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 final class OpslistField extends ListField
 {
+    /**
+     * Field type used by Joomla when resolving XML field definitions.
+     *
+     * @var    string
+     * @since  3.0.0
+     */
     protected $type = 'opslist';
 
     /**
      * Build select options from `getShippingPoints()` and return user-facing error options on failures.
      *
-     * @since 3.0.0
+     * @return  array<int, object>  Joomla select option objects.
+     *
+     * @since   3.0.0
      */
     protected function getOptions(): array
     {

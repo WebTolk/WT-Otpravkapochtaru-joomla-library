@@ -17,6 +17,8 @@ defined('_JEXEC') or die;
 
 /**
  * Official country reference extracted from otpravka.pochta.ru documentation.
+ *
+ * @since  3.0.0
  */
 final class CountryDictionary
 {
