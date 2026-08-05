@@ -1,0 +1,67 @@
+{
+    "step": "05-findOrderByShopId",
+    "status": "ok",
+    "result": [
+        {
+            "add-to-mmo": false,
+            "address-changed": false,
+            "address-type-from": "DEFAULT",
+            "address-type-to": "DEFAULT",
+            "barcode": "80214523462306",
+            "completeness-checking": false,
+            "delivery-time": {
+                "max-days": 6
+            },
+            "delivery-to-door": false,
+            "easy-return-recipient-payment": false,
+            "forbidden-esp": false,
+            "given-name": "Иван",
+            "ground-rate": 40902,
+            "ground-rate-with-vat": 49900,
+            "ground-rate-wo-vat": 40902,
+            "house-to": "д. 1",
+            "id": 2333724273,
+            "in-mmo": false,
+            "index-to": 455039,
+            "mail-category": "ORDINARY",
+            "mail-direct": 643,
+            "mail-rank": "WO_RANK",
+            "mail-type": "POSTAL_PARCEL",
+            "manual-address-input": false,
+            "mass": 1000,
+            "mass-rate": 40902,
+            "mass-rate-with-vat": 49900,
+            "mass-rate-wo-vat": 40902,
+            "middle-name": "Иванович",
+            "order-num": "codex-order-tracking-20260725_183153",
+            "payment-method": "CASHLESS",
+            "place-to": "Магнитогорск",
+            "postmarks": [
+                "NONSTANDARD"
+            ],
+            "postoffice-code": "109012",
+            "pre-postal-preparation": false,
+            "prepayment-return": false,
+            "recipient-name": "Иванов Иван Иванович",
+            "region-to": "обл. Челябинская",
+            "str-index-to": "455039",
+            "street-to": "Ленина",
+            "surname": "Иванов",
+            "tariff-count": 1,
+            "tariff-type": "MASS",
+            "tel-address": 79063049783,
+            "total-rate-wo-vat": 40902,
+            "total-vat": 8998,
+            "transport-type": "SURFACE",
+            "unloading": false,
+            "version": 0,
+            "weight-pay": 1000,
+            "with-client-return": false,
+            "with-discount": false
+        }
+    ],
+    "duration_ms": 676.98,
+    "context": {
+        "order_num": "codex-order-tracking-20260725_183153"
+    }
+}

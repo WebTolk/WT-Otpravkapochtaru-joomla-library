@@ -1,0 +1,42 @@
+stage: release
+work_mode: release
+artifacts_in:
+  - change-summary
+  - review-findings
+  - test-cases
+artifacts_out:
+  - release-notes
+  - migration-notes
+  - patch
+required_tools:
+  - phpstorm-mcp
+  - shell
+optional_tools:
+  - devtools
+  - serena
+allowed_next_skills:
+  - evolve
+failure_conditions:
+  - release impact undocumented
+  - migration risk undocumented
+  - delivered change set not traceable
+quality_gates:
+  - release and migration artifacts are complete
+  - rollback and deployment caveats are stated
+logging_requirements:
+  - update task-log at release gate decision
+  - record delivered artifacts in agent-log
+  - record shell delivery steps in tool telemetry
+tool_policy_overrides:
+  allow_shell_for_packaging_when_toolchain_requires_it: true
+handoff_contract:
+  ready_when:
+    - delivery artifacts are complete
+    - rollback and migration impact are stated
+  must_include:
+    - release summary
+    - migration actions
+    - deployment caveats
+    - patch linkage
+  blocks_handoff_when:
+    - release package lacks verification context

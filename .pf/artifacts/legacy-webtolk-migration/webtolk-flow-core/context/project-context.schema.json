@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://development-flow.local/context/project-context.schema.json",
+  "title": "ProjectContext",
+  "type": "object",
+  "required": ["project", "overlays", "constraints", "environments", "artifact_locations", "tooling"],
+  "properties": {
+    "project": { "type": "object" },
+    "overlays": { "type": "object" },
+    "constraints": { "type": "object" },
+    "environments": { "type": "object" },
+    "artifact_locations": { "type": "object" },
+    "tooling": { "type": "object" }
+  },
+  "additionalProperties": false
+}

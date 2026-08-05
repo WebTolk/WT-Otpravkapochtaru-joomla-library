@@ -1,0 +1,39 @@
+stage: domain
+work_mode: analysis
+artifacts_in:
+  - scope
+  - investigation-report
+  - impact-analysis
+artifacts_out:
+  - decision-log
+  - impact-analysis
+required_tools:
+  - phpstorm-mcp
+  - serena
+optional_tools:
+  - shell
+allowed_next_skills:
+  - architecture-plan
+  - implementation
+failure_conditions:
+  - impacted domains not identified
+  - ownership boundaries are mixed
+  - downstream risks not captured
+quality_gates:
+  - domain surface is mapped
+  - ownership boundaries are explicit
+logging_requirements:
+  - update task-log with domain mapping status
+  - record hotspot analysis in agent-log
+tool_policy_overrides:
+  prefer_serena_for_shared_structure_analysis: true
+handoff_contract:
+  ready_when:
+    - domain surface is mapped
+    - hotspots are listed
+  must_include:
+    - entities and responsibilities
+    - dependency touchpoints
+    - domain risks
+  blocks_handoff_when:
+    - change surface is still unclear

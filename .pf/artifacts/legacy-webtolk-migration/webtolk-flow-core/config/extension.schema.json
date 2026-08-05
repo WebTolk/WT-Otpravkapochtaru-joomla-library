@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://development-flow.local/config/extension.schema.json",
+  "title": "ExtensionManifest",
+  "type": "object",
+  "required": ["name", "type", "loads_after", "provides", "files"],
+  "properties": {
+    "name": { "type": "string" },
+    "type": { "enum": ["platform", "toolchain", "domain", "tooling", "project"] },
+    "loads_after": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "provides": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

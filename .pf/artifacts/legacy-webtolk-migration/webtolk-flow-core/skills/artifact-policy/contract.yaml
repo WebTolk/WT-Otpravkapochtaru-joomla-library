@@ -1,0 +1,41 @@
+stage: intake
+work_mode: orchestration
+artifacts_in:
+  - task-record
+  - project-context
+artifacts_out:
+  - artifact-index
+  - missing-artifacts-created
+required_tools:
+  - phpstorm-mcp
+  - shell-fallback-for-bootstrap
+optional_tools:
+  - serena
+allowed_next_skills:
+  - flow-orchestrator
+  - intake-scope
+failure_conditions:
+  - required template missing
+  - artifact path unresolved
+  - project context absent
+quality_gates:
+  - required artifacts exist for target stage
+  - artifact locations are explicit
+logging_requirements:
+  - update task-log after artifact normalization
+  - record created artifacts in agent-log
+  - record shell fallback in tool telemetry
+tool_policy_overrides:
+  allow_shell_bootstrap_only: true
+  require_telemetry_for_fallback: true
+handoff_contract:
+  ready_when:
+    - required artifacts exist for target stage
+    - artifact locations are recorded
+  must_include:
+    - artifact list
+    - stage mapping
+    - missing artifact creation log
+  blocks_handoff_when:
+    - any required artifact is absent
+    - artifact ownership is ambiguous

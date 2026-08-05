@@ -1,0 +1,81 @@
+package:
+  name: development-flow
+  version: 1.0.0
+  mode: artifact-driven
+  portability: platform-agnostic
+  language_scope: language-agnostic
+
+runtime:
+  context_file: context/project-context.yaml
+  stage_order:
+    - intake
+    - investigation
+    - domain
+    - architecture
+    - implementation
+    - assurance
+    - release
+    - evolve
+  required_logs:
+    - logs/task-log.md
+    - logs/agent-log.md
+    - logs/verification-log.md
+  required_registries:
+    - config/mcp-registry.global.yaml
+    - config/mcp-registry.project.yaml
+  cursor_file: evolutions/cursor.json
+
+artifacts:
+  root: templates/artifacts
+  required_by_stage:
+    intake:
+      - brief
+      - scope
+    investigation:
+      - investigation-report
+      - impact-analysis
+    domain:
+      - decision-log
+    architecture:
+      - architecture
+      - implementation-plan
+    implementation:
+      - changed-files
+      - change-summary
+    assurance:
+      - review-findings
+      - test-plan
+      - test-cases
+      - browser-verification-report
+    release:
+      - release-notes
+      - migration-notes
+      - patch
+    evolve:
+      - evolution-report
+
+tool_policy:
+  read_code: mcp-first
+  symbol_analysis: serena-first
+  browser: devtools-first
+  shell: fallback-only
+  telemetry_schema: config/tool-telemetry.schema.json
+
+logging:
+  policy_file: logs/logging-policy.md
+  required_fields:
+    - timestamp
+    - task
+    - files
+    - tools
+    - status
+    - risks
+
+extensions:
+  root: extensions
+  load_order:
+    - platform
+    - toolchain
+    - domain
+    - tooling
+    - project

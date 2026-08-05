@@ -1,0 +1,46 @@
+﻿project:
+  name: sample-project
+  summary: One-line description of the project intent and product surface.
+  repository_root: .
+  primary_artifact_root: .webtolk
+
+overlays:
+  platform: []
+  toolchain: []
+  domain: []
+  tooling: []
+  project_extensions: []
+
+constraints:
+  forbidden_paths: []
+  release_constraints: []
+  verification_constraints: []
+
+environments:
+  local: {}
+  ci: {}
+  release: {}
+
+artifact_locations:
+  briefs: docs/briefs
+  reports: docs/reports
+  release: docs/release
+
+tooling:
+  phpstorm_mcp_required: true
+  serena_required: true
+  devtools_required: false
+  shell_fallback_allowed: true
+  logical_tools:
+    phpstan:
+      toolchain: php
+      policy: configured-toolchain
+    phpunit:
+      toolchain: php
+      policy: configured-toolchain
+    php-cs-fixer:
+      toolchain: php
+      policy: configured-toolchain
+    phing:
+      toolchain: php
+      policy: configured-toolchain

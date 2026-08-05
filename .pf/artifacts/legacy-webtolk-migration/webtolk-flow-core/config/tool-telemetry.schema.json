@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://development-flow.local/config/tool-telemetry.schema.json",
+  "title": "ToolTelemetryEvent",
+  "type": "object",
+  "required": ["timestamp", "task", "tool_name", "operation", "files", "fallback", "reason", "status"],
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "task": { "type": "string" },
+    "tool_name": { "type": "string" },
+    "operation": { "type": "string" },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fallback": { "type": "boolean" },
+    "reason": { "type": "string" },
+    "status": { "enum": ["started", "completed", "failed", "blocked"] },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

@@ -10,6 +10,7 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__ . '/script.php',
     ])
     ->exclude([
+        '.pf',
         '.webtolk',
         'docs',
     ]);
@@ -17,7 +18,7 @@ $finder = PhpCsFixer\Finder::create()
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setUsingCache(true)
-    ->setCacheFile(__DIR__ . '/.webtolk/tmp/php-cs-fixer/.php-cs-fixer.cache')
+    ->setCacheFile(__DIR__ . '/.pf/runtime/cache/php-cs-fixer/.php-cs-fixer.cache')
     ->setRules([
         '@PSR12' => true,
         'array_syntax' => ['syntax' => 'short'],

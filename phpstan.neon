@@ -11,5 +11,5 @@ parameters:
     scanDirectories:
         - D:/.agents/docs/Joomla-core/6.x/6.1.0/libraries/src
         - D:/.agents/docs/Joomla-core/6.x/6.1.0/libraries/vendor/joomla
-    tmpDir: .webtolk/tmp/phpstan
+    tmpDir: .pf/runtime/cache/phpstan
     treatPhpDocTypesAsCertain: false

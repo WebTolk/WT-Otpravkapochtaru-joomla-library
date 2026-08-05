@@ -1,0 +1,560 @@
+schema_version: 1
+process_forge:
+  version: 1.0.0
+  version_constraint: ^1.0
+  mode: file_only
+  install_mode: linked
+  distribution:
+    id: processforge
+    source: workplace
+  runner_required: false
+  backend_required: false
+project:
+  id: wt-otpravkapochtaru-joomla-library
+  name: WT-Otpravkapochtaru-joomla-library
+  type: joomla-extension
+flow:
+  root: .pf
+  manifest: .pf/process-forge.yaml
+  local_config: .pf/process-forge.local.yaml
+workplace:
+  reference: local_file
+  local_config: .pf/process-forge.local.yaml
+coordination:
+  mode: inherit
+  director:
+    use_workplace_director: true
+    inbox_submit_required: false
+detected:
+  status: classified
+  languages:
+    []
+  platforms:
+    - joomla
+  project_kind:
+    - software.javascript-node
+    - software.php-composer
+  tags:
+    - software
+  loaded_classifiers:
+    - processforge.official.software-web.classifier
+  matched_rules:
+    -
+      classifier: processforge.official.software-web.classifier
+      rule: processforge.official.rule.composer-marker
+      confidence: high
+      source: software-web.yaml
+    -
+      classifier: processforge.official.software-web.classifier
+      rule: processforge.official.rule.node-marker
+      confidence: high
+      source: software-web.yaml
+platform_contracts:
+  -
+    id: platform.joomla
+    platform: joomla
+    source: workplace
+    status: available
+    registry_entry: joomla
+    required_contract: true
+    relation: selected
+    inherited_by: null
+    extends:
+      []
+    requires_platforms:
+      []
+    required_capabilities:
+      - filesystem.read
+      - filesystem.write
+    required:
+      knowledge_packages:
+        - docs.joomla-6-1
+        - docs.joomla-administrator
+        - docs.joomla-core
+        - docs.joomla-toolkit
+      tools:
+        - php-phing-packager
+        - php-phpcs
+        - php-phpstan
+        - php-phpunit
+      mcp:
+        []
+      templates:
+        - joomla.installer-script
+    recommended:
+      knowledge_packages:
+        []
+      tools:
+        - ide-phpstorm
+        - php-php-cs-fixer
+        - serena-cli
+      mcp:
+        - chrome-devtools
+        - phpstorm
+        - playwright
+        - serena
+      templates:
+        - joomla.module-info-field
+        - joomla.plugin-info-field
+        - php.class-doc-block
+    optional:
+      knowledge_packages:
+        []
+      tools:
+        []
+      mcp:
+        - chrome-devtools
+        - playwright
+      templates:
+        []
+    parameters:
+      {}
+platform_stack:
+  -
+    id: platform.joomla
+    platform: joomla
+    source: workplace
+    status: available
+    relation: selected
+    required: true
+    inherited_by: null
+    extends:
+      []
+    requires_platforms:
+      []
+paths:
+  processes: processes
+  packages: packages
+  templates: templates
+  assignments: assignments
+  artifacts: artifacts
+  contexts: contexts
+  logs: logs
+  handoffs: handoffs
+  reviews: reviews
+  adr: adr
+  schemas: schemas
+  registries: registries
+  runtime: runtime
+  hooks: hooks.yaml
+knowledge_stack:
+  -
+    id: processforge.core
+    version: ^1.0
+    source: distribution
+    distribution: processforge
+  -
+    id: docs.joomla-6-1
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      - platform.joomla
+  -
+    id: docs.joomla-administrator
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      - platform.joomla
+  -
+    id: docs.joomla-core
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      - platform.joomla
+  -
+    id: docs.joomla-core.branch-v1-5-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v1-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v2-5-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v3-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v4-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v5-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.branch-v6-x
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v1-0-15
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v1-5-26
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v2-5-28
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v3-10-12
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v4-4-14
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v5-4-5
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v5-4-6
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v5-4-7
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v6-0-4
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v6-1-0
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v6-1-1
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-core.v6-1-2
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      []
+  -
+    id: docs.joomla-toolkit
+    version: '*'
+    source: workplace
+    registry: package_roots
+    load_policy: on_demand
+    required_by:
+      - platform.joomla
+  -
+    id: project.wt-otpravkapochtaru-joomla-library
+    version: 1.0.0
+    source: project
+parameters:
+  {}
+context_requirements:
+  knowledge_packages:
+    -
+      id: processforge.core
+      constraint: ^1.0
+      required: true
+    -
+      id: docs.joomla-6-1
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-administrator
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v1-5-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v1-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v2-5-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v3-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v4-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v5-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.branch-v6-x
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v1-0-15
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v1-5-26
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v2-5-28
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v3-10-12
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v4-4-14
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v5-4-5
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v5-4-6
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v5-4-7
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v6-0-4
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v6-1-0
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v6-1-1
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-core.v6-1-2
+      constraint: '*'
+      required: true
+    -
+      id: docs.joomla-toolkit
+      constraint: '*'
+      required: true
+    -
+      id: project.wt-otpravkapochtaru-joomla-library
+      constraint: 1.0.0
+      required: true
+  knowledge_resources:
+    []
+  template_packages:
+    []
+  templates:
+    -
+      id: joomla.installer-script
+      required: true
+    -
+      id: joomla.module-info-field
+      required: false
+    -
+      id: joomla.plugin-info-field
+      required: false
+    -
+      id: php.class-doc-block
+      required: false
+  tools:
+    -
+      id: ide-phpstorm
+      required: false
+    -
+      id: php-phing-packager
+      required: true
+    -
+      id: php-php-cs-fixer
+      required: false
+    -
+      id: php-phpcs
+      required: true
+    -
+      id: php-phpstan
+      required: true
+    -
+      id: php-phpunit
+      required: true
+    -
+      id: serena-cli
+      required: false
+  platform_contracts:
+    -
+      id: joomla
+      required: true
+context_policy:
+  on_session_start:
+    check_freshness: true
+    check_update_candidates: if_due
+    if_fresh: continue
+    if_fresh_with_updates: notify
+    if_stale: ask_operator
+    if_broken: block
+  auto_refresh:
+    enabled: false
+    allow_patch: true
+    allow_minor: false
+    allow_major: false
+    allow_rolling_resources: false
+  active_run_behavior:
+    existing_capsules: pin_existing
+    new_capsules: require_fresh_snapshot
+  organized_mode:
+    stale_snapshot_action: needs_operator
+required_capabilities:
+  - filesystem.read
+  - filesystem.write
+optional_capabilities:
+  []
+selected_resources:
+  required:
+    knowledge_packages:
+      - docs.joomla-6-1
+      - docs.joomla-administrator
+      - docs.joomla-core
+      - docs.joomla-core.branch-v1-5-x
+      - docs.joomla-core.branch-v1-x
+      - docs.joomla-core.branch-v2-5-x
+      - docs.joomla-core.branch-v3-x
+      - docs.joomla-core.branch-v4-x
+      - docs.joomla-core.branch-v5-x
+      - docs.joomla-core.branch-v6-x
+      - docs.joomla-core.v1-0-15
+      - docs.joomla-core.v1-5-26
+      - docs.joomla-core.v2-5-28
+      - docs.joomla-core.v3-10-12
+      - docs.joomla-core.v4-4-14
+      - docs.joomla-core.v5-4-5
+      - docs.joomla-core.v5-4-6
+      - docs.joomla-core.v5-4-7
+      - docs.joomla-core.v6-0-4
+      - docs.joomla-core.v6-1-0
+      - docs.joomla-core.v6-1-1
+      - docs.joomla-core.v6-1-2
+      - docs.joomla-toolkit
+    tools:
+      - php-phing-packager
+      - php-phpcs
+      - php-phpstan
+      - php-phpunit
+    mcp:
+      []
+    templates:
+      - joomla.installer-script
+  recommended:
+    knowledge_packages:
+      []
+    tools:
+      - ide-phpstorm
+      - php-php-cs-fixer
+      - serena-cli
+    mcp:
+      - chrome-devtools
+      - phpstorm
+      - playwright
+      - serena
+    templates:
+      - joomla.module-info-field
+      - joomla.plugin-info-field
+      - php.class-doc-block
+policies:
+  one_writer_per_file_scope: true
+  approved_artifacts_are_protected: true
+  execution_context_is_immutable: true
+  public_files_must_not_contain_local_absolute_paths: true

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Project Packaging Bridge" default="1. Info">
-    <property name="config" value=".webtolk/build/package.config.json"/>
+    <property name="config" value=".dist/build/package.config.json"/>
     <property name="targetRoot" value="."/>
     <import file="D:/.agents/tools/phing-packager/build.xml"/>
 </project>

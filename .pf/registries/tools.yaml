@@ -1,0 +1,11 @@
+schema_version: 1
+tools:
+  - id: codex-filesystem
+    name: Codex filesystem access
+    kind: runtime
+    status: available
+    provides:
+      capabilities:
+        - filesystem.read
+        - filesystem.write
+    evidence: .pf/artifacts/project-onboarding-report.md

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://development-flow.local/config/runtime.schema.json",
+  "title": "RuntimeConfig",
+  "type": "object",
+  "required": ["package", "runtime", "artifacts", "tool_policy", "logging", "extensions"],
+  "properties": {
+    "package": {
+      "type": "object",
+      "required": ["name", "version", "mode", "portability", "language_scope"]
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["context_file", "stage_order", "required_logs", "required_registries", "cursor_file"]
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["root", "required_by_stage"]
+    },
+    "tool_policy": {
+      "type": "object",
+      "required": ["read_code", "symbol_analysis", "browser", "shell", "telemetry_schema"]
+    },
+    "logging": {
+      "type": "object",
+      "required": ["policy_file", "required_fields"]
+    },
+    "extensions": {
+      "type": "object",
+      "required": ["root", "load_order"]
+    }
+  },
+  "additionalProperties": false
+}

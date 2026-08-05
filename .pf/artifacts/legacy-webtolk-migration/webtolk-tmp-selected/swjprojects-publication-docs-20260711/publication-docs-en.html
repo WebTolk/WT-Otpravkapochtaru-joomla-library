@@ -1,0 +1,247 @@
+<h1 id="wt-otpravkapochtaru-for-joomla">WT Otpravkapochtaru for Joomla</h1>
+<p><code>WT Otpravkapochtaru</code> is a Joomla 5+ package that helps Joomla extensions work with Russian Post's Otpravka REST API and the SOAP tracking service. The package contains a library and a system plugin that stores connection settings.</p>
+<p>This document is prepared for the SW JProjects project page. It does not replace the full developer reference in the repository. Its purpose is to explain the practical workflow: connect the account, normalize user data, calculate delivery, create a shipment, build a batch, generate documents, create returns and request tracking data.</p>
+<p>Official Russian Post documentation is available at: <a href="https://otpravka.pochta.ru/specification#/main">https://otpravka.pochta.ru/specification#/main</a>.</p>
+<h2 id="what-the-library-covers">What the Library Covers</h2>
+<p>The official Otpravka specification is organized around large API areas: authorization, data preparation, orders, batches, documents, returns, settings, post office lookup, property dictionaries and additional service modules. The public library facade follows this model where it is useful for a regular Joomla integration.</p>
+<p>Supported areas:</p>
+<ul>
+<li>reading account settings, shipping points and the current API request limit;</li>
+<li>normalizing addresses, personal names and phone numbers before shipment creation;</li>
+<li>calculating tariff and delivery period through the current Russian Post REST method;</li>
+<li>creating, finding, editing, deleting and returning orders to the New state;</li>
+<li>checking recipient reliability;</li>
+<li>creating batches and reading batch/order data;</li>
+<li>generating the document package and the F103 form;</li>
+<li>creating, editing and deleting return shipments;</li>
+<li>searching post offices by postal code, address and coordinates;</li>
+<li>reading post office services;</li>
+<li>using a local country dictionary;</li>
+<li>requesting SOAP tracking operations and working with tracking tickets.</li>
+</ul>
+<p>Not exposed as dedicated public methods:</p>
+<ul>
+<li>batch archive and long-term archive;</li>
+<li>time slots and booking;</li>
+<li>claims for additional services;</li>
+<li>API user sessions;</li>
+<li>every additional printed form from the official specification except the document package and F103.</li>
+</ul>
+<p>This is intentional. The package covers the main shipping and tracking workflow without turning the Joomla integration into a full mirror of the official specification.</p>
+<h2 id="installation-and-setup">Installation and Setup</h2>
+<p>Install the ZIP package with the standard Joomla extension manager. After installation, open the <code>System - WT Otpravkapochtaru</code> plugin and fill in the connection settings:</p>
+<ul>
+<li>application access token;</li>
+<li>authorization mode;</li>
+<li>user authorization key or login/password pair;</li>
+<li>separate SOAP tracking credentials if tracking is required;</li>
+<li>HTTP request timeout.</li>
+</ul>
+<p>For production sites, keep real credentials only in Joomla settings or in a protected configuration provider. Do not place them in code, examples, logs or public documentation.</p>
+<h2 id="basic-shipping-workflow">Basic Shipping Workflow</h2>
+<p>Do not create a shipment directly from raw form input. First, transform user-entered data into the shape expected by Russian Post.</p>
+<ol type="1">
+<li>Normalize sender and recipient addresses.</li>
+<li>Normalize recipient name and phone.</li>
+<li>Use the normalized postal code and address in tariff calculation.</li>
+<li>Build the order payload from normalized data.</li>
+<li>Create the order in the New state.</li>
+<li>After checking several orders, build a batch.</li>
+<li>Generate printable documents.</li>
+</ol>
+<p>This order reduces API errors and makes the integration easier to debug.</p>
+<h2 id="example-normalization-and-delivery-calculation">Example: Normalization and Delivery Calculation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider<span class="ot">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Otpravkapochtaru<span class="ot">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">defined</span>(<span class="st">&#39;_JEXEC&#39;</span>) <span class="op">or</span> <span class="cf">die</span><span class="ot">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">$credentials</span> <span class="op">=</span> <span class="kw">new</span> CredentialsProvider([</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;access_token&#39;</span> =&gt; <span class="st">&#39;YOUR_ACCESS_TOKEN&#39;</span><span class="ot">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;auth_mode&#39;</span> =&gt; <span class="st">&#39;login_password&#39;</span><span class="ot">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_login&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_LOGIN&#39;</span><span class="ot">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_password&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_PASSWORD&#39;</span><span class="ot">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="va">$client</span> <span class="op">=</span> <span class="kw">new</span> Otpravkapochtaru(<span class="va">$credentials</span>)<span class="ot">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="va">$fromAddress</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanAddress(<span class="st">&#39;410000, Saratov, Moskovskaya street, 1&#39;</span>)<span class="ot">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="va">$toAddress</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanAddress(<span class="st">&#39;685000, Magadan, Lenina avenue, 1&#39;</span>)<span class="ot">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="va">$recipient</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanPhysical(<span class="st">&#39;Ivanov Ivan Ivanovich&#39;</span>)<span class="ot">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="va">$phone</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanPhone(<span class="st">&#39;+7 900 000-00-00&#39;</span>)<span class="ot">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="va">$tariff</span> <span class="op">=</span> <span class="va">$client</span>-&gt;getTariffAndDeliveryPeriod(</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;23030&#39;</span><span class="ot">,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;index-from&#39;</span> =&gt; <span class="va">$fromAddress</span>[<span class="dv">0</span>][<span class="st">&#39;index&#39;</span>] <span class="op">??</span> <span class="st">&#39;410000&#39;</span><span class="ot">,</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;index-to&#39;</span> =&gt; <span class="va">$toAddress</span>[<span class="dv">0</span>][<span class="st">&#39;index&#39;</span>] <span class="op">??</span> <span class="st">&#39;685000&#39;</span><span class="ot">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;mail-category&#39;</span> =&gt; <span class="st">&#39;ORDINARY&#39;</span><span class="ot">,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;mail-type&#39;</span> =&gt; <span class="st">&#39;POSTAL_PARCEL&#39;</span><span class="ot">,</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;mass&#39;</span> =&gt; <span class="dv">500</span><span class="ot">,</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;fragile&#39;</span> =&gt; <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;sms-notice-recipient&#39;</span> =&gt; <span class="dv">0</span><span class="ot">,</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;with-order-of-notice&#39;</span> =&gt; <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;with-simple-notice&#39;</span> =&gt; <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Recipient: &#39;</span> <span class="op">.</span> (<span class="va">$recipient</span>[<span class="dv">0</span>][<span class="st">&#39;original-fio&#39;</span>] <span class="op">??</span> <span class="st">&#39;not detected&#39;</span>) <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Phone: &#39;</span> <span class="op">.</span> (<span class="va">$phone</span>[<span class="dv">0</span>][<span class="st">&#39;phone&#39;</span>] <span class="op">??</span> <span class="st">&#39;not detected&#39;</span>) <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Price: &#39;</span> <span class="op">.</span> ((<span class="va">$tariff</span>[<span class="st">&#39;total-rate&#39;</span>] <span class="op">??</span> <span class="dv">0</span>) <span class="op">/</span> <span class="dv">100</span>) <span class="op">.</span> <span class="st">&#39; RUB&#39;</span> <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">echo</span> <span class="st">&#39;Delivery period: &#39;</span> <span class="op">.</span> (<span class="va">$tariff</span>[<span class="st">&#39;delivery-time&#39;</span>] <span class="op">??</span> <span class="st">&#39;not calculated&#39;</span>) <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span></code></pre></div>
+<p>API money values are usually returned in kopecks. Divide them by <code>100</code> before displaying them to a user.</p>
+<h2 id="example-creating-an-order">Example: Creating an Order</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider<span class="ot">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Entity\Order<span class="ot">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Entity\Recipient<span class="ot">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Otpravkapochtaru<span class="ot">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">defined</span>(<span class="st">&#39;_JEXEC&#39;</span>) <span class="op">or</span> <span class="cf">die</span><span class="ot">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="va">$client</span> <span class="op">=</span> <span class="kw">new</span> Otpravkapochtaru(<span class="kw">new</span> CredentialsProvider([</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;access_token&#39;</span> =&gt; <span class="st">&#39;YOUR_ACCESS_TOKEN&#39;</span><span class="ot">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;auth_mode&#39;</span> =&gt; <span class="st">&#39;login_password&#39;</span><span class="ot">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_login&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_LOGIN&#39;</span><span class="ot">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_password&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_PASSWORD&#39;</span><span class="ot">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>]))<span class="ot">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="va">$normalizedAddress</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanAddress(<span class="st">&#39;685000, Magadan, Lenina avenue, 1&#39;</span>)<span class="ot">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="va">$normalizedPerson</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanPhysical(<span class="st">&#39;Ivanov Ivan Ivanovich&#39;</span>)<span class="ot">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="va">$normalizedPhone</span> <span class="op">=</span> <span class="va">$client</span>-&gt;cleanPhone(<span class="st">&#39;+7 900 000-00-00&#39;</span>)<span class="ot">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="va">$recipient</span> <span class="op">=</span> Recipient::create([</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;address-type-to&#39;</span> =&gt; <span class="st">&#39;DEFAULT&#39;</span><span class="ot">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;index-to&#39;</span> =&gt; <span class="va">$normalizedAddress</span>[<span class="dv">0</span>][<span class="st">&#39;index&#39;</span>] <span class="op">??</span> <span class="st">&#39;685000&#39;</span><span class="ot">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;region-to&#39;</span> =&gt; <span class="va">$normalizedAddress</span>[<span class="dv">0</span>][<span class="st">&#39;region&#39;</span>] <span class="op">??</span> <span class="st">&#39;Magadan region&#39;</span><span class="ot">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;place-to&#39;</span> =&gt; <span class="va">$normalizedAddress</span>[<span class="dv">0</span>][<span class="st">&#39;place&#39;</span>] <span class="op">??</span> <span class="st">&#39;Magadan&#39;</span><span class="ot">,</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;street-to&#39;</span> =&gt; <span class="va">$normalizedAddress</span>[<span class="dv">0</span>][<span class="st">&#39;street&#39;</span>] <span class="op">??</span> <span class="st">&#39;Lenina avenue&#39;</span><span class="ot">,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;house-to&#39;</span> =&gt; <span class="va">$normalizedAddress</span>[<span class="dv">0</span>][<span class="st">&#39;house&#39;</span>] <span class="op">??</span> <span class="st">&#39;1&#39;</span><span class="ot">,</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;recipient-name&#39;</span> =&gt; <span class="va">$normalizedPerson</span>[<span class="dv">0</span>][<span class="st">&#39;original-fio&#39;</span>] <span class="op">??</span> <span class="st">&#39;Ivanov Ivan Ivanovich&#39;</span><span class="ot">,</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;tel-address&#39;</span> =&gt; <span class="va">$normalizedPhone</span>[<span class="dv">0</span>][<span class="st">&#39;phone&#39;</span>] <span class="op">??</span> <span class="st">&#39;79000000000&#39;</span><span class="ot">,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="va">$order</span> <span class="op">=</span> Order::create([</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;order-num&#39;</span> =&gt; <span class="st">&#39;JSHOP-10001&#39;</span><span class="ot">,</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mail-type&#39;</span> =&gt; <span class="st">&#39;POSTAL_PARCEL&#39;</span><span class="ot">,</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mail-category&#39;</span> =&gt; <span class="st">&#39;ORDINARY&#39;</span><span class="ot">,</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;mass&#39;</span> =&gt; <span class="dv">500</span><span class="ot">,</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transport-type&#39;</span> =&gt; <span class="st">&#39;SURFACE&#39;</span><span class="ot">,</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;payment-method&#39;</span> =&gt; <span class="st">&#39;CASHLESS&#39;</span><span class="ot">,</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;recipient&#39;</span> =&gt; <span class="va">$recipient</span>-&gt;toArray()<span class="ot">,</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>])<span class="ot">;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="va">$created</span> <span class="op">=</span> <span class="va">$client</span>-&gt;createOrders([<span class="va">$order</span>])<span class="ot">;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$created</span> <span class="kw">as</span> <span class="va">$item</span>) {</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> <span class="st">&#39;Created API order: &#39;</span> <span class="op">.</span> (<span class="va">$item</span>[<span class="st">&#39;result-ids&#39;</span>][<span class="dv">0</span>] <span class="op">??</span> <span class="st">&#39;without id&#39;</span>) <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Use <code>editOrder()</code> to update an existing order and <code>deleteOrders()</code> to remove orders from the New state. Use <code>returnOrdersToNew()</code> when an order has to be moved back to New.</p>
+<h2 id="batches-and-documents">Batches and Documents</h2>
+<p>When orders are checked and ready to be handed over to a post office, create a batch:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider<span class="ot">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Otpravkapochtaru<span class="ot">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">defined</span>(<span class="st">&#39;_JEXEC&#39;</span>) <span class="op">or</span> <span class="cf">die</span><span class="ot">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="va">$client</span> <span class="op">=</span> <span class="kw">new</span> Otpravkapochtaru(<span class="kw">new</span> CredentialsProvider([</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;access_token&#39;</span> =&gt; <span class="st">&#39;YOUR_ACCESS_TOKEN&#39;</span><span class="ot">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;auth_mode&#39;</span> =&gt; <span class="st">&#39;login_password&#39;</span><span class="ot">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_login&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_LOGIN&#39;</span><span class="ot">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_password&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_PASSWORD&#39;</span><span class="ot">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>]))<span class="ot">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="va">$batch</span> <span class="op">=</span> <span class="va">$client</span>-&gt;createBatch([<span class="dv">123456789</span><span class="ot">,</span> <span class="dv">123456790</span>])<span class="ot">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="va">$batchName</span> <span class="op">=</span> <span class="va">$batch</span>[<span class="st">&#39;batch-name&#39;</span>] <span class="op">??</span> <span class="kw">null</span><span class="ot">;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="va">$batchName</span> <span class="op">!==</span> <span class="kw">null</span>) {</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">$zip</span> <span class="op">=</span> <span class="va">$client</span>-&gt;generateDocumentPackage(<span class="va">$batchName</span>)<span class="ot">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file_put_contents</span>(<span class="cn">JPATH_ROOT</span> <span class="op">.</span> <span class="st">&#39;/tmp/&#39;</span> <span class="op">.</span> <span class="va">$batchName</span> <span class="op">.</span> <span class="st">&#39;.zip&#39;</span><span class="ot">,</span> <span class="va">$zip</span>[<span class="st">&#39;body&#39;</span>])<span class="ot">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Document methods return binary data. Store it in a protected location and do not send it to a browser without proper <code>Content-Type</code> and <code>Content-Disposition</code> headers.</p>
+<h2 id="returns">Returns</h2>
+<p>A return shipment can be created for a direct shipment barcode or as a separate return shipment. Use the <code>ReturnShipment</code> entity when you want to assemble the payload explicitly and reuse it in tests.</p>
+<p>Main methods:</p>
+<ul>
+<li><code>createReturnShipment()</code> creates a return for a previously created shipment;</li>
+<li><code>createReturnShipments()</code> creates separate return shipments;</li>
+<li><code>editReturnShipment()</code> updates a separate return shipment;</li>
+<li><code>deleteReturnShipment()</code> deletes a separate return shipment.</li>
+</ul>
+<h2 id="post-offices-and-dictionaries">Post Offices and Dictionaries</h2>
+<p>Post office lookup methods are useful before order creation. They can validate a postal code, find a nearby office and list available services.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider<span class="ot">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Otpravkapochtaru<span class="ot">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">defined</span>(<span class="st">&#39;_JEXEC&#39;</span>) <span class="op">or</span> <span class="cf">die</span><span class="ot">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="va">$client</span> <span class="op">=</span> <span class="kw">new</span> Otpravkapochtaru(<span class="kw">new</span> CredentialsProvider([</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;access_token&#39;</span> =&gt; <span class="st">&#39;YOUR_ACCESS_TOKEN&#39;</span><span class="ot">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;auth_mode&#39;</span> =&gt; <span class="st">&#39;login_password&#39;</span><span class="ot">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_login&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_LOGIN&#39;</span><span class="ot">,</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;user_password&#39;</span> =&gt; <span class="st">&#39;YOUR_USER_PASSWORD&#39;</span><span class="ot">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>]))<span class="ot">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="va">$office</span> <span class="op">=</span> <span class="va">$client</span>-&gt;searchPostOfficeByIndex(<span class="st">&#39;685000&#39;</span>)<span class="ot">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="va">$services</span> <span class="op">=</span> <span class="va">$client</span>-&gt;getPostOfficeServices(<span class="st">&#39;685000&#39;</span>)<span class="ot">;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">var_dump</span>(<span class="va">$office</span><span class="ot">,</span> <span class="va">$services</span>)<span class="ot">;</span></span></code></pre></div>
+<p>The country list is local and does not spend the REST API request limit.</p>
+<h2 id="soap-tracking">SOAP Tracking</h2>
+<p>The Otpravka REST API is used for shipment preparation. Tracking operations use Russian Post's SOAP service, so they require separate credentials.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">declare</span>(strict_types<span class="op">=</span><span class="dv">1</span>)<span class="ot">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider<span class="ot">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Webtolk\Otpravkapochtaru\Otpravkapochtaru<span class="ot">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">defined</span>(<span class="st">&#39;_JEXEC&#39;</span>) <span class="op">or</span> <span class="cf">die</span><span class="ot">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="va">$client</span> <span class="op">=</span> <span class="kw">new</span> Otpravkapochtaru(<span class="kw">new</span> CredentialsProvider([</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;tracking_login&#39;</span> =&gt; <span class="st">&#39;YOUR_TRACKING_LOGIN&#39;</span><span class="ot">,</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;tracking_password&#39;</span> =&gt; <span class="st">&#39;YOUR_TRACKING_PASSWORD&#39;</span><span class="ot">,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>]))<span class="ot">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="va">$operations</span> <span class="op">=</span> <span class="va">$client</span>-&gt;getOperationsByRpo(<span class="st">&#39;12345678901234&#39;</span>)<span class="ot">;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">foreach</span> (<span class="va">$operations</span> <span class="kw">as</span> <span class="va">$operation</span>) {</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">echo</span> (<span class="va">$operation</span>[<span class="st">&#39;operationName&#39;</span>] <span class="op">??</span> <span class="st">&#39;Operation&#39;</span>) <span class="op">.</span> <span class="cn">PHP_EOL</span><span class="ot">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If the account has no SOAP tracking access, REST shipping scenarios may still work.</p>
+<h2 id="real-response-schemas">Real Response Schemas</h2>
+<p>The repository contains an appendix with observed JSON Schemas captured from real shipping requests. The schemas are stored in <code>docs/api-schemas/otpravka/</code> and are not included in the Joomla ZIP package.</p>
+<p>Use these schemas as engineering evidence for documentation and tests, but do not treat them as a complete official specification. The API may return additional fields when Russian Post changes a contract or enables new account features.</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><code>README.md</code> — quick start and installation.</li>
+<li><code>docs/developer-api.md</code> — full technical reference.</li>
+<li><code>docs/facade-method-reference.md</code> — public facade method reference.</li>
+<li><code>docs/api/*.md</code> — detailed scenario chapters.</li>
+<li><code>docs/entities-reference.md</code> — <code>Order</code>, <code>Recipient</code>, <code>ReturnShipment</code> and other payload entities.</li>
+<li><code>docs/low-level-api.md</code> — low-level transport, SOAP and credential provider details.</li>
+</ul>
+<h2 id="publication-checklist">Publication Checklist</h2>
+<p>For SW JProjects, use the HTML fragment generated from this document. The text is divided into human-readable sections, avoids heavy tables and fits a project page: purpose first, then workflow, examples and limitations.</p>
+<p>Before publishing, check that:</p>
+<ul>
+<li>the project remains unpublished if the extension is not ready for public download;</li>
+<li>the text contains no real access keys, customer phones, barcodes or order addresses;</li>
+<li>links to the full documentation point to a public repository or prepared website pages;</li>
+<li>plugin settings screenshots are uploaded to the language-specific project galleries.</li>
+</ul>

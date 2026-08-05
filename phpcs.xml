@@ -7,6 +7,7 @@
     <file>script.php</file>
     <file>tests</file>
 
+    <exclude-pattern type="relative">^\.pf/*</exclude-pattern>
     <exclude-pattern type="relative">^\.webtolk/*</exclude-pattern>
     <exclude-pattern type="relative">^\.packages/*</exclude-pattern>
     <exclude-pattern type="relative">^docs/*</exclude-pattern>

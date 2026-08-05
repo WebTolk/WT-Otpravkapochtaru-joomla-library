@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://development-flow.local/config/task.schema.json",
+  "title": "TaskRecord",
+  "type": "object",
+  "required": ["id", "title", "mode", "stage", "requested_outcome", "artifacts", "constraints"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "mode": { "enum": ["investigation", "implementation", "assurance", "release", "evolve"] },
+    "stage": { "type": "string" },
+    "requested_outcome": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "overlays": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

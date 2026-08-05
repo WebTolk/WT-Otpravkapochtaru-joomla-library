@@ -1,0 +1,9 @@
+name: sample-tooling
+type: tooling
+loads_after:
+  - config/mcp-registry.project.yaml
+provides:
+  - mcp-routes
+  - shell-constraints
+files:
+  - rules/tooling/sample-tooling.md
