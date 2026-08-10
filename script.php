@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
@@ -122,7 +123,7 @@ return new class () implements ServiceProviderInterface {
                  */
                 public function update(InstallerAdapter $adapter): bool
                 {
-                    return true;
+                    return $this->removeLegacyPochtaruLibrary();
                 }
 
                 /**
@@ -142,6 +143,10 @@ return new class () implements ServiceProviderInterface {
                     }
 
                     if (!$this->checkPhpVersion()) {
+                        return false;
+                    }
+
+                    if (in_array($type, ['install', 'discover_install'], true) && !$this->removeLegacyPochtaruLibrary()) {
                         return false;
                     }
 
@@ -237,6 +242,39 @@ return new class () implements ServiceProviderInterface {
                     $plugin->enabled = 1;
 
                     $this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
+                }
+
+                /**
+                 * Remove the pre-3.0 library package runtime that used a different library element.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
+                 */
+                protected function removeLegacyPochtaruLibrary(): bool
+                {
+                    $query = $this->db->getQuery(true)
+                        ->select($this->db->quoteName('extension_id'))
+                        ->from($this->db->quoteName('#__extensions'))
+                        ->where($this->db->quoteName('type') . ' = ' . $this->db->quote('library'))
+                        ->where($this->db->quoteName('element') . ' = ' . $this->db->quote('Webtolk/Pochtaru'));
+
+                    $extensionId = (int) $this->db->setQuery($query)->loadResult();
+
+                    if ($extensionId === 0) {
+                        return true;
+                    }
+
+                    if (Installer::getInstance()->uninstall('library', $extensionId)) {
+                        return true;
+                    }
+
+                    $this->app->enqueueMessage(
+                        'Unable to remove legacy library Webtolk/Pochtaru before installing WT Otpravkapochtaru 3.0.0.',
+                        'error'
+                    );
+
+                    return false;
                 }
 
                 /**

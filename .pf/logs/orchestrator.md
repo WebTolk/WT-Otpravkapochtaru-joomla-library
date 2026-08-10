@@ -898,3 +898,49 @@
 - compatibility:
   - existing system plugin parameter names remain supported and are covered by unit tests
   - linked-select/AJAX legacy paths remain removed
+
+## 2026-08-10 22:19 +04:00 - Joomla Local 2.0.1 -> 3.0.0 Plugin Params Upgrade Test
+
+- agent/role: Codex / runtime assurance
+- task: verify that existing system plugin params survive updating from the 2.0.1 package in `.pf/tmp` to the current 3.0.0 package
+- files changed:
+  - `.pf/artifacts/joomla-local-201-to-300-plugin-params-upgrade-test-20260810.md`
+- status: completed
+- evidence:
+  - removed current 3.0.0 library package from `joomla.local`
+  - installed `.pf/tmp/pkg_smwtotpravkapochtaru_2.0.1.zip`
+  - populated legacy params on the 2.0.1 `wtotpravkapochtaru` system plugin
+  - installed `.packages/WT Otpravkapochtaru_3.0.0.zip`
+  - confirmed the same plugin row `extension_id=385` updated to 3.0.0 and retained `AccessToken`, `user_key_or_login_and_password`, `user_auth_key`, `user_login`, `user_password`
+  - confirmed the Joomla administrator plugin form shows the retained values
+  - confirmed installed `CredentialsProvider` 3.0.0 reads the retained legacy values in Joomla CLI application context
+- residual observation:
+  - old `pkg_smwtotpravkapochtaru` and `Webtolk/Pochtaru` 2.0.1 remain installed beside new `pkg_lib_wt_otpravkapochtaru` and `Webtolk/Otpravkapochtaru` 3.0.0 because the package/library elements changed
+
+## 2026-08-10 22:27 +04:00 - Legacy Library Cleanup In Installer Script
+
+- agent/role: Codex / implementation and runtime assurance
+- task: remove legacy library `Webtolk/Pochtaru` during 2.0.1 -> 3.0.0 upgrade while preserving existing system plugin params
+- files changed:
+  - `script.php`
+  - `.pf/artifacts/joomla-local-201-to-300-legacy-library-cleanup-test-20260810.md`
+- status: completed
+- implementation:
+  - added Joomla Installer API cleanup for legacy library element `Webtolk/Pochtaru`
+  - `update()` calls the cleanup for normal package updates
+  - `preflight()` calls the cleanup for `install` and `discover_install` because the real 2.0.1 -> 3.0.0 path uses a new package element and is seen by Joomla as a package install
+- checks:
+  - release package rebuilt: `.packages/WT Otpravkapochtaru_3.0.0.zip`, `41` entries, `61882` bytes, SHA-256 `AD359B3B59D5C359A130EDC49A19619E13FF4328C0176DE468CC7C9158F5FCCB`, forbidden entries `0`
+  - PHP lint: passed
+  - PHPUnit: `OK (10 tests, 25 assertions)`
+  - JS syntax: passed
+  - PHPCS: passed
+  - PHPStan: passed
+  - PHP CS Fixer dry-run: passed
+  - Joomla local upgrade test: passed
+- runtime result:
+  - 2.0.1 baseline installed from `.pf/tmp/pkg_smwtotpravkapochtaru_2.0.1.zip`
+  - old library `Webtolk/Pochtaru` existed before 3.0 install
+  - after installing 3.0.0, `Webtolk/Pochtaru` count in `#__extensions` was `0`
+  - `wtotpravkapochtaru` plugin kept its row and retained legacy params
+  - installed `CredentialsProvider` 3.0.0 read the retained legacy params successfully
