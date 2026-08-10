@@ -1,5 +1,7 @@
 .idea/
+.codex/
 .serena/
+.playwright-mcp/
 .webtolk/
 .webtolk.backup-*/
 .packages/
@@ -18,6 +20,7 @@ Thumbs.db
 .DS_Store
 .pf/process-forge.local.yaml
 .pf/runtime/
+.pf/tmp/
 .pf/private-notes/
 .pf/cache/
 .secrets/

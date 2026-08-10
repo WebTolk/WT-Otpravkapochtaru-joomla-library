@@ -43,7 +43,7 @@ final class OpslistField extends ListField
      */
     protected function getOptions(): array
     {
-        if (!PluginHelper::isEnabled('system', 'wt_otpravkapochtaru')) {
+        if (!PluginHelper::isEnabled('system', 'wtotpravkapochtaru')) {
             return [
                 HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_PLUGIN_DISABLED')),
             ];

@@ -22,7 +22,7 @@ use Webtolk\Otpravkapochtaru\Exception\ConfigurationException;
 final class CredentialsProvider
 {
     private const PLUGIN_GROUP = 'system';
-    private const PLUGIN_NAME  = 'wt_otpravkapochtaru';
+    private const PLUGIN_NAME  = 'wtotpravkapochtaru';
 
     /**
      * Explicit or lazily loaded Joomla plugin parameters.
@@ -53,7 +53,7 @@ final class CredentialsProvider
     }
 
     /**
-     * Return the Otpravka API access token and support the legacy `AccessToken` parameter name.
+     * Return the Otpravka API access token.
      *
      * @since 3.0.0
      */
@@ -74,8 +74,6 @@ final class CredentialsProvider
 
     /**
      * Return the selected user authorization mode.
-     *
-     * New `auth_mode` params and legacy `user_key_or_login_and_password` params are both supported.
      *
      * @since 3.0.0
      */
@@ -158,10 +156,10 @@ final class CredentialsProvider
     public function getUserAuthorizationHeader(): string
     {
         if ($this->getAuthMode() === 'key' || $this->getAuthMode() === 'user_key') {
-            $value = trim((string) $this->params()->get('user_key', ''));
+            $value = trim($this->getUserKey());
 
             if ($value === '') {
-                throw new ConfigurationException('Required configuration value "user_key" is missing.');
+                throw new ConfigurationException('Required configuration value "user_key" or "user_auth_key" is missing.');
             }
 
             return $value;
@@ -194,13 +192,13 @@ final class CredentialsProvider
         }
 
         if (!PluginHelper::isEnabled(self::PLUGIN_GROUP, self::PLUGIN_NAME)) {
-            throw new ConfigurationException('System plugin wt_otpravkapochtaru is disabled.');
+            throw new ConfigurationException('System plugin wtotpravkapochtaru is disabled.');
         }
 
         $plugin = PluginHelper::getPlugin(self::PLUGIN_GROUP, self::PLUGIN_NAME);
 
         if ($plugin === null || empty($plugin->params)) {
-            throw new ConfigurationException('System plugin wt_otpravkapochtaru configuration is empty.');
+            throw new ConfigurationException('System plugin wtotpravkapochtaru configuration is empty.');
         }
 
         $this->params = new Registry($plugin->params);

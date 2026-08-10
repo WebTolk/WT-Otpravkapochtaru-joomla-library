@@ -1,0 +1,114 @@
+schema_version: 1
+id: t01c-category-type-source-contract
+title: Resolve shipment category and type source contract
+run_id: linked-otpravka-select-fields-20260806
+process: software-feature-development
+status: done
+created_at: '2026-08-06T04:56:14Z'
+updated_at: '2026-08-06T05:14:54Z'
+objective: Produce a readable UTF-8 planning artifact that proves PHPStorm MCP usage or records an orchestrator-approved fallback, identifies the authoritative data source for shipment categories and shipment types, and defines whether implementation can proceed.
+platform: joomla
+selected_specializations:
+  - specialization.joomla-fullstack
+order: 3
+dependencies:
+  blocked_by:
+    []
+  blocks:
+    []
+iterations:
+  -
+    id: iter-001
+    kind: review
+    status: passed
+    started_at: '2026-08-06T05:14:54Z'
+    summary: 'User clarified that legacy JoomShopping chain OPS -> type -> category is the correct target order. Source contract and worker briefs updated: types by OPS from user-available-mail-types/products, categories by OPS/type from user-available-products mail-category filtered by mail-type.'
+    artifacts:
+      - .pf/artifacts/runs/linked-otpravka-select-fields-20260806/t01c-category-type-source-contract/work-log.md
+    completed_at: '2026-08-06T05:14:54Z'
+result:
+  status: done
+  summary: 'Source contract resolved by orchestrator from legacy package and local Otpravka/Joomla docs: categories from selected OPS user-available-products mail-category; types from selected OPS user-available-products mail-type filtered by selected mail-category. Implementation may proceed with Joomla API data handling and secure JSON com_ajax contract.'
+  artifacts:
+    - .pf/artifacts/category-type-source-contract-20260806.md
+    - .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+    - .pf/artifacts/worker-task-briefs-linked-select-fields-20260806.md
+execution_mode:
+  kind: planning_only
+  code_changes_allowed: false
+  artifact_changes_allowed: true
+  requires_review: true
+context_artifacts:
+  -
+    path: .pf/artifacts/linked-select-fields-orchestration-plan-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/worker-api-security-design-v2-review-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+workspace_access:
+  knowledge_resources:
+    - 'docs.api.otpravka-pochta:root'
+    - 'docs.joomla-toolkit:root'
+  templates:
+    []
+  tools:
+    []
+  mcp:
+    - phpstorm
+    - serena
+allowed_files:
+  - .pf/artifacts/category-type-source-contract-20260806.md
+allowed_read_files:
+  - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php
+  - plg_system_wt_otpravkapochtaru/src/Extension/WtOtpravkapochtaru.php
+ownership:
+  owner_id: shell-worker-source-contract
+  owner_label: worker-shell-worker-source-contract
+  role: architect
+  writer: true
+  owned_files:
+    - .pf/artifacts/category-type-source-contract-20260806.md
+  owned_globs:
+    []
+non_overlap:
+  policy: block_on_write_overlap
+  active_parallel_tasks:
+    []
+  current_write_scope:
+    - .pf/artifacts/category-type-source-contract-20260806.md
+  rule: Do not edit files owned by active parallel tasks.
+required_outputs:
+  -
+    id: source_contract
+    type: unspecified
+    path: .pf/artifacts/category-type-source-contract-20260806.md
+    required: true
+  -
+    id: mcp_evidence
+    type: unspecified
+    path: .pf/artifacts/category-type-source-contract-20260806.md
+    required: true
+  -
+    id: implementation_gate_decision
+    type: unspecified
+    path: .pf/artifacts/category-type-source-contract-20260806.md
+    required: true
+agent_reasoning_effort: high
+expected_report:
+  language: ru
+  artifact: .pf/artifacts/category-type-source-contract-20260806.md
+  format: concise_markdown
+  include:
+    - source_contract
+    - mcp_evidence
+    - implementation_gate_decision

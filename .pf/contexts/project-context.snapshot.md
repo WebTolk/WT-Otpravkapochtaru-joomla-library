@@ -2,8 +2,8 @@
 
 ## Generated
 
-- generated_at: 2026-08-05T15:41:27Z
-- valid_until: 2026-08-12T15:41:27Z
+- generated_at: 2026-08-06T05:15:26Z
+- valid_until: 2026-08-13T05:15:26Z
 
 ## Freshness
 
@@ -71,10 +71,11 @@ fresh
 
 ## Selected Specializations
 
-- None.
+- specialization.joomla-fullstack
 
 ## Effective Resources
 
+- docs.api.otpravka-pochta (activated, None)
 - docs.joomla-6-1 (activated, None)
 - docs.joomla-administrator (activated, None)
 - docs.joomla-core (activated, None)
@@ -97,6 +98,8 @@ fresh
 - docs.joomla-core.v6-1-0 (activated, None)
 - docs.joomla-core.v6-1-1 (activated, None)
 - docs.joomla-core.v6-1-2 (activated, None)
+- docs.joomla-development-articles (activated, None)
+- docs.joomla-extensions (activated, None)
 - docs.joomla-toolkit (activated, None)
 - docs.php (activated, None)
 - docs.web.accessibility (activated, None)
@@ -104,6 +107,8 @@ fresh
 - docs.web.html (activated, None)
 - docs.web.javascript (activated, None)
 - docs.web.performance (activated, None)
+- frontend-eslint (activated, None)
+- frontend-stylelint (activated, None)
 - ide-phpstorm (activated, None)
 - php-phing-packager (activated, None)
 - php-php-cs-fixer (activated, None)
@@ -125,9 +130,15 @@ fresh
 - architecture
 - browser_automation
 - browser_devtools_diagnostics
+- frontend_lint
+- frontend_style_lint
 - ide_php_project_analysis
 - ide_php_repository_analysis
 - investigation
+- joomla.extension_packaging
+- joomla.fullstack_development
+- joomla.rendered_ui_verification
+- joomla.runtime_verification
 - php_code_style_check
 - php_code_style_fix
 - php_static_analysis
@@ -145,7 +156,7 @@ fresh
 
 ## Execution Route
 
-- process: None.
+- process:
 - required_capabilities: None.
 - required_evidence: None.
 
@@ -156,7 +167,7 @@ fresh
 
 ## Applied Project Overrides
 
-- None.
+- {'kind': 'knowledge_packages', 'target': 'docs.api.otpravka-pochta', 'mode': 'extension', 'reason': 'Connect Russian Post Otpravka REST API knowledge for linked OPS/category/type field design and AJAX endpoint security planning.', 'path': '', 'sha256': 'missing', 'base_sha256': 'missing', 'effective_fingerprint': 'sha256:c9ffad3933c5314e7456e79f08d88b9a1fbe6bd7aa2b5f256296c3d4143bcae8'}
 
 ## Resolved Parameters
 
@@ -196,6 +207,9 @@ fresh
 
 ## Recommended Knowledge Resources
 
+- docs.api.otpravka-pochta:root (indexed, None)
+- docs.joomla-development-articles:root (indexed, None)
+- docs.joomla-extensions:root (indexed, None)
 - project.wt-otpravkapochtaru-joomla-library:project-profile (indexed, None)
 - project.wt-otpravkapochtaru-joomla-library:project-artifacts (indexed, None)
 

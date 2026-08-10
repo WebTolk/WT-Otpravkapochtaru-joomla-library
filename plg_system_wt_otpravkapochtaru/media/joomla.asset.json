@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "plg_system_wtotpravkapochtaru",
+  "version": "3.0.0",
+  "description": "WT Otpravkapochtaru system plugin assets",
+  "license": "GPL-3.0-or-later",
+  "assets": [
+    {
+      "name": "plg_system_wtotpravkapochtaru.linked-select-fields",
+      "type": "script",
+      "uri": "plg_system_wtotpravkapochtaru/linked-select-fields.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@ schema_version: 1
 id: first-assignment
 title: Verify ProcessForge project onboarding
 process: project-onboarding
-status: open
+status: completed
 objective: Verify that this project is connected to ProcessForge and ready for future assignment work.
 tasks:
   - Read .pf/AGENTS.md

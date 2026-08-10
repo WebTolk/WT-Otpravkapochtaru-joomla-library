@@ -1,0 +1,167 @@
+schema_version: 1
+id: t02-library-fields-assets
+title: Implement linked Joomla Form fields and frontend asset
+run_id: linked-otpravka-select-fields-20260806
+process: software-feature-development
+status: done
+created_at: '2026-08-06T04:37:34Z'
+updated_at: '2026-08-06T06:17:03Z'
+objective: Implement library-side Joomla Form fields for OPS, shipment types, and shipment categories using watchfield and url XML attributes, plus an asset-managed vanilla JS controller for the clarified OPS -> type -> category linked select chain.
+platform: joomla
+selected_specializations:
+  - specialization.joomla-fullstack
+order: 4
+dependencies:
+  blocked_by:
+    - t01c-category-type-source-contract
+  blocks:
+    []
+iterations:
+  -
+    id: iter-001
+    kind: review
+    status: failed
+    started_at: '2026-08-06T05:23:00Z'
+    summary: 'Worker stopped by orchestrator: used shell/PowerShell Set-Content for code writes instead of PHPStorm MCP, generated malformed PHP evidence in stderr, and created out-of-scope tests/temp_write_probe.txt. Product changes were cleaned up.'
+    artifacts:
+      - .pf/artifacts/runs/linked-otpravka-select-fields-20260806/t02-library-fields-assets/work-log.md
+    completed_at: '2026-08-06T05:23:00Z'
+  -
+    id: iter-002
+    kind: review
+    status: failed
+    started_at: '2026-08-06T05:50:57Z'
+    summary: 'PowerShell-fallback relaunch failed before code writes: worker exhausted model context after broad local/API documentation reads. No product changes and no expected report were produced. Next retry must use tighter context and write-capable sandbox.'
+    artifacts:
+      - .pf/artifacts/runs/linked-otpravka-select-fields-20260806/t02-library-fields-assets/work-log.md
+    completed_at: '2026-08-06T05:50:57Z'
+  -
+    id: iter-003
+    kind: review
+    status: passed
+    started_at: '2026-08-06T06:17:03Z'
+    summary: Worker output accepted after orchestrator fixes documented in .pf/artifacts/worker-fields-assets-review-20260806.md; lint, unit tests, JS/XML/JSON checks, PHPCS, PHPStan, and php-cs-fixer dry-run passed for changed scope.
+    artifacts:
+      - .pf/artifacts/runs/linked-otpravka-select-fields-20260806/t02-library-fields-assets/work-log.md
+    completed_at: '2026-08-06T06:17:03Z'
+result:
+  status: done
+  summary: Collected worker run output from codex-exec-workspace-write
+  artifacts:
+    - .pf/artifacts/worker-fields-assets-report-20260806.md
+execution_mode:
+  kind: implementation
+  code_changes_allowed: true
+  artifact_changes_allowed: true
+  requires_review: true
+context_artifacts:
+  -
+    path: .pf/artifacts/linked-select-fields-orchestration-plan-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/worker-api-security-design-v2-review-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/category-type-source-contract-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/worker-task-briefs-linked-select-fields-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/worker-orchestration-rules-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/joomshopping-shipping-price-form-investigation.md
+    role: input
+    required: true
+    mutable_by_worker: false
+workspace_access:
+  knowledge_resources:
+    - 'docs.api.otpravka-pochta:root'
+    - 'docs.joomla-toolkit:root'
+  templates:
+    []
+  tools:
+    - php-phpunit
+  mcp:
+    - phpstorm
+    - serena
+allowed_files:
+  - plg_system_wt_otpravkapochtaru/wt_otpravkapochtaru.xml
+  - composer.json
+  - lib_webtolk_otpravkapochtaru/src/Fields/*
+  - lib_webtolk_otpravkapochtaru/src/Service/*
+  - plg_system_wt_otpravkapochtaru/media/*
+  - tests/Unit/Fields/*
+allowed_read_files:
+  - .pf/artifacts/linked-select-fields-orchestration-plan-20260806.md
+  - .pf/artifacts/category-type-source-contract-20260806.md
+  - .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+  - .pf/artifacts/worker-task-briefs-linked-select-fields-20260806.md
+  - .pf/artifacts/worker-orchestration-rules-20260806.md
+  - lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php
+  - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+  - plg_system_wt_otpravkapochtaru/wt_otpravkapochtaru.xml
+forbidden_files:
+  - plg_system_wt_otpravkapochtaru/src/Extension/*
+ownership:
+  owner_id: shell-worker-fields-assets
+  owner_label: worker-shell-worker-fields-assets
+  role: developer
+  writer: true
+  owned_files:
+    - plg_system_wt_otpravkapochtaru/wt_otpravkapochtaru.xml
+    - composer.json
+    - lib_webtolk_otpravkapochtaru/src/Fields/*
+    - lib_webtolk_otpravkapochtaru/src/Service/*
+    - plg_system_wt_otpravkapochtaru/media/*
+    - tests/Unit/Fields/*
+  owned_globs:
+    []
+non_overlap:
+  policy: block_on_write_overlap
+  active_parallel_tasks:
+    []
+  current_write_scope:
+    - plg_system_wt_otpravkapochtaru/wt_otpravkapochtaru.xml
+    - composer.json
+    - lib_webtolk_otpravkapochtaru/src/Fields/*
+    - lib_webtolk_otpravkapochtaru/src/Service/*
+    - plg_system_wt_otpravkapochtaru/media/*
+    - tests/Unit/Fields/*
+  rule: Do not edit files owned by active parallel tasks.
+required_outputs:
+  -
+    id: changed_files
+    type: unspecified
+    path: .pf/artifacts/worker-fields-assets-report-20260806.md
+    required: true
+  -
+    id: unit_tests
+    type: unspecified
+    path: .pf/artifacts/worker-fields-assets-report-20260806.md
+    required: true
+agent_reasoning_effort: high
+expected_report:
+  language: ru
+  artifact: .pf/artifacts/worker-fields-assets-report-20260806.md
+  format: concise_markdown
+  include:
+    - changed_files
+    - unit_tests
+agent_model: gpt-5.3-codex-spark

@@ -1,0 +1,94 @@
+schema_version: 1
+id: t01-api-security-design
+title: Map Otpravka option sources and AJAX security contract
+run_id: linked-otpravka-select-fields-20260806
+process: software-feature-development
+status: done
+created_at: '2026-08-06T04:37:22Z'
+updated_at: '2026-08-06T04:43:34Z'
+objective: Using local sources only, determine the API/source-of-truth for OPS, shipment categories, and shipment types; define secure com_ajax request/response contract for linked Joomla Form fields.
+platform: joomla
+selected_specializations:
+  - specialization.joomla-fullstack
+order: 1
+dependencies:
+  blocked_by:
+    []
+  blocks:
+    []
+iterations:
+  []
+result:
+  status: done
+  summary: Collected worker run output from codex-exec
+  artifacts:
+    - .pf/artifacts/worker-api-security-design-20260806.md
+execution_mode:
+  kind: planning_only
+  code_changes_allowed: false
+  artifact_changes_allowed: true
+  requires_review: true
+context_artifacts:
+  -
+    path: .pf/artifacts/otpravka-api-knowledge-package-connection-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/joomshopping-shipping-price-form-investigation.md
+    role: input
+    required: true
+    mutable_by_worker: false
+workspace_access:
+  knowledge_resources:
+    - 'docs.api.otpravka-pochta:root'
+    - 'docs.joomla-toolkit:root'
+  templates:
+    []
+  tools:
+    []
+  mcp:
+    - phpstorm
+    - serena
+allowed_files:
+  - .pf/artifacts/worker-api-security-design-20260806.md
+allowed_read_files:
+  - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php
+  - plg_system_wt_otpravkapochtaru/src/Extension/WtOtpravkapochtaru.php
+ownership:
+  owner_id: shell-worker-api-security
+  owner_label: worker-shell-worker-api-security
+  role: developer
+  writer: true
+  owned_files:
+    - .pf/artifacts/worker-api-security-design-20260806.md
+  owned_globs:
+    []
+non_overlap:
+  policy: block_on_write_overlap
+  active_parallel_tasks:
+    []
+  current_write_scope:
+    - .pf/artifacts/worker-api-security-design-20260806.md
+  rule: Do not edit files owned by active parallel tasks.
+required_outputs:
+  -
+    id: api_source_map
+    type: unspecified
+    path: .pf/artifacts/worker-api-security-design-20260806.md
+    required: true
+  -
+    id: ajax_security_contract
+    type: unspecified
+    path: .pf/artifacts/worker-api-security-design-20260806.md
+    required: true
+agent_reasoning_effort: high
+expected_report:
+  language: ru
+  artifact: .pf/artifacts/worker-api-security-design-20260806.md
+  format: concise_markdown
+  include:
+    - api_source_map
+    - ajax_security_contract
+agent_model: gpt-5.3-codex-spark

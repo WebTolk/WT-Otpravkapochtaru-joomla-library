@@ -35,7 +35,7 @@ return new class () implements ServiceProviderInterface {
                 $dispatcher = $container->get(DispatcherInterface::class);
                 $plugin     = new WtOtpravkapochtaru(
                     $dispatcher,
-                    (array) PluginHelper::getPlugin('system', 'wt_otpravkapochtaru')
+                    (array) PluginHelper::getPlugin('system', 'wtotpravkapochtaru')
                 );
                 $plugin->setApplication(Factory::getApplication());
 

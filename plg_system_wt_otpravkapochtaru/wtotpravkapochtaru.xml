@@ -1,21 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <extension type="plugin" group="system" method="upgrade">
-    <name>System - WT Otpravkapochtaru</name>
+    <name>System - WT Otpravka.pochta.ru</name>
     <author>Sergey Tolkachyov</author>
     <creationDate>08.07.2026</creationDate>
     <version>3.0.0</version>
     <description>System plugin with settings for the WT Otpravkapochtaru Joomla library.</description>
     <namespace path="src">Webtolk\Plugin\System\WtOtpravkapochtaru</namespace>
     <files>
-        <folder plugin="wt_otpravkapochtaru">services</folder>
-        <folder plugin="wt_otpravkapochtaru">src</folder>
-        <folder>config</folder>
+        <folder plugin="wtotpravkapochtaru">services</folder>
+        <folder plugin="wtotpravkapochtaru">src</folder>
     </files>
+    <media folder="media" destination="plg_system_wtotpravkapochtaru">
+        <filename>joomla.asset.json</filename>
+        <folder>js</folder>
+    </media>
     <languages folder="language">
-        <language tag="en-GB">en-GB/plg_system_wt_otpravkapochtaru.ini</language>
-        <language tag="en-GB">en-GB/plg_system_wt_otpravkapochtaru.sys.ini</language>
-        <language tag="ru-RU">ru-RU/plg_system_wt_otpravkapochtaru.ini</language>
-        <language tag="ru-RU">ru-RU/plg_system_wt_otpravkapochtaru.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_system_wtotpravkapochtaru.ini</language>
+        <language tag="en-GB">en-GB/plg_system_wtotpravkapochtaru.sys.ini</language>
+        <language tag="ru-RU">ru-RU/plg_system_wtotpravkapochtaru.ini</language>
+        <language tag="ru-RU">ru-RU/plg_system_wtotpravkapochtaru.sys.ini</language>
     </languages>
     <config>
         <fields name="params" addfieldprefix="Webtolk\Plugin\System\WtOtpravkapochtaru\Field">
@@ -32,39 +35,39 @@
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_LABEL"
                     description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_DESC"
                 />
-            <field
-                name="access_token"
-                type="text"
-                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_LABEL"
-                description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_DESC"
+                <field
+                    name="AccessToken"
+                    type="text"
+                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_LABEL"
+                    description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCESS_TOKEN_DESC"
                 />
                 <field
-                    name="auth_mode"
+                    name="user_key_or_login_and_password"
                     type="list"
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_LABEL"
                     default="key"
                 >
                     <option value="key">PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_KEY</option>
-                    <option value="login_password">PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_LOGIN_PASSWORD</option>
+                    <option value="login_and_password">PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AUTH_MODE_LOGIN_PASSWORD</option>
                 </field>
                 <field
-                    name="user_key"
+                    name="user_auth_key"
                     type="text"
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_KEY_LABEL"
                     description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_KEY_DESC"
-                    showon="auth_mode:key"
+                    showon="user_key_or_login_and_password:key"
                 />
                 <field
                     name="user_login"
                     type="text"
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_LOGIN_LABEL"
-                    showon="auth_mode:login_password"
+                    showon="user_key_or_login_and_password:login_and_password"
                 />
                 <field
                     name="user_password"
                     type="password"
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_USER_PASSWORD_LABEL"
-                    showon="auth_mode:login_password"
+                    showon="user_key_or_login_and_password:login_and_password"
                 />
                 <field
                     name="tracking_login"
@@ -82,6 +85,28 @@
                     label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_HTTP_TIMEOUT_LABEL"
                     default="60"
                     min="1"
+                />
+                <field
+                    name="linked_test_shipping_point"
+                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
+                    type="opslist"
+                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_LABEL"
+                />
+                <field
+                    name="linked_test_mail_type"
+                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
+                    type="mailtypes"
+                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_MAIL_TYPE_LABEL"
+                    requestfields="{&quot;postoffice_code&quot;:&quot;linked_test_shipping_point&quot;}"
+                    url="index.php?option=com_ajax&amp;plugin=wtotpravkapochtaru&amp;group=system&amp;format=json&amp;action=getMailTypes"
+                />
+                <field
+                    name="linked_test_mail_category"
+                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
+                    type="mailcategories"
+                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_MAIL_CATEGORY_LABEL"
+                    requestfields="{&quot;postoffice_code&quot;:&quot;linked_test_shipping_point&quot;,&quot;mail_type&quot;:&quot;linked_test_mail_type&quot;}"
+                    url="index.php?option=com_ajax&amp;plugin=wtotpravkapochtaru&amp;group=system&amp;format=json&amp;action=getMailCategories"
                 />
             </fieldset>
         </fields>

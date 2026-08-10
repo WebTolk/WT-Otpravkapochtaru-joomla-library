@@ -13,6 +13,7 @@
   "packageJsonPath": "build/package.json",
   "exclude": [
     ".idea/",
+    ".codex/",
     ".packages/",
     ".pf/",
     ".dist/",
@@ -24,8 +25,19 @@
     "build/",
     "build/node_modules/",
     ".gitignore",
+    ".editorconfig",
+    ".gitattributes",
+    ".php-cs-fixer.dist.php",
+    ".phpunit.result.cache",
+    "composer.json",
     "docs/",
+    "tests/",
+    "tools/",
     "LICENSE",
+    "phing.xml",
+    "phpcs.xml",
+    "phpstan.neon",
+    "phpunit.xml",
     "*.md"
   ],
   "replace": {

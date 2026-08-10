@@ -18,7 +18,7 @@
     </languages>
     <files>
         <folder type="library" id="Webtolk/Otpravkapochtaru">lib_webtolk_otpravkapochtaru</folder>
-        <folder type="plugin" id="wt_otpravkapochtaru" group="system">plg_system_wt_otpravkapochtaru</folder>
+        <folder type="plugin" id="wtotpravkapochtaru" group="system">plg_system_wt_otpravkapochtaru</folder>
     </files>
     <updateservers>
         <server type="extension" priority="1" name="WT Otpravkapochtaru">https://web-tolk.ru/component/swjprojects/jupdate?element=lib_wt_otpravkapochtaru</server>

@@ -1,0 +1,1504 @@
+schema_version: 1
+capsule:
+  id: t03-plugin-ajax-endpoints-capsule
+  generated_at: '2026-08-06T05:52:23Z'
+  assignment_id: t03-plugin-ajax-endpoints
+  assignment_path: .pf/assignments/t03-plugin-ajax-endpoints.yaml
+  assignment_checksum: 42f217fe4e49ebb65359f54f5654f55e78894d9bd5b674c93bba0f10b338fb8e
+  snapshot: .pf/contexts/project-context.snapshot.yaml
+  snapshot_checksum: 9546db074cb0ac1a072d8f8ed13e67a8cda5a52d018f60d01c15319cd023a34f
+  immutable: true
+  worker_may_rebuild_context: false
+context_snapshot:
+  id: ctx-20260806-051530-591bab
+  sha256: 'sha256:9546db074cb0ac1a072d8f8ed13e67a8cda5a52d018f60d01c15319cd023a34f'
+  generated_at: '2026-08-06T05:15:26Z'
+  freshness_at_creation: fresh
+project_classification:
+  status: classified
+  project_types:
+    - software.javascript-node
+    - software.php-composer
+  platforms:
+    []
+  tags:
+    - software
+  confidence: high
+  loaded_classifiers:
+    - processforge.official.software-web.classifier
+  matched_rules:
+    -
+      classifier: processforge.official.software-web.classifier
+      rule: processforge.official.rule.composer-marker
+      confidence: high
+      source: software-web.yaml
+    -
+      classifier: processforge.official.software-web.classifier
+      rule: processforge.official.rule.node-marker
+      confidence: high
+      source: software-web.yaml
+  inactive_classifier_hints:
+    []
+resolved_resources:
+  -
+    id: 'docs.api.otpravka-pochta:root'
+    kind: documentation
+    package_id: docs.api.otpravka-pochta
+    requirement: recommended
+    versioning_mode: rolling_index
+    retention_policy: replace_in_place
+    instance_id: 'docs.api.otpravka-pochta:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: rest-api/otpravka-pochta
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:472a304a5043c38dfa16a7bd1d7ddabc7ea60aa26052edab82f692a912bdeb93'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-6-1:root'
+    kind: documentation
+    package_id: docs.joomla-6-1
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-6-1:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-6-1-docs
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:57fe67e370d1f3e721d51716634ac5949aa08a9f5bb34909ea0c0b341a3bc135'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-administrator:root'
+    kind: documentation
+    package_id: docs.joomla-administrator
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-administrator:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-administrator-docs
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:f16dc86ccb4b622565f6b5343ea9cf84351dffdd40248ae09a873a16845e0a39'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core:root'
+    kind: source_tree
+    package_id: docs.joomla-core
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:b7ec6732ee998127f45b6213da618a43a4d4844800cd1e52ebda2201fcc7eb48'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v1-5-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v1-5-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v1-5-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/1.5.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:bc4430ff51b73c4a22898c9d4ce9e33f64de7e99095f936b30db7cf3750db2eb'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v1-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v1-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v1-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/1.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:4e56e62fcce7569252a06e64bf17beb2c360981d33ac6526baded371ea97b66c'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v2-5-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v2-5-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v2-5-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/2.5.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:a6e6ece4b71d82337c70479a5cfeed79339f13f55fbb0a9dd8258ce30127695d'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v3-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v3-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v3-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/3.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:b0b3206ffc20567c7528e77528ce7eacef0c78737328de0db2d7197f13a89560'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v4-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v4-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v4-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/4.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:04799227f5cc5d1dc147b109a6d609a0ea40ee512baccba66b773cccd39de1a5'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v5-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v5-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v5-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/5.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:8991ba301f6b5ea257780c7d38f771bce32b0038ab71bfc2fc22a2d2b1a68b4c'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.branch-v6-x:root'
+    kind: source_tree
+    package_id: docs.joomla-core.branch-v6-x
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-core.branch-v6-x:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/6.x
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:fc93dfa8b14285ad6af92f4425be5f6f99c4fbb002a3623125d4607cac7f1bc2'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-core.v1-0-15:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v1-0-15
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v1-0-15:source-tree@1.0.15'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/1.x/1.0.15
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:38e7abe3468ce3f50b5590a7d41a570ac680e7042c1aee1d1ed0824fda473174'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 1.0.15
+  -
+    id: 'docs.joomla-core.v1-5-26:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v1-5-26
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v1-5-26:source-tree@1.5.26'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/1.5.x/1.5.26
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:8bb9020a86fc0d207e4f0c56bfecb5333b8f574c10f9b196e4d01588d590f2ef'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 1.5.26
+  -
+    id: 'docs.joomla-core.v2-5-28:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v2-5-28
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v2-5-28:source-tree@2.5.28'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/2.5.x/2.5.28
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:bf8cf4baa56daa7ea2360244aeb99a974cc3c9f7e98a0c1cddd614460133866e'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 2.5.28
+  -
+    id: 'docs.joomla-core.v3-10-12:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v3-10-12
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v3-10-12:source-tree@3.10.12'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/3.x/3.10.12
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:49771d40d07f5e0399130b7d0dd662b987856928762daec0bc0446f4a26b20be'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 3.10.12
+  -
+    id: 'docs.joomla-core.v4-4-14:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v4-4-14
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v4-4-14:source-tree@4.4.14'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/4.x/4.4.14
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:d43e7a641b6b56726d5a83381b3e945834147f62df24b5b1be7950d1412397b5'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 4.4.14
+  -
+    id: 'docs.joomla-core.v5-4-5:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v5-4-5
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v5-4-5:source-tree@5.4.5'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/5.x/5.4.5
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:78e6306e106ecb5773e42e2b7c90ef7f51150a7a7f976f49fdd28027148c04f4'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 5.4.5
+  -
+    id: 'docs.joomla-core.v5-4-6:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v5-4-6
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v5-4-6:source-tree@5.4.6'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/5.x/5.4.6
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:921bd22aee5763fb46ee2783f2a40c71a308113d2dc20df3b1953772470fb616'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 5.4.6
+  -
+    id: 'docs.joomla-core.v5-4-7:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v5-4-7
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v5-4-7:source-tree@5.4.7'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/5.x/5.4.7
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:1a4eb592f8d1ca5792a3020f4f61689a3fc6f6005c1040d6398b7b180fb4e01d'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 5.4.7
+  -
+    id: 'docs.joomla-core.v6-0-4:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v6-0-4
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v6-0-4:source-tree@6.0.4'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/6.x/6.0.4
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:e0fdfbc29ab63d8ce8ea49c5a95f0259c436a6b64dd0ccd505192435bdb96d9e'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 6.0.4
+  -
+    id: 'docs.joomla-core.v6-1-0:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v6-1-0
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v6-1-0:source-tree@6.1.0'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/6.x/6.1.0
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:1b794d84575d083ba65095878f87be11d5c7062e88adbb608896cf120aa2014a'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 6.1.0
+  -
+    id: 'docs.joomla-core.v6-1-1:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v6-1-1
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v6-1-1:source-tree@6.1.1'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/6.x/6.1.1
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:7bb01a457733641baaea2e3056716926eee909bd1fd2840e02b1c92313bd5c52'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 6.1.1
+  -
+    id: 'docs.joomla-core.v6-1-2:source-tree'
+    kind: source_tree
+    package_id: docs.joomla-core.v6-1-2
+    requirement: required
+    versioning_mode: multi_version
+    retention_policy: keep_versions
+    instance_id: 'docs.joomla-core.v6-1-2:source-tree@6.1.2'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/Joomla-core/6.x/6.1.2
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:69c0932d319ef91def38cc38ac480574894a88aef02b425a52194189463fe62f'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+    resolved_version: 6.1.2
+  -
+    id: 'docs.joomla-development-articles:root'
+    kind: documentation
+    package_id: docs.joomla-development-articles
+    requirement: recommended
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-development-articles:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/joomla-development-articles
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:13c2a11cf7ab168757de8481d00d8ee640821fa5dfa0266906c1ab8fc4f11ab4'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-extensions:root'
+    kind: documentation
+    package_id: docs.joomla-extensions
+    requirement: recommended
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-extensions:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/3rd-party-extensions-docs
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:94e7981a5b87176411491e4c344abc7cb7b366e155aa75d885f6f7ad5b4919e8'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'docs.joomla-toolkit:root'
+    kind: documentation
+    package_id: docs.joomla-toolkit
+    requirement: required
+    versioning_mode: single_current
+    retention_policy: replace_in_place
+    instance_id: 'docs.joomla-toolkit:root@current'
+    path_ref:
+      registry: knowledge_roots
+      id: local-docs
+      relative_path: joomla/core/joomla-toolkit
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:c90bb9cc5e51d1e73d704bb524281cb8ed87a7fbbedd9235d76036e3c22e1538'
+    reproducibility:
+      level: exact
+    snapshot_behavior:
+      on_new_version: notify_only
+      on_current_generation_changed: notify_only
+      on_instance_missing: broken
+      reproducibility: exact
+  -
+    id: 'project.wt-otpravkapochtaru-joomla-library:project-profile'
+    kind: note_collection
+    package_id: project.wt-otpravkapochtaru-joomla-library
+    requirement: recommended
+    versioning_mode: rolling_index
+    retention_policy: replace_in_place
+    instance_id: 'project.wt-otpravkapochtaru-joomla-library:project-profile@current'
+    path_ref:
+      package: project.wt-otpravkapochtaru-joomla-library
+      relative_path: artifacts/project-profile.md
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:7e52fb706229b680f6ff614aec5e5dc33f658652f0e7d2dc6b9f5b4d60239ce6'
+    reproducibility:
+      level: best_effort
+      reason: resource retention policy is replace_in_place
+    snapshot_behavior:
+      on_new_version: mark_stale
+      on_current_generation_changed: mark_stale
+      on_instance_missing: broken
+      reproducibility: best_effort
+  -
+    id: 'project.wt-otpravkapochtaru-joomla-library:project-artifacts'
+    kind: reference
+    package_id: project.wt-otpravkapochtaru-joomla-library
+    requirement: recommended
+    versioning_mode: rolling_index
+    retention_policy: replace_in_place
+    instance_id: 'project.wt-otpravkapochtaru-joomla-library:project-artifacts@current'
+    path_ref:
+      package: project.wt-otpravkapochtaru-joomla-library
+      relative_path: artifacts
+    fingerprint:
+      type: resource_record_sha256
+      value: 'sha256:a77e8c520465948db9d573f2e46947082562c2a9ed5295f624b622a6256b7ca5'
+    reproducibility:
+      level: best_effort
+      reason: resource retention policy is replace_in_place
+    snapshot_behavior:
+      on_new_version: mark_stale
+      on_current_generation_changed: mark_stale
+      on_instance_missing: broken
+      reproducibility: best_effort
+resolved_parameters:
+  {}
+parameter_resolution_summary:
+  status: resolved
+  sources:
+    []
+  conflicts:
+    []
+effective_specializations:
+  -
+    id: specialization.joomla-fullstack
+    source: workplace
+    path: <workplace>/specializations/specialization.joomla-fullstack.yaml
+    matched_bindings:
+      -
+        platforms:
+          - platform.joomla
+        platform_stack_includes:
+          []
+    provides_capabilities:
+      - joomla.extension_packaging
+      - joomla.fullstack_development
+      - joomla.rendered_ui_verification
+      - joomla.runtime_verification
+    sha256: 'sha256:4d7e348a0b8fc0839b3b769e2f6527f2e073e82ac7c7bbe312856baa16c6430c'
+project_override_summary:
+  -
+    kind: knowledge_packages
+    target: docs.api.otpravka-pochta
+    mode: extension
+    reason: Connect Russian Post Otpravka REST API knowledge for linked OPS/category/type field design and AJAX endpoint security planning.
+    path: ""
+    sha256: missing
+    base_sha256: missing
+    effective_fingerprint: 'sha256:c9ffad3933c5314e7456e79f08d88b9a1fbe6bd7aa2b5f256296c3d4143bcae8'
+active_resource_profile:
+  selected_platform:
+    - platform.joomla
+  platform_stack:
+    -
+      id: platform.joomla
+      platform: joomla
+      source: workplace
+      status: available
+      relation: selected
+      required: true
+      inherited_by: null
+      extends:
+        []
+      requires_platforms:
+        []
+  selected_specializations:
+    -
+      id: specialization.joomla-fullstack
+      source: workplace
+      path: <workplace>/specializations/specialization.joomla-fullstack.yaml
+      matched_bindings:
+        -
+          platforms:
+            - platform.joomla
+          platform_stack_includes:
+            []
+      provides_capabilities:
+        - joomla.extension_packaging
+        - joomla.fullstack_development
+        - joomla.rendered_ui_verification
+        - joomla.runtime_verification
+      sha256: 'sha256:4d7e348a0b8fc0839b3b769e2f6527f2e073e82ac7c7bbe312856baa16c6430c'
+  available_knowledge_packages:
+    - docs.api.otpravka-pochta
+    - docs.joomla-6-1
+    - docs.joomla-administrator
+    - docs.joomla-core
+    - docs.joomla-core.branch-v1-5-x
+    - docs.joomla-core.branch-v1-x
+    - docs.joomla-core.branch-v2-5-x
+    - docs.joomla-core.branch-v3-x
+    - docs.joomla-core.branch-v4-x
+    - docs.joomla-core.branch-v5-x
+    - docs.joomla-core.branch-v6-x
+    - docs.joomla-core.v1-0-15
+    - docs.joomla-core.v1-5-26
+    - docs.joomla-core.v2-5-28
+    - docs.joomla-core.v3-10-12
+    - docs.joomla-core.v4-4-14
+    - docs.joomla-core.v5-4-5
+    - docs.joomla-core.v5-4-6
+    - docs.joomla-core.v5-4-7
+    - docs.joomla-core.v6-0-4
+    - docs.joomla-core.v6-1-0
+    - docs.joomla-core.v6-1-1
+    - docs.joomla-core.v6-1-2
+    - docs.joomla-development-articles
+    - docs.joomla-extensions
+    - docs.joomla-toolkit
+    - docs.php
+    - docs.web.accessibility
+    - docs.web.css
+    - docs.web.html
+    - docs.web.javascript
+    - docs.web.performance
+  activated_knowledge_packages:
+    - docs.api.otpravka-pochta
+    - docs.joomla-6-1
+    - docs.joomla-administrator
+    - docs.joomla-core
+    - docs.joomla-core.branch-v1-5-x
+    - docs.joomla-core.branch-v1-x
+    - docs.joomla-core.branch-v2-5-x
+    - docs.joomla-core.branch-v3-x
+    - docs.joomla-core.branch-v4-x
+    - docs.joomla-core.branch-v5-x
+    - docs.joomla-core.branch-v6-x
+    - docs.joomla-core.v1-0-15
+    - docs.joomla-core.v1-5-26
+    - docs.joomla-core.v2-5-28
+    - docs.joomla-core.v3-10-12
+    - docs.joomla-core.v4-4-14
+    - docs.joomla-core.v5-4-5
+    - docs.joomla-core.v5-4-6
+    - docs.joomla-core.v5-4-7
+    - docs.joomla-core.v6-0-4
+    - docs.joomla-core.v6-1-0
+    - docs.joomla-core.v6-1-1
+    - docs.joomla-core.v6-1-2
+    - docs.joomla-development-articles
+    - docs.joomla-extensions
+    - docs.joomla-toolkit
+    - docs.php
+    - docs.web.accessibility
+    - docs.web.css
+    - docs.web.html
+    - docs.web.javascript
+    - docs.web.performance
+  excluded_knowledge_packages:
+    - docs.joomla
+  available_tools:
+    - frontend-eslint
+    - frontend-stylelint
+    - ide-phpstorm
+    - php-phing-packager
+    - php-php-cs-fixer
+    - php-phpcs
+    - php-phpstan
+    - php-phpunit
+    - serena-cli
+  activated_tools:
+    - frontend-eslint
+    - frontend-stylelint
+    - ide-phpstorm
+    - php-phing-packager
+    - php-php-cs-fixer
+    - php-phpcs
+    - php-phpstan
+    - php-phpunit
+    - serena-cli
+  excluded_tools:
+    []
+  available_mcp:
+    - chrome-devtools
+    - phpstorm
+    - playwright
+    - serena
+  activated_mcp:
+    - chrome-devtools
+    - phpstorm
+    - playwright
+    - serena
+  excluded_mcp:
+    []
+  activated_templates:
+    - joomla.installer-script
+    - joomla.module-info-field
+    - joomla.plugin-info-field
+    - php.class-doc-block
+  excluded_templates:
+    []
+  provided_capabilities:
+    - architecture
+    - browser_automation
+    - browser_devtools_diagnostics
+    - frontend_lint
+    - frontend_style_lint
+    - ide_php_project_analysis
+    - ide_php_repository_analysis
+    - investigation
+    - joomla.extension_packaging
+    - joomla.fullstack_development
+    - joomla.rendered_ui_verification
+    - joomla.runtime_verification
+    - php_code_style_check
+    - php_code_style_fix
+    - php_static_analysis
+    - php_unit_testing
+    - php_zip_packaging
+    - process_coordination
+    - reporting
+    - repository_read
+    - repository_symbol_analysis
+    - repository_write
+    - review
+    - test_execution
+    - test_planning
+    - test_running
+  applied_project_overrides:
+    -
+      kind: knowledge_packages
+      target: docs.api.otpravka-pochta
+      mode: extension
+      reason: Connect Russian Post Otpravka REST API knowledge for linked OPS/category/type field design and AJAX endpoint security planning.
+      path: ""
+      sha256: missing
+      base_sha256: missing
+      effective_fingerprint: 'sha256:c9ffad3933c5314e7456e79f08d88b9a1fbe6bd7aa2b5f256296c3d4143bcae8'
+  effective_resources:
+    -
+      kind: knowledge_packages
+      id: docs.api.otpravka-pochta
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-6-1
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-administrator
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v1-5-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v1-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v2-5-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v3-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v4-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v5-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.branch-v6-x
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v1-0-15
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v1-5-26
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v2-5-28
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v3-10-12
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v4-4-14
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v5-4-5
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v5-4-6
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v5-4-7
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v6-0-4
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v6-1-0
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v6-1-1
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-core.v6-1-2
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-development-articles
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-extensions
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.joomla-toolkit
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.php
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.web.accessibility
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.web.css
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.web.html
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.web.javascript
+      status: activated
+    -
+      kind: knowledge_packages
+      id: docs.web.performance
+      status: activated
+    -
+      kind: tools
+      id: frontend-eslint
+      status: activated
+    -
+      kind: tools
+      id: frontend-stylelint
+      status: activated
+    -
+      kind: tools
+      id: ide-phpstorm
+      status: activated
+    -
+      kind: tools
+      id: php-phing-packager
+      status: activated
+    -
+      kind: tools
+      id: php-php-cs-fixer
+      status: activated
+    -
+      kind: tools
+      id: php-phpcs
+      status: activated
+    -
+      kind: tools
+      id: php-phpstan
+      status: activated
+    -
+      kind: tools
+      id: php-phpunit
+      status: activated
+    -
+      kind: tools
+      id: serena-cli
+      status: activated
+    -
+      kind: mcp
+      id: chrome-devtools
+      status: activated
+    -
+      kind: mcp
+      id: phpstorm
+      status: activated
+    -
+      kind: mcp
+      id: playwright
+      status: activated
+    -
+      kind: mcp
+      id: serena
+      status: activated
+    -
+      kind: templates
+      id: joomla.installer-script
+      status: activated
+    -
+      kind: templates
+      id: joomla.module-info-field
+      status: activated
+    -
+      kind: templates
+      id: joomla.plugin-info-field
+      status: activated
+    -
+      kind: templates
+      id: php.class-doc-block
+      status: activated
+  effective_fingerprints:
+    knowledge_packages:docs.api.otpravka-pochta: 'sha256:c9ffad3933c5314e7456e79f08d88b9a1fbe6bd7aa2b5f256296c3d4143bcae8'
+  resolution_reasons:
+    -
+      source: processforge.official.software-development
+      reason: active official process pack knowledge packages merged
+    -
+      source: specialization.joomla-fullstack
+      reason: selected specialization resources merged
+    -
+      source: project_override
+      target: docs.api.otpravka-pochta
+      reason: knowledge_packages extension applied
+  conflicts:
+    []
+execution_route_summary:
+  process: ""
+  stages:
+    []
+  required_capabilities:
+    []
+  capability_requirements:
+    []
+  required_artifacts:
+    []
+  required_evidence:
+    []
+  acceptance_criteria:
+    []
+capability_resolution_summary:
+  satisfied:
+    []
+  unsatisfied:
+    []
+effective_resources:
+  -
+    kind: knowledge_packages
+    id: docs.api.otpravka-pochta
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-6-1
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-administrator
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v1-5-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v1-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v2-5-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v3-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v4-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v5-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.branch-v6-x
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v1-0-15
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v1-5-26
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v2-5-28
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v3-10-12
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v4-4-14
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v5-4-5
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v5-4-6
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v5-4-7
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v6-0-4
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v6-1-0
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v6-1-1
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-core.v6-1-2
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-development-articles
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-extensions
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.joomla-toolkit
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.php
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.web.accessibility
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.web.css
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.web.html
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.web.javascript
+    status: activated
+  -
+    kind: knowledge_packages
+    id: docs.web.performance
+    status: activated
+  -
+    kind: tools
+    id: frontend-eslint
+    status: activated
+  -
+    kind: tools
+    id: frontend-stylelint
+    status: activated
+  -
+    kind: tools
+    id: ide-phpstorm
+    status: activated
+  -
+    kind: tools
+    id: php-phing-packager
+    status: activated
+  -
+    kind: tools
+    id: php-php-cs-fixer
+    status: activated
+  -
+    kind: tools
+    id: php-phpcs
+    status: activated
+  -
+    kind: tools
+    id: php-phpstan
+    status: activated
+  -
+    kind: tools
+    id: php-phpunit
+    status: activated
+  -
+    kind: tools
+    id: serena-cli
+    status: activated
+  -
+    kind: mcp
+    id: chrome-devtools
+    status: activated
+  -
+    kind: mcp
+    id: phpstorm
+    status: activated
+  -
+    kind: mcp
+    id: playwright
+    status: activated
+  -
+    kind: mcp
+    id: serena
+    status: activated
+  -
+    kind: templates
+    id: joomla.installer-script
+    status: activated
+  -
+    kind: templates
+    id: joomla.module-info-field
+    status: activated
+  -
+    kind: templates
+    id: joomla.plugin-info-field
+    status: activated
+  -
+    kind: templates
+    id: php.class-doc-block
+    status: activated
+assignment:
+  id: t03-plugin-ajax-endpoints
+  path: .pf/assignments/t03-plugin-ajax-endpoints.yaml
+  status: open
+  objective: Implement system plugin com_ajax handlers that return JSON options for shipment types by OPS and shipment categories by OPS/type, with strict input validation, token/security checks, Joomla API data handling, and no secret leakage.
+  execution_mode:
+    kind: implementation
+    code_changes_allowed: true
+    artifact_changes_allowed: true
+    requires_review: true
+context:
+  snapshot_id: ctx-20260806-051530-591bab
+  freshness: fresh
+  required_sources:
+    - .pf/contexts/project-context.snapshot.yaml
+    - .pf/assignments/t03-plugin-ajax-endpoints.yaml
+  context_artifacts:
+    -
+      path: .pf/artifacts/linked-select-fields-orchestration-plan-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+    -
+      path: .pf/artifacts/worker-api-security-design-v2-review-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+    -
+      path: .pf/artifacts/category-type-source-contract-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+    -
+      path: .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+    -
+      path: .pf/artifacts/worker-task-briefs-linked-select-fields-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+    -
+      path: .pf/artifacts/worker-orchestration-rules-20260806.md
+      role: input
+      required: true
+      mutable_by_worker: false
+  selected_specializations:
+    - specialization.joomla-fullstack
+  applied_project_overrides:
+    - docs.api.otpravka-pochta
+  parameter_sources:
+    []
+scope:
+  allowed_files:
+    - plg_system_wt_otpravkapochtaru/src/Extension/*
+    - plg_system_wt_otpravkapochtaru/src/Service/*
+    - plg_system_wt_otpravkapochtaru/language/*/*.ini
+    - tests/Unit/PluginAjax/*
+  allowed_read_files:
+    - .pf/artifacts/linked-select-fields-orchestration-plan-20260806.md
+    - .pf/artifacts/category-type-source-contract-20260806.md
+    - .pf/artifacts/legacy-linked-select-fields-investigation-20260806.md
+    - .pf/artifacts/worker-api-security-design-v2-review-20260806.md
+    - .pf/artifacts/worker-task-briefs-linked-select-fields-20260806.md
+    - .pf/artifacts/worker-orchestration-rules-20260806.md
+    - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+    - lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php
+    - plg_system_wt_otpravkapochtaru/src/Extension/WtOtpravkapochtaru.php
+    - plg_system_wt_otpravkapochtaru/services/provider.php
+    - plg_system_wt_otpravkapochtaru/language/en-GB/plg_system_wt_otpravkapochtaru.ini
+    - plg_system_wt_otpravkapochtaru/language/ru-RU/plg_system_wt_otpravkapochtaru.ini
+  forbidden_files:
+    - lib_webtolk_otpravkapochtaru/src/Fields/*
+    - plg_system_wt_otpravkapochtaru/media/*
+  ownership:
+    owner_id: shell-worker-plugin-ajax
+    owner_label: worker-shell-worker-plugin-ajax
+    role: developer
+    writer: true
+    owned_files:
+      - plg_system_wt_otpravkapochtaru/src/Extension/*
+      - plg_system_wt_otpravkapochtaru/src/Service/*
+      - plg_system_wt_otpravkapochtaru/language/*/*.ini
+      - tests/Unit/PluginAjax/*
+    owned_globs:
+      []
+  non_overlap:
+    policy: block_on_write_overlap
+    active_parallel_tasks:
+      []
+    current_write_scope:
+      - plg_system_wt_otpravkapochtaru/src/Extension/*
+      - plg_system_wt_otpravkapochtaru/src/Service/*
+      - plg_system_wt_otpravkapochtaru/language/*/*.ini
+      - tests/Unit/PluginAjax/*
+    rule: Do not edit files owned by active parallel tasks.
+    overlap_check:
+      status: pass
+      conflicts:
+        []
+outputs:
+  required_outputs:
+    -
+      id: changed_files
+      type: unspecified
+      path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+      required: true
+    -
+      id: security_notes
+      type: unspecified
+      path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+      required: true
+    -
+      id: unit_tests
+      type: unspecified
+      path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+      required: true
+  expected_report:
+    language: ru
+    artifact: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+    format: concise_markdown
+    include:
+      - changed_files
+      - security_notes
+      - unit_tests
+workspace_access:
+  knowledge_resources:
+    - 'docs.api.otpravka-pochta:root'
+    - 'docs.joomla-toolkit:root'
+  templates:
+    []
+  tools:
+    - php-phpunit
+  mcp:
+    - phpstorm
+    - serena
+agent_model: gpt-5.3-codex-spark
+agent_reasoning_effort: high
+subagent_policy:
+  allow: false
+  max_subagents: 0
+  allowed_roles:
+    []
+  require_reports: false
+  reports_dir: ""
+workplace_coordination:
+  effective_mode: simple
+  director_required: false
+  director_available_at_workplace: false
+capabilities:
+  required:
+    []
+  optional:
+    []
+telemetry:
+  events: .pf/runtime/telemetry/t03-plugin-ajax-endpoints.ndjson
+  event_correlation_id: assignment-t03-plugin-ajax-endpoints
+required_sources:
+  - .pf/contexts/project-context.snapshot.yaml
+  - .pf/assignments/t03-plugin-ajax-endpoints.yaml
+allowed_files:
+  - plg_system_wt_otpravkapochtaru/src/Extension/*
+  - plg_system_wt_otpravkapochtaru/src/Service/*
+  - plg_system_wt_otpravkapochtaru/language/*/*.ini
+  - tests/Unit/PluginAjax/*
+forbidden_files:
+  - lib_webtolk_otpravkapochtaru/src/Fields/*
+  - plg_system_wt_otpravkapochtaru/media/*
+required_outputs:
+  -
+    id: changed_files
+    type: unspecified
+    path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+    required: true
+  -
+    id: security_notes
+    type: unspecified
+    path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+    required: true
+  -
+    id: unit_tests
+    type: unspecified
+    path: .pf/artifacts/worker-plugin-ajax-report-20260806.md
+    required: true
+required_capabilities:
+  []
+optional_capabilities:
+  []
+selected_sources:
+  []
+event_correlation_id: assignment-t03-plugin-ajax-endpoints

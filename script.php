@@ -161,7 +161,7 @@ return new class () implements ServiceProviderInterface {
                 public function postflight(string $type, InstallerAdapter $adapter): bool
                 {
                     if (in_array($type, ['install', 'discover_install', 'update'], true)) {
-                        $this->enablePlugin('wt_otpravkapochtaru', 'system');
+                        $this->enablePlugin('wtotpravkapochtaru', 'system');
                     }
 
                     $html = $this->renderInstallationMessage($type, (string) $adapter->getManifest()->version);

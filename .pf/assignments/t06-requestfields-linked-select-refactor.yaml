@@ -1,0 +1,136 @@
+schema_version: 1
+id: t06-requestfields-linked-select-refactor
+title: Refactor linked select dependencies to requestfields mapping
+run_id: requestfields-linked-select-refactor-20260806
+process: software-feature-development
+status: done
+created_at: '2026-08-06T14:15:00Z'
+updated_at: '2026-08-06T14:53:13Z'
+objective: Replace the watchfield/parentfield runtime contract for linked select dependencies with a generic requestfields mapping where JSON keys are AJAX request parameter names and JSON values are Joomla Form field names; preserve the current OPS -> type -> category behavior and support third-level cascades through change dispatch after redraw.
+platform: joomla
+selected_specializations:
+  - specialization.joomla-fullstack
+order: 6
+dependencies:
+  blocked_by:
+    []
+  blocks:
+    []
+execution_mode:
+  kind: implementation
+  code_changes_allowed: true
+  artifact_changes_allowed: true
+  requires_review: true
+context_artifacts:
+  -
+    path: .pf/artifacts/requestfields-linked-select-refactor-plan-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/worker-orchestration-rules-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/joomla-local-plugin-element-migration-and-linked-fields-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+  -
+    path: .pf/artifacts/category-type-source-contract-20260806.md
+    role: input
+    required: true
+    mutable_by_worker: false
+workspace_access:
+  knowledge_resources:
+    - 'docs.joomla-6-1:root'
+    - 'docs.joomla-toolkit:root'
+    - 'docs.api.otpravka-pochta:root'
+  templates:
+    []
+  tools:
+    - php-phpunit
+    - php-phing-packager
+  mcp:
+    - phpstorm
+    - serena
+allowed_files:
+  - lib_webtolk_otpravkapochtaru/src/Fields/LinkedSelectField.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php
+  - plg_system_wt_otpravkapochtaru/media/js/linked-select-fields.js
+  - plg_system_wt_otpravkapochtaru/media/joomla.asset.json
+  - tests/Unit/Fields/*
+  - .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+allowed_read_files:
+  - .pf/AGENTS.md
+  - .pf/process-forge.yaml
+  - .pf/contexts/project-context.snapshot.md
+  - .pf/artifacts/requestfields-linked-select-refactor-plan-20260806.md
+  - .pf/artifacts/worker-orchestration-rules-20260806.md
+  - .pf/artifacts/joomla-local-plugin-element-migration-and-linked-fields-20260806.md
+  - .pf/artifacts/category-type-source-contract-20260806.md
+  - lib_webtolk_otpravkapochtaru/src/Fields/LinkedSelectField.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php
+  - lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php
+  - plg_system_wt_otpravkapochtaru/media/js/linked-select-fields.js
+  - plg_system_wt_otpravkapochtaru/media/joomla.asset.json
+  - tests/Unit/Fields/*
+forbidden_files:
+  - plg_system_wt_otpravkapochtaru/src/Extension/*
+  - plg_system_wt_otpravkapochtaru/src/Service/*
+  - lib_webtolk_otpravkapochtaru/src/Service/*
+  - pkg_lib_wt_otpravkapochtaru.xml
+ownership:
+  owner_id: shell-worker-requestfields-linked-select
+  owner_label: worker-shell-worker-requestfields-linked-select
+  role: developer
+  writer: true
+  owned_files:
+    - lib_webtolk_otpravkapochtaru/src/Fields/LinkedSelectField.php
+    - lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php
+    - lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php
+    - plg_system_wt_otpravkapochtaru/media/js/linked-select-fields.js
+    - plg_system_wt_otpravkapochtaru/media/joomla.asset.json
+    - tests/Unit/Fields/*
+    - .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+  owned_globs:
+    []
+non_overlap:
+  policy: block_on_write_overlap
+  active_parallel_tasks:
+    []
+  current_write_scope:
+    - lib_webtolk_otpravkapochtaru/src/Fields/LinkedSelectField.php
+    - lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php
+    - lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php
+    - plg_system_wt_otpravkapochtaru/media/js/linked-select-fields.js
+    - plg_system_wt_otpravkapochtaru/media/joomla.asset.json
+    - tests/Unit/Fields/*
+    - .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+  rule: Do not edit files owned by active parallel tasks.
+required_outputs:
+  -
+    id: worker_report
+    type: markdown
+    path: .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+    required: true
+agent_reasoning_effort: high
+agent_model: gpt-5.3-codex-spark
+expected_report:
+  language: ru
+  artifact: .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+  format: concise_markdown
+  include:
+    - phpstorm_mcp_evidence
+    - changed_files
+    - implementation_notes
+    - tests_checks
+    - residual_risks
+result:
+  status: done
+  summary: Collected worker run output from codex-exec-workspace-write; accepted only after orchestrator fixes and local checks.
+  artifacts:
+    - .pf/artifacts/worker-requestfields-linked-select-report-20260806.md
+    - .pf/artifacts/worker-requestfields-linked-select-review-20260806.md

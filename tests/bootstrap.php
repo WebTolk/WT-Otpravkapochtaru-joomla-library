@@ -5,7 +5,7 @@ defined('JPATH_SITE') || define('JPATH_SITE', 'D:/OSPanel/home/joomla.local/publ
 
 spl_autoload_register(
     static function (string $class): void {
-        $joomlaRoot = 'D:/.agents/docs/Joomla-core/6.x/6.1.0';
+        $joomlaRoot = 'D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.0';
         $prefixes   = [
             'Webtolk\\Otpravkapochtaru\\'                   => __DIR__ . '/../lib_webtolk_otpravkapochtaru/src/',
             'Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\' => __DIR__ . '/../plg_system_wt_otpravkapochtaru/src/',

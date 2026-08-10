@@ -13,6 +13,8 @@ project:
   id: wt-otpravkapochtaru-joomla-library
   name: WT-Otpravkapochtaru-joomla-library
   type: joomla-extension
+specializations:
+  - specialization.joomla-fullstack
 flow:
   root: .pf
   manifest: .pf/process-forge.yaml
