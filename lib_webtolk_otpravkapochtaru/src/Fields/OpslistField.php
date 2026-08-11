@@ -19,9 +19,7 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
-use Webtolk\Otpravkapochtaru\Exception\ConfigurationException;
-use Webtolk\Otpravkapochtaru\Exception\TransportException;
+use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 final class OpslistField extends ListField
@@ -52,11 +50,17 @@ final class OpslistField extends ListField
         try {
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
             $shippingPoints = $apiClient->getShippingPoints();
-        } catch (ConfigurationException $e) {
+        } catch (\RuntimeException $e) {
+            if ($this->isConfigurationError($e)) {
+                return [
+                    HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_CONFIG_MISSING') . ' - ' . htmlspecialchars((string) $e->getMessage(), ENT_QUOTES, 'UTF-8')),
+                ];
+            }
+
             return [
-                HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_CONFIG_MISSING') . ' - ' . htmlspecialchars((string) $e->getMessage(), ENT_QUOTES, 'UTF-8')),
+                HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_API_ERROR') . ' - ' . htmlspecialchars((string) $e->getMessage(), ENT_QUOTES, 'UTF-8')),
             ];
-        } catch (TransportException | \Exception $e) {
+        } catch (\Throwable $e) {
             return [
                 HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_API_ERROR') . ' - ' . htmlspecialchars((string) $e->getMessage(), ENT_QUOTES, 'UTF-8')),
             ];
@@ -93,5 +97,24 @@ final class OpslistField extends ListField
         }
 
         return $options;
+    }
+
+    /**
+     * Determine whether the exception is caused by configuration or plugin availability issues.
+     *
+     * @param   \Throwable  $exception  Thrown exception.
+     *
+     * @return  bool
+     *
+     * @since   3.0.0
+     */
+    private function isConfigurationError(\Throwable $exception): bool
+    {
+        $message = strtoupper((string) $exception->getMessage());
+
+        return str_contains($message, 'REQUIRED CONFIGURATION VALUE')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU IS DISABLED')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU CONFIGURATION IS EMPTY')
+            || str_contains($message, 'TRACKING CREDENTIALS ARE NOT CONFIGURED');
     }
 }

@@ -4,31 +4,23 @@
 
 ## Начало работы
 
-- [Корневой README](../README.md) — установка, настройка и законченный быстрый старт с нормализацией и расчётом доставки.
-- [Пользовательская документация Joomla](joomla-user-guide.md) — параметры системного плагина и проверка подключения.
-- [Техническая документация](developer-api.md) — архитектура, конфигурация, формы данных, исключения, лимиты и безопасность.
+- [Корневой README](../README.md) - установка, настройка и быстрый старт.
+- [Пользовательская документация Joomla](joomla-user-guide.md) - параметры системного плагина и проверка подключения.
+- [Техническая документация](developer-api.md) - исторический developer manual, который требует отдельной ревизии после перехода на thin wrapper.
+- [Thin wrapper architecture](thin-wrapper-architecture.md) - актуальный контракт сборки Joomla-обертки и upstream SDK.
 
-## Публичный интерфейс
+## Публичный интерфейс 3.0
 
-- [Карта всех методов фасада](facade-method-reference.md).
-- [Аккаунт и настройки](api/account-and-configuration.md).
-- [Нормализация и тариф](api/normalization-and-tariffs.md).
-- [Заказы и получатели](api/orders.md).
-- [Партии и документы](api/batches-and-documents.md).
-- [Возвраты](api/returns.md).
-- [Отделения и справочники](api/post-offices-and-dictionaries.md).
-- [SOAP-отслеживание](api/tracking.md).
+- Основная точка входа: `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
+- Настройки хранятся в системном плагине `wtotpravkapochtaru`.
+- Joomla Form fields и web assets находятся в библиотеке.
+- Низкоуровневые классы старого форка больше не являются публичным API пакета; используйте фасад и upstream SDK.
 
-## Дополнительные классы
+## Проверки
 
-- [Сущности данных](entities-reference.md) — все публичные `fromArray()` и `toArray()`, обязательные поля и значения по умолчанию.
-- [Низкоуровневый интерфейс](low-level-api.md) — `CredentialsProvider`, `Request`, `SoapRequest`, `TrackingEntity` и `CountryDictionary`.
+- Contract checks: `tests/Unit/Architecture/ThinWrapperContractTest.php`.
+- Coverage сейчас статический: Composer requirements, installer SOAP policy, отсутствие удаленных namespace references в активных docs/runtime и smoke-check нового `dist/*.zip`, если он собран.
 
-## Реальные ответы
+## Исторические материалы
 
-- [Наблюдаемые схемы ответов Otpravka REST API](api-schemas/otpravka/README.md).
-- [Машиночитаемый индекс контрактов](api-schemas/otpravka/index.json).
-- [Обезличенные примеры](api-schemas/otpravka/examples/).
-- [JSON Schema Draft 2020-12](api-schemas/otpravka/schemas/).
-
-Схемы построены по реальному прогону маршрута `410000 Саратов` → `685000 Магадан`. Они показывают наблюдаемую форму ответа, но не заменяют полную спецификацию внешнего API.
+Файлы в `docs/api/*`, `docs/entities-reference.md` и `docs/low-level-api.md` пока могут содержать примеры старого fork API. Перед публикацией полного developer manual их нужно обновить отдельной задачей.

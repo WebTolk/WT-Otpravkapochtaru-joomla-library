@@ -1,0 +1,29 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-migration-20260811
+task_id: t18-current-library-inventory
+project_root: .
+mode: shell-worker
+product_code_policy: read_only
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts
+allowed_runtime_writes:
+  - .pf/runtime
+forbidden_product_writes:
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - script.php
+  - composer.json
+  - phing.xml
+  - .github
+  - build
+forbidden_stand_writes:
+  - D:/OSPanel/home/joomla.local/public
+model_policy:
+  worker: gpt-5.3-codex-spark
+notes:
+  - Read current library code and classify files only.
+  - Do not design JoomShopping integration.
+  - Do not require old unreleased 3.0.0 public API compatibility.
+  - Write only the requested .pf artifact.

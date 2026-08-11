@@ -1,0 +1,25 @@
+schema_version: 1
+run_id: soap-policy-worker-audit-20260811
+task_id: t32-package-local-smoke
+project_root: .
+mode: shell-worker
+product_code_policy: read_only
+stand_write_policy: install_smoke_allowed
+allowed_public_outputs:
+  - .pf/artifacts/worker-soap-policy-package-local-smoke-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+forbidden_product_writes:
+  - README.md
+  - composer.json
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - phing.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+notes:
+  - Runtime install smoke on joomla.local is allowed.
+  - Do not edit product code.

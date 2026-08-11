@@ -944,3 +944,558 @@
   - after installing 3.0.0, `Webtolk/Pochtaru` count in `#__extensions` was `0`
   - `wtotpravkapochtaru` plugin kept its row and retained legacy params
   - installed `CredentialsProvider` 3.0.0 read the retained legacy params successfully
+
+## 2026-08-11 - Request Class vs Joomla Http Overengineering Review
+
+- agent/role: Codex / Process Forge investigation
+- task: compare `Request` helper methods with Joomla Framework Http/Uri and check whether `buildUri()` is unnecessary
+- files changed:
+  - `.pf/artifacts/request-class-joomla-http-overengineering-review-20260811.md`
+- status: completed
+- product code changed: no
+- evidence:
+  - loaded `.pf/process-forge.yaml`, project context snapshot, session status and recent orchestrator log
+  - inspected `Request` symbols and internal references with Serena
+  - compared against Joomla 6.1.2 local core snapshot for `joomla/http` and `joomla/uri`
+  - confirmed Joomla Http handles transport request creation and string-to-Uri conversion, but does not provide this project's endpoint alias/base-path handling or API-specific response checks
+  - confirmed Joomla Uri query rendering does not match current RFC3986 query semantics
+- conclusion:
+  - `buildUri()` is a separable overengineering point and should be folded into a single request URL builder
+  - JSON encoding, Russian Post response decoding, business-error parsing and filename sanitization should remain in `Request`
+
+## 2026-08-11 - LapayGroup RussianPost Joomla Local Validation Plan
+
+- agent/role: Codex / Process Forge orchestrator
+- task: prepare a shell-worker testing plan for validating `lapaygroup/russianpost` 2.0.0 on `joomla.local`
+- files changed:
+  - `.pf/artifacts/lapaygroup-russianpost-joomla-local-test-plan-20260811.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/plan.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/task-index.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/worker-prompts/t07-lapaygroup-stand-dependency-probe.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/worker-prompts/t08-lapaygroup-joomla-psr-transport-prototype.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/worker-prompts/t09-lapaygroup-runtime-smoke.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/worker-prompts/t10-lapaygroup-data-parity-risk-matrix.md`
+  - `.pf/runs/lapaygroup-russianpost-joomla-local-validation-20260811/worker-prompts/t11-lapaygroup-test-plan-review.md`
+- status: planned
+- product code changed: no
+- worker model policy:
+  - implementation/probe workers: `gpt-5.3-codex-spark`
+  - reviewer worker: `gpt-5.5`, reasoning effort `high`
+- testing target:
+  - upstream SDK: `lapaygroup/russianpost` 2.0.0
+  - PSR-18 client: `Joomla\Http\Http`
+  - PSR-17 factories: Laminas Diactoros factories from Joomla vendor
+  - Symfony HTTP Client: present in Joomla vendor but not the target Joomla-way path
+
+## 2026-08-11 - LapayGroup RussianPost Shell-Worker Validation Run
+
+- agent/role: Codex / Process Forge orchestrator
+- task: launch Process Forge shell-workers for `lapaygroup/russianpost` 2.0.0 validation on `joomla.local`
+- product code changed: no
+- status: completed with reviewer rejection of migration readiness
+- launch corrections:
+  - used `D:\.agents\processforge\tools\codex_exec_worker.py`, not Codex sub-agents
+  - rewrote generated worker prompts, capsules and `workspace-access.json` files without UTF-8 BOM because the PF wrapper and Composer JSON parsing rejected BOM-prefixed files
+- shell-workers:
+  - T07 `t07-lapaygroup-stand-dependency-probe`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-stand-dependency-probe-20260811.md`
+  - T08 `t08-lapaygroup-joomla-psr-transport-prototype`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-joomla-psr-transport-prototype-20260811.md`
+  - T09 `t09-lapaygroup-runtime-smoke`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-runtime-smoke-20260811.md`
+  - T10 `t10-lapaygroup-data-parity-risk-matrix`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-data-parity-risk-matrix-20260811.md`
+  - T11 `t11-lapaygroup-test-plan-review`: `gpt-5.5`, reasoning effort `high`, completed, artifact `.pf/artifacts/reviewer-lapaygroup-test-plan-review-20260811.md`
+- findings:
+  - Joomla-way runtime dependencies exist on `joomla.local`: `Joomla\Http\Http` implements PSR-18, Laminas Diactoros factories and PSR interfaces are available
+  - isolated install of `lapaygroup/russianpost:2.0.0` did not pass because CLI Composer is blocked by missing `openssl`
+  - `LapayGroup\RussianPost\Http\Psr18Transport` was not instantiated because the SDK class is absent on the stand
+  - runtime smoke used the current project facade and all API calls failed at outbound HTTPS connectivity before receiving API data
+  - reviewer result: `rejected`, migration risk classification `needs-more-proof`
+- follow-up:
+  - enable CLI `openssl` or provide verified exact SDK source in scratch
+  - rerun T07/T08/T09 with actual LapayGroup SDK classes and direct outbound HTTPS/proxy access
+  - extend parity matrix for the full public facade before any product-code migration proposal
+
+## 2026-08-11 - LapayGroup Local SDK Recheck Shell-Worker
+
+- agent/role: Codex / Process Forge orchestrator
+- task: rerun SDK inspection using the local release source placed in `.pf/tmp/LapayGroup-RussianPost-2.0.0`
+- product code changed: no
+- shell-worker:
+  - T12 `t12-lapaygroup-local-sdk-inspection`: `gpt-5.3-codex-spark`, completed
+  - artifact `.pf/artifacts/worker-lapaygroup-local-sdk-inspection-20260811.md`
+- result:
+  - local SDK metadata passed: package `lapaygroup/russianpost`, PHP constraint `^8.3`, required extensions `ext-mbstring` and `ext-soap`, PSR-4 `LapayGroup\\RussianPost\\ => src/`
+  - `src/Http/Psr18Transport.php` exists
+  - constructor signature matches the Joomla-way dependency plan:
+    - `ClientInterface $client`
+    - `RequestFactoryInterface $requestFactory`
+    - `StreamFactoryInterface $streamFactory`
+    - `UploadedFileFactoryInterface $uploadedFileFactory`
+  - scratch bootstrap loaded Joomla vendor autoload, registered the local SDK PSR-4 namespace and successfully instantiated `LapayGroup\RussianPost\Http\Psr18Transport`
+  - no constructor adapter is needed for `Joomla\Http\Http` + Laminas Diactoros factories
+- conclusion:
+  - the previous Composer-download blocker no longer blocks local class-level proof when the exact SDK source is present in `.pf/tmp`
+  - remaining proof gaps are live API validation through LapayGroup SDK, extension runtime integration path and packaged classloader parity
+
+## 2026-08-11 - LapayGroup Joomla Core/Vendor Swap Worker Run
+
+- agent/role: Codex / Process Forge orchestrator
+- task: replace/register LapayGroup SDK directly in the `joomla.local` stand core/vendor area and run tests through shell-workers
+- product code changed: no
+- run: `.pf/runs/lapaygroup-joomla-core-swap-20260811`
+- shell-workers:
+  - T13 `t13-lapaygroup-core-swap-stand-snapshot`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-core-swap-stand-snapshot-20260811.md`
+  - T14 `t14-lapaygroup-core-swap-writer`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-core-swap-writer-20260811.md`
+  - T15 `t15-lapaygroup-core-swap-sdk-smoke`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-core-swap-sdk-smoke-20260811.md`
+  - T16 `t16-lapaygroup-core-swap-joomshopping-surface`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/worker-lapaygroup-core-swap-joomshopping-surface-20260811.md`
+  - T17 `t17-lapaygroup-core-swap-review`: `gpt-5.3-codex-spark`, completed, artifact `.pf/artifacts/reviewer-lapaygroup-core-swap-20260811.md`
+- stand changes:
+  - copied LapayGroup SDK source into the Joomla stand vendor tree
+  - patched Joomla stand Composer autoload maps for `LapayGroup\\RussianPost\\`
+  - backed up touched autoload files under `.pf/tmp/lapaygroup-core-swap-backup-20260811`
+  - did not edit installed Webtolk facade files
+- proof:
+  - `LapayGroup\RussianPost\Http\Psr18Transport` autoloads from Joomla vendor without manual scratch mapping
+  - transport instantiates with `Joomla\Http\Http` and Laminas Diactoros factories
+  - plugin params exist and are non-empty; artifacts record only key names and lengths
+  - LapayGroup `OtpravkaApi` and `Calculation` providers instantiate
+- test result:
+  - live read-only calls attempted through LapayGroup SDK all failed at outbound HTTPS connectivity before returning API data
+  - JoomShopping/system plugin install and form metadata checks passed
+  - WebAsset manifest/files exist
+  - browser/admin page rendering remained blocked by unavailable local HTTP endpoint in worker context
+- reviewer verdict:
+  - `needs-more-proof`
+  - classloader/constructor proof: pass
+  - credentials proof: pass
+  - live API proof: needs more proof
+  - JoomShopping form proof: partial pass
+  - package/runtime parity risk: high until live SDK and full facade parity are proven
+- cleanup:
+  - removed accidental untracked LapayGroup SDK files that a worker copied into the repository root
+  - repository product code remained unchanged; current worktree changes are `.pf` artifacts/capsules/runs/logs only
+
+## 2026-08-11 - Thin Wrapper Migration Worker Planning
+
+- agent/role: Codex / Process Forge orchestrator
+- task: plan isolated shell-worker assignments for migrating toward a thin Joomla wrapper around `lapaygroup/russianpost`
+- product code changed: no
+- run: `.pf/runs/lapaygroup-thin-wrapper-migration-20260811`
+- artifact: `.pf/artifacts/lapaygroup-thin-wrapper-migration-worker-plan-20260811.md`
+- architectural boundary:
+  - the library must not contain JoomShopping integration
+  - the library provides generic Joomla Form fields for Russian Post Otpravka entities
+  - old unreleased 3.0.0 public PHP facade compatibility is not preserved
+  - backward compatibility is preserved only for system plugin stored settings/params
+- planned shell-worker tasks:
+  - T18 `t18-current-library-inventory`: classify current project classes/files as keep, remove, replace with LapayGroup SDK, or rewrite as Joomla wrapper
+  - T19 `t19-lapaygroup-sdk-inventory`: inventory local `lapaygroup/russianpost` 2.0.0 source from `.pf/tmp`
+  - T20 `t20-plugin-settings-contract`: define the exact system plugin params compatibility contract
+  - T21 `t21-joomla-fields-contract`: define the generic Joomla Form field contract and asset behavior
+  - T22 `t22-wrapper-package-strategy`: define the thin wrapper/autoload/package/update strategy
+  - T23 `t23-test-gates`: define the minimum complete test and release gates
+  - T24 `t24-plan-review`: review all worker outputs before implementation
+- worker model:
+  - all worker prompts target Process Forge shell-workers, not Codex sub-agents
+  - worker model: `gpt-5.3-codex-spark`
+  - prompts are intentionally read-only planning tasks; no stand or product-code mutation is authorized in this planning step
+- status:
+  - planning artifacts and worker prompts prepared
+  - workers not launched in this step
+
+## 2026-08-11 - WT Max Composer Build Reference
+
+- agent/role: Codex / Process Forge orchestrator
+- task: inspect `WebTolk/WT-Max-Joomla-library` as the build reference for the thin wrapper migration
+- product code changed: no
+- artifact: `.pf/artifacts/wt-max-composer-build-reference-20260811.md`
+- reference findings:
+  - WT Max declares the upstream SDK as a Composer dependency
+  - GitHub Actions runs Composer update during release build
+  - release script derives package metadata from `composer.lock`
+  - release script copies only runtime SDK source into the Joomla library tree
+  - release script generates a package-local SDK autoloader
+  - GitHub release publishes the built ZIP from `dist/*.zip`
+- plan updates:
+  - updated `.pf/runs/lapaygroup-thin-wrapper-migration-20260811/plan.md`
+  - updated `.pf/artifacts/lapaygroup-thin-wrapper-migration-worker-plan-20260811.md`
+  - updated T22 worker prompt to require WT Max-style Composer/GitHub release strategy
+- boundary retained:
+  - no JoomShopping integration in the library
+  - no old unreleased 3.0.0 public facade compatibility
+  - compatibility only for system plugin stored params
+- status:
+  - workers remain not launched after operator stop
+
+## 2026-08-11 - Thin Wrapper Migration Shell-Worker Run
+
+- agent/role: Codex / Process Forge orchestrator
+- task: launch and review isolated Process Forge shell-workers for the LapayGroup thin-wrapper migration plan
+- product code changed: no
+- run: `.pf/runs/lapaygroup-thin-wrapper-migration-20260811`
+- runtime: `.pf/runtime/agent-runs/lapaygroup-thin-wrapper-migration-20260811`
+- capsules:
+  - `.pf/contexts/assignment-capsules/t18-current-library-inventory.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t19-lapaygroup-sdk-inventory.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t20-plugin-settings-contract.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t21-joomla-fields-contract.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t22-wrapper-package-strategy.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t23-test-gates.capsule.yaml`
+  - `.pf/contexts/assignment-capsules/t24-plan-review.capsule.yaml`
+- worker artifacts:
+  - T18 `.pf/artifacts/worker-thin-wrapper-current-inventory-20260811.md`
+  - T19 `.pf/artifacts/worker-thin-wrapper-lapaygroup-inventory-20260811.md`
+  - T20 `.pf/artifacts/worker-thin-wrapper-plugin-settings-contract-20260811.md`
+  - T21 `.pf/artifacts/worker-thin-wrapper-joomla-fields-contract-20260811.md`
+  - T22 `.pf/artifacts/worker-thin-wrapper-package-strategy-20260811.md`
+  - T23 `.pf/artifacts/worker-thin-wrapper-test-gates-20260811.md`
+  - T24 `.pf/artifacts/reviewer-thin-wrapper-migration-plan-20260811.md`
+  - orchestrator review `.pf/artifacts/orchestrator-thin-wrapper-worker-review-20260811.md`
+- result:
+  - T18-T23 completed with artifacts
+  - T24 reviewer verdict: `needs-more-proof`
+  - no JoomShopping library dependency found
+  - no old unreleased public facade compatibility requirement found
+  - plugin settings compatibility remains required
+- main blockers before implementation:
+  - field webasset ownership is still plugin-bound in the plan and must be made library-owned or explicitly justified
+  - `lapaygroup/russianpost` requires PHP `^8.3`, `ext-soap`, and `ext-mbstring`; manifests/installer gates must be verified
+  - extension package version policy must be independent from SDK lock metadata unless operator chooses SDK-coupled versioning
+  - tracking/SOAP scope must be decided
+- operational note:
+  - PowerShell launch scripts left heartbeat files at `starting` because native stderr from Codex CLI triggered PowerShell `NativeCommandError`; artifacts were still produced
+  - first T24 artifact had mojibake and was rerun with ASCII-only output
+
+## 2026-08-11 - Library-Owned Field Assets
+
+- agent/role: Codex / implementation
+- task: move linked-select Joomla Form assets from the system plugin media package to the library media package
+- product code changed: yes
+- artifact: `.pf/artifacts/library-owned-field-assets-20260811.md`
+- changes:
+  - moved `linked-select-fields.js` to `lib_webtolk_otpravkapochtaru/media/js/linked-select-fields.js`
+  - added `lib_webtolk_otpravkapochtaru/media/joomla.asset.json`
+  - added library media install declaration with destination `lib_wt_otpravkapochtaru`
+  - removed plugin media install declaration from `plg_system_wt_otpravkapochtaru/wtotpravkapochtaru.xml`
+  - updated `LinkedSelectField` to use `lib_wt_otpravkapochtaru.linked-select-fields`
+- verification:
+  - PHP lint passed for `LinkedSelectField.php`
+  - JSON/XML parse passed for asset and manifests
+  - package build passed via absolute `phing.xml`
+  - archive `.packages/WT Otpravkapochtaru_3.0.0.zip` contains 41 files and library media asset entries
+  - plugin-owned linked-select media entries were not found in ZIP media inspection
+
+## 2026-08-11 - Connect Software Development Process
+
+- agent/role: Codex / Process Forge context maintenance
+- task: enable and connect the Process Forge software development process for this project
+- product code changed: no
+- artifact: `.pf/artifacts/software-development-process-connected-20260811.md`
+- changes:
+  - activated `processforge.official.software-development` in the linked workplace
+  - updated `.pf/process-forge.yaml` with `process: software-feature-development`
+  - added `software-feature-development` to project `processes`
+  - added `processforge.official.software-development` to project `packages`
+  - refreshed project context snapshot
+- verification:
+  - `project-context-check`: fresh, continue
+  - snapshot `Execution Route`: `software-feature-development`
+  - snapshot `Enabled Processes`: `software-feature-development`
+  - process describe: active, production-ready
+  - process doctor contract-only: passed
+
+## 2026-08-11 - Root Directory Cleanup
+
+- agent/role: Codex / workspace cleanup
+- task: remove accidental root-level SDK directories from the Joomla package repository root
+- product code changed: no
+- removed empty untracked directories:
+  - `Entity`
+  - `Enum`
+  - `Exceptions`
+  - `Http`
+  - `Providers`
+- verification:
+  - `git ls-files Entity Enum Exceptions Http Providers` returned no tracked files
+  - directories contained no files before deletion
+  - all five directories are absent after cleanup
+  - root now contains only expected project/service directories and hidden tooling directories
+
+## 2026-08-11 - Joomla Requirements Verification
+
+- agent/role: Codex / requirements and implementation
+- task: verify Joomla system requirements from local Process Forge docs before raising package PHP requirement
+- product code changed: yes
+- artifact: `.pf/artifacts/joomla-system-requirements-php83-mbstring-20260811.md`
+- local sources checked:
+  - `D:/.agents/docs/joomla/Joomla-context7/2026-02-21-refresh/manual_joomla__overview.md`
+  - `D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.2/administrator/index.php`
+  - `D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.2/installation/src/Model/ChecksModel.php`
+  - `D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.2/libraries/vendor/composer/platform_check.php`
+  - `D:/.agents/docs/joomla/core/Joomla-core/5.x/5.4.5/administrator/index.php`
+  - `D:/.agents/docs/joomla/core/Joomla-core/5.x/5.4.5/libraries/vendor/composer/platform_check.php`
+- changes:
+  - set package PHP requirement to `>=8.3.0`
+  - required `ext-mbstring` and kept `ext-simplexml` in `composer.json`
+  - removed `ext-soap` from package-level Composer requirements
+  - added installer preflight check for required PHP extensions
+  - documented SOAP as optional for tracking-only workflows
+- verification:
+  - PHP lint passed for `script.php`
+  - JSON parse passed for `composer.json` and library `joomla.asset.json`
+  - `git diff --check` passed for touched files
+  - release ZIP build passed; `.packages/WT Otpravkapochtaru_3.0.0.zip`, 41 entries, 62097 bytes
+- residual risk:
+  - `composer validate --no-check-publish` is blocked by local CLI PHP missing `openssl`, before Composer evaluates project metadata
+
+## 2026-08-11 - Release Readiness Worker Audit
+
+- agent/role: Codex / Process Forge orchestrator
+- task: audit and launch narrow shell-workers for release-readiness checks
+- product code changed: no
+- run: `.pf/runs/release-readiness-audit-20260811/`
+- orchestrator review: `.pf/artifacts/orchestrator-release-readiness-worker-review-20260811.md`
+- workers launched:
+  - T25 requirements consistency audit
+  - T26 package archive and manifest audit
+  - T27 Joomla Form field asset boundary audit
+  - T28 optional SOAP runtime-risk audit
+  - T29 release-readiness reviewer
+- execution:
+  - all workers used `gpt-5.3-codex-spark`
+  - all heartbeat files completed with exit code `0`
+  - no product code was changed by workers
+- review outcome:
+  - T25 pass accepted
+  - T27 pass accepted
+  - T26 `needs-fix` rejected as XML parsing false positive; direct archive/XML inspection passes
+  - T28 `needs-fix` narrowed to tracking-only polish; local SOAP-disabled probe proves facade instantiation does not fail
+  - follow-up: add tracking-only guard for missing `ext-soap` before public release polish
+
+## 2026-08-11 12:09 +04:00 - SOAP Composer Requirement And Joomla Installer Warning
+
+- agent/role: Codex / implementation
+- task: apply corrected SOAP policy
+- product code changed: yes
+- changed files:
+  - `composer.json`
+  - `script.php`
+  - `language/en-GB/pkg_lib_wt_otpravkapochtaru.sys.ini`
+  - `language/ru-RU/pkg_lib_wt_otpravkapochtaru.sys.ini`
+  - `README.md`
+- decision:
+  - keep `ext-soap` in Composer requirements for GitHub/Composer builds
+  - keep Joomla installer preflight non-blocking for missing SOAP
+  - show a post-install/post-update warning when SOAP is not loaded because tracking will not work
+- artifact updates:
+  - `.pf/artifacts/joomla-system-requirements-php83-mbstring-20260811.md`
+  - `.pf/artifacts/orchestrator-release-readiness-worker-review-20260811.md`
+- verification:
+  - PHP lint for `script.php` passed
+  - `composer.json` JSON parse passed and includes `ext-soap`
+  - corrected-file `git diff --check` passed
+  - Composer validate remains blocked by local CLI PHP missing `openssl`
+  - release package build passed
+  - archive `.packages/WT Otpravkapochtaru_3.0.0.zip`: 41 entries, 62326 bytes
+  - archive contains updated installer warning hook and localized warning keys
+  - Joomla local install passed with OSPanel PHP 8.3 configured without SOAP
+  - `.pf/tmp/installer_soap_warning_probe.php` showed `warning_present=yes` without SOAP and `warning_present=no` with SOAP
+
+## 2026-08-11 - SOAP Policy Worker Audit Launch
+
+- agent/role: Codex / Process Forge orchestrator
+- task: launch shell-workers for corrected SOAP policy verification
+- product code changed: no
+- run: `.pf/runs/soap-policy-worker-audit-20260811/`
+- model: `gpt-5.3-codex-spark`
+- workers planned:
+  - T30 Composer/GitHub SOAP requirement audit
+  - T31 Joomla installer SOAP warning audit
+  - T32 package ZIP and Joomla local smoke audit
+  - T33 reviewer after T30-T32 reports exist
+- product-code policy:
+  - workers are read-only for product files
+  - T32 may run installer smoke on `joomla.local`
+
+## 2026-08-11 - SOAP Policy Worker Audit Review
+
+- agent/role: Codex / Process Forge orchestrator
+- task: monitor and review SOAP policy shell-workers
+- product code changed: no
+- run: `.pf/runs/soap-policy-worker-audit-20260811/`
+- orchestrator review: `.pf/artifacts/orchestrator-soap-policy-worker-review-20260811.md`
+- worker results:
+  - T30 Composer/GitHub SOAP requirement audit: `pass`
+  - T31 Joomla installer SOAP warning audit: `pass`
+  - T32 package ZIP and Joomla local smoke audit: `pass`
+  - T33 reviewer: `pass`
+- execution notes:
+  - T31 initially timed out before report creation, then passed after scoped relaunch
+  - all final heartbeat files completed with exit code `0`
+  - worker CLI emitted external MCP HTTP 403 noise, but artifacts were produced
+  - T32 installed the package on `joomla.local`, so test stand state changed
+- orchestrator verdict:
+  - corrected SOAP policy passes worker review
+  - Composer/GitHub build requires `ext-soap`
+  - Joomla installer does not block on missing SOAP and warns for tracking
+
+## 2026-08-11 - LapayGroup Thin Wrapper Implementation Worker Assignment
+
+- agent/role: Codex / Process Forge orchestrator
+- task: distribute the main WT Max-style architecture migration to shell-workers
+- product code changed: no by orchestrator
+- run: `.pf/runs/lapaygroup-thin-wrapper-implementation-20260811/`
+- requested model: `gpt-5.3-codex-spark`
+- required worker tooling:
+  - PHPStorm MCP for navigation and file inspections
+  - shell only for Composer/build/Git/Joomla CLI checks
+- wave 1 workers:
+  - T34 build and CI writer; owns `composer.json`, `.gitignore`, `.github/**`, `build/**`
+  - T35 runtime wrapper writer; owns `lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php` and new `src/Joomla/**`, `src/Transport/**`, `src/libraries/**`
+- wave 1 review:
+  - T34 completed with build/CI files
+  - T35 completed but kept dependencies on old fork namespaces under `Configuration`, `Entity`, and `Exception`
+  - orchestrator PHPStorm MCP inspections completed for first-wave PHP files
+  - added T35B corrective runtime cleanup before fork deletion
+- wave 2 workers:
+  - T36 fork prune and manifest writer, after T34/T35B
+  - T37 docs and tests writer, after T34-T36
+- wave 3:
+  - T38 implementation reviewer
+- PHPStorm MCP availability:
+  - `get_file_problems` on `composer.json` responded; current warning is only "Packages are not installed"
+
+## 2026-08-11 15:15 +04:00 - Thin Wrapper Continuation After Interruption
+
+- agent/role: Codex / Process Forge orchestrator recovery
+- task: continue interrupted thin-wrapper implementation flow and monitor shell-worker state
+- product code changed: no runtime product code changed in this continuation; tests, docs, bootstrap, XML whitespace, and release archive were updated
+- worker monitoring:
+  - no active shell-worker PID was present
+  - T34/T34B/T35/T35B/T35D/T36/T36B/T38 were completed
+  - T35C/T37/T37B remained failed with `exit_code: 101`
+  - stale older `starting` heartbeats had no PID and were not treated as active workers
+- changes:
+  - retargeted credentials unit test to `Joomla\CredentialsProvider`
+  - added upstream SDK autoload contract test and facade order payload normalization test
+  - removed stale tests for deleted fork dictionary/entity classes
+  - rewrote stale deep docs pages to the current facade/upstream thin-wrapper boundary
+  - fixed XML trailing blank-line warnings
+- verification:
+  - PHPUnit passed: 14 tests, 54 assertions
+  - PHP lint passed for runtime entry files and updated tests
+  - focused PHPCS passed for updated tests/bootstrap
+  - focused PHP-CS-Fixer dry run passed for updated tests/bootstrap
+  - `git diff --check` passed
+  - rebuilt `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`: 97 entries, 121782 bytes, SHA-256 `0AA36E07B0E2AD2983961EB12F91D8480FE88990940601FC1E236FDDC263E7ED`
+- residual blockers:
+  - Composer validate is still blocked by local CLI PHP missing `openssl`
+  - `package-from-lock` is unavailable because `composer.lock` is absent
+  - no live Joomla reinstall/runtime smoke was run in this continuation pass
+
+## 2026-08-11 16:06 +04:00 - Joomla Local Asset Registry Repair
+
+- agent/role: Codex / local Joomla smoke and ProcessForge recovery
+- task: repair reported `media\lib_wt_otpravkapochtaru\joomla.asset.json` invalid JSON failure on `joomla.local`
+- product code changed: no
+- stand changed: restored `D:\OSPanel\home\joomla.local\public\media\lib_wt_otpravkapochtaru\joomla.asset.json` from the valid repository source file
+- evidence:
+  - source file and restored stand file parse as JSON
+  - source and stand file SHA-256 match: `32D44825B44929CBB238801DC55EF1619FDA1968C3ACB6CA6910B1AE0745DF3E`
+  - `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip` and `.packages/WT Otpravkapochtaru_3.0.0.zip` both contain a valid `lib_webtolk_otpravkapochtaru/media/joomla.asset.json`
+  - browser smoke after administrator login no longer shows `Asset registry file` or `invalid JSON`
+- worker monitoring:
+  - no active `process-forge` / `shell-worker` / `.pf` worker process found, except the one-off diagnostic PowerShell command itself
+- residual notes:
+  - Joomla redirects `extension_id=389` back to the plugin list; earlier snapshot showed direct-access denial for that id
+  - browser console still reports HTTP Cross-Origin-Opener-Policy warnings, unrelated to the asset registry JSON
+  - CLI DB lookup is blocked by local PHP missing `mysqli` and PDO drivers
+- artifact: `.pf/artifacts/joomla-local-asset-registry-repair-20260811.md`
+
+## 2026-08-11 16:28 +04:00 - Joomla Local Account Info Runtime Repair
+
+- agent/role: Codex / local Joomla runtime verification
+- task: diagnose and fix plugin settings `account_info` field showing an API error on `joomla.local`
+- product code changed: yes
+- root cause:
+  - `LapayGroup\RussianPost\Providers\OtpravkaApi::callApi()` reads response bodies with `getContents()`
+  - Joomla HTTP returned PSR-7 body streams positioned at EOF, so the SDK saw empty bodies even when HTTP responses contained JSON
+- changes:
+  - added `Webtolk\Otpravkapochtaru\Joomla\RewindingPsr18Client`
+  - updated `Psr18TransportFactory` to wrap Joomla HTTP with the rewinding PSR-18 decorator
+  - added `tests/Unit/Joomla/RewindingPsr18ClientTest.php`
+- stand/package:
+  - rebuilt `.packages/WT Otpravkapochtaru_3.0.0.zip`
+  - archive: `65` entries, `210874` bytes, SHA-256 `9FD3DCE870B1582D664B98A80930395D08CACCE8ECBA4FABD6599A43BC2C9019`
+  - Joomla CLI install passed with `Extension installed successfully.`
+- verification:
+  - direct sanitized API probe succeeded for `/1.0/settings` and `/1.0/user-shipping-points`
+  - runtime smoke after install: `settings`, `shippingPoints`, and postoffice lookup passed
+  - tariff probe now fails with a normal parsed API `HTTP 400`, not an empty-body transport symptom
+  - browser smoke: plugin edit page shows `API connected`; no visible `API request error` or `пустой ответ`; shipping point list is populated
+  - PHPUnit passed: `15 tests, 57 assertions`
+  - focused PHPCS passed
+  - focused PHP-CS-Fixer dry run passed
+  - PHPStan passed
+  - `git diff --check` passed with only pre-existing CRLF warnings in unrelated `.pf` files
+- worker monitoring:
+  - no active `process-forge` / `shell-worker` / `.pf` worker process remained after verification
+- artifact: `.pf/artifacts/joomla-local-accountinfo-runtime-repair-20260811.md`
+
+## 2026-08-11 16:38 +04:00 - Joomla Local Library Fields Runtime Repair
+
+- agent/role: Codex / Joomla library field runtime verification
+- task: check all library fields and fix linked field cascade on `joomla.local`
+- product code changed: yes
+- fields checked:
+  - `AccountinfoField`
+  - `OpslistField`
+  - `MailtypesField`
+  - `MailcategoriesField`
+  - `LinkedSelectField`
+  - `media/lib_wt_otpravkapochtaru/js/linked-select-fields.js`
+- root cause:
+  - `linked-select-fields.js` was absent from the final plugin edit page HTML
+  - JS dependency resolver did not recognize Joomla plugin params ids/names such as `jform_params_linked_test_shipping_point` and `jform[params][linked_test_shipping_point]`
+- changes:
+  - corrected the linked-select asset name/URI in `LinkedSelectField`
+  - added a guarded direct script tag fallback for plugin/edit form rendering when WebAssetManager misses the field asset
+  - added JS resolution for `jform_params_<field>` and `jform[params][<field>]`
+- package/stand:
+  - rebuilt `.packages/WT Otpravkapochtaru_3.0.0.zip`
+  - archive: `65` entries, `211255` bytes, SHA-256 `FE527800D39AACBBFF476F1B7D62D5F13D650A5D81DFC424FBCAC2BB96654B09`
+  - Joomla CLI install passed with `Extension installed successfully.`
+- verification:
+  - browser after install loaded `linked-select-fields.js` from library media
+  - `AccountinfoField` shows `API connected`
+  - `OpslistField` is populated with `109012 - ул. Никольская, д.7-9, стр.4, г. Москва`
+  - `MailtypesField` loads `7` options via `getMailTypes`
+  - `MailcategoriesField` loads `4` options via `getMailCategories` for `EMS`
+  - changing mail type to `SMALL_PACKET` triggered `getMailCategories` and updated the category to `ORDERED / Registered`
+  - no visible `API request error` or `Shipping points list unavailable`
+  - PHPUnit passed: `15 tests, 57 assertions`
+  - OSPanel PHP lint, JS syntax check, focused PHPCS, focused PHP-CS-Fixer dry run, and PHPStan passed
+  - `git diff --check` passed with only pre-existing CRLF warnings in unrelated `.pf` files
+- worker monitoring:
+  - no active `process-forge` / `shell-worker` / `.pf` worker process remained after verification
+- artifact: `.pf/artifacts/joomla-local-library-fields-runtime-repair-20260811.md`
+
+## 2026-08-11 16:52 +04:00 - Git Delivery Audit
+
+- agent/role: Codex / delivery
+- task: audit ignore rules, upstream SDK boundary, GitHub Actions workflow, and final verification before commit/push
+- code changed: no product-code change in this step
+- gitignore/upstream:
+  - `.packages/`, `dist/`, `build/.tmp/`, `build/.stage/`, `.pf/tmp/`, `node_modules/`, and nested `vendor/` directories are ignored
+  - `git check-ignore` confirms `lib_webtolk_otpravkapochtaru/src/libraries/vendor/` is ignored
+  - `git ls-files` found no tracked `lapaygroup/russianpost` SDK source files
+- github actions:
+  - `.github/workflows/release.yml` is a single project workflow adapted from the WT Max build pattern
+  - no copied reference `.github` folder, WT Max names, local Joomla URL, credential, or absolute local path was found in workflow/build files
+- verification:
+  - PHPUnit passed: `15 tests, 57 assertions`
+  - PHPStan passed with no errors
+  - changed PHP field/transport files passed `php -l`
+  - `linked-select-fields.js` passed `node --check`
+  - package build passed: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`, `98` entries, `122925` bytes, SHA-256 `35F3B46945AA840A58CD64C870208D9895F29B1B8AAE7CDD8FA1D50116A5FFA5`
+- worker monitoring:
+  - no active project shell-worker process found; observed Node/OSPanel PHP processes are browser/MCP and OSPanel runtime background processes
+- artifact: `.pf/artifacts/git-delivery-audit-20260811.md`

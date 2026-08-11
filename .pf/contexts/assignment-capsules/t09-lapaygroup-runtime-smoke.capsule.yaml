@@ -1,0 +1,25 @@
+schema_version: 1
+run_id: lapaygroup-russianpost-joomla-local-validation-20260811
+task_id: t09-lapaygroup-runtime-smoke
+project_root: .
+mode: shell-worker
+product_code_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts
+allowed_runtime_writes:
+  - .pf/runtime
+  - .pf/tmp
+  - D:/OSPanel/home/joomla.local/public/tmp
+forbidden_product_writes:
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - script.php
+model_policy:
+  implementation_workers: gpt-5.3-codex-spark
+  reviewer: gpt-5.5
+  reviewer_reasoning_effort: high
+notes:
+  - Use Joomla-way transport for runtime prototypes.
+  - Do not print secrets or raw authorization headers.
+  - Stop if product code changes are needed.

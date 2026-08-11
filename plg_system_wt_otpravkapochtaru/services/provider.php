@@ -18,7 +18,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-use Joomla\Event\DispatcherInterface;
 use Webtolk\Plugin\System\WtOtpravkapochtaru\Extension\WtOtpravkapochtaru;
 
 return new class () implements ServiceProviderInterface {
@@ -32,11 +31,7 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-                $dispatcher = $container->get(DispatcherInterface::class);
-                $plugin     = new WtOtpravkapochtaru(
-                    $dispatcher,
-                    (array) PluginHelper::getPlugin('system', 'wtotpravkapochtaru')
-                );
+                $plugin = new WtOtpravkapochtaru((array) PluginHelper::getPlugin('system', 'wtotpravkapochtaru'));
                 $plugin->setApplication(Factory::getApplication());
 
                 return $plugin;

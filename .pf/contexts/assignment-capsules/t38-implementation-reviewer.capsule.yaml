@@ -1,0 +1,31 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t38-implementation-reviewer
+project_root: .
+mode: shell-worker-reviewer
+product_code_policy: read_only
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/reviewer-lapaygroup-thin-wrapper-implementation-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+forbidden_product_writes:
+  - composer.json
+  - build
+  - .github
+  - README.md
+  - docs
+  - tests
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Run only after T34-T37 complete.
+  - Use PHPStorm MCP where useful.

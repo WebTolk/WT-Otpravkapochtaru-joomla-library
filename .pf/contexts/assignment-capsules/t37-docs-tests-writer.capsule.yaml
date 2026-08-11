@@ -1,0 +1,33 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t37-docs-tests-writer
+project_root: .
+mode: shell-worker
+product_code_policy: scoped_write
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-lapaygroup-thin-wrapper-docs-tests-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+allowed_product_writes:
+  - README.md
+  - docs
+  - tests
+  - phpunit.xml
+forbidden_product_writes:
+  - composer.json
+  - build
+  - .github
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Run only after T34B, T35D, T36, and T36B complete.
+  - Use PHPStorm MCP for inspection/navigation.

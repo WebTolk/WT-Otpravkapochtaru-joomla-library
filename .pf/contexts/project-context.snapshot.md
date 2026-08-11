@@ -2,8 +2,8 @@
 
 ## Generated
 
-- generated_at: 2026-08-06T05:15:26Z
-- valid_until: 2026-08-13T05:15:26Z
+- generated_at: 2026-08-11T06:57:35Z
+- valid_until: 2026-08-18T06:57:35Z
 
 ## Freshness
 
@@ -156,13 +156,13 @@ fresh
 
 ## Execution Route
 
-- process:
-- required_capabilities: None.
+- process: software-feature-development
+- required_capabilities: architecture, process_coordination, repository_read, repository_write, review, test_running
 - required_evidence: None.
 
 ## Capability Resolution
 
-- satisfied: 0
+- satisfied: 14
 - unsatisfied: 0
 
 ## Applied Project Overrides
@@ -215,7 +215,7 @@ fresh
 
 ## Enabled Processes
 
-- None.
+- software-feature-development
 
 ## Required Capabilities
 

@@ -1,0 +1,32 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t34b-build-tracking-fix
+project_root: .
+mode: shell-worker
+product_code_policy: scoped_write
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-lapaygroup-thin-wrapper-build-tracking-fix-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+allowed_product_writes:
+  - composer.json
+  - .gitignore
+  - .github/workflows/release.yml
+  - build/release.php
+forbidden_product_writes:
+  - README.md
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - tests
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Use named PHPStorm MCP tools when available.
+  - Do not edit files outside allowed_product_writes.

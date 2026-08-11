@@ -4,8 +4,12 @@
   "type": "joomla-package",
   "license": "GPL-3.0-or-later",
   "require": {
+    "php": ">=8.3.0",
+    "lapaygroup/russianpost": "^2.0",
+    "ext-mbstring": "*",
     "ext-simplexml": "*",
-    "ext-soap": "*"
+    "ext-soap": "*",
+    "ext-zip": "*"
   },
   "autoload": {
     "psr-4": {
@@ -29,9 +33,15 @@
     ]
   },
   "config": {
+    "optimize-autoloader": true,
     "platform": {
-      "php": "8.1.0"
+      "php": "8.3.0"
     },
+    "vendor-dir": "build/.tmp/composer-vendor",
+    "github-protocols": [
+      "https"
+    ],
+    "prepend-autoloader": false,
     "sort-packages": true
   }
 }

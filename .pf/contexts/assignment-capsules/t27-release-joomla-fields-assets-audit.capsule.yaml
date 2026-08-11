@@ -1,0 +1,26 @@
+schema_version: 1
+run_id: release-readiness-audit-20260811
+task_id: t27-release-joomla-fields-assets-audit
+project_root: .
+mode: shell-worker
+product_code_policy: read_only
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-release-joomla-fields-assets-audit-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+forbidden_product_writes:
+  - README.md
+  - composer.json
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - phing.xml
+  - .github
+model_policy:
+  worker: gpt-5.3-codex-spark
+notes:
+  - Verify generic Joomla Form field webasset ownership only.
+  - Do not edit product code.

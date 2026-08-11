@@ -1,0 +1,34 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t37b-docs-tests-fix
+project_root: .
+mode: shell-worker
+product_code_policy: scoped_write
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-lapaygroup-thin-wrapper-docs-tests-fix-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+allowed_product_writes:
+  - README.md
+  - docs
+  - tests
+  - phpunit.xml
+forbidden_product_writes:
+  - composer.json
+  - .gitignore
+  - .github
+  - build
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Use named PHPStorm MCP tools when available.
+  - T37 failed after partial docs/tests changes; verify current file state before editing.

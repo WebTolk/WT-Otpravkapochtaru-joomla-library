@@ -139,6 +139,15 @@ paths:
   registries: registries
   runtime: runtime
   hooks: hooks.yaml
+process: software-feature-development
+processes:
+  -
+    id: software-feature-development
+    path: packs/official/software-development/processes/software-feature-development.yaml
+packages:
+  -
+    id: processforge.official.software-development
+    path: packs/official/software-development/package.yaml
 knowledge_stack:
   -
     id: processforge.core

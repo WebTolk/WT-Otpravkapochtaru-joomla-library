@@ -1,0 +1,32 @@
+schema_version: 1
+run_id: lapaygroup-joomla-core-swap-20260811
+task_id: t14-lapaygroup-core-swap-writer
+project_root: .
+mode: shell-worker
+product_code_policy: read_only
+stand_write_policy: single_writer_core_vendor
+allowed_public_outputs:
+  - .pf/artifacts
+allowed_runtime_writes:
+  - .pf/runtime
+  - .pf/tmp
+allowed_stand_writes:
+  - joomla-local-public/libraries/vendor
+forbidden_product_writes:
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - script.php
+forbidden_stand_writes:
+  - joomla-local-public/plugins
+  - joomla-local-public/administrator
+  - joomla-local-public/components
+  - joomla-local-public/modules
+  - joomla-local-public/templates
+model_policy:
+  worker: gpt-5.3-codex-spark
+notes:
+  - This is the only writer worker for the stand.
+  - Backup before writing.
+  - Stop if installed Webtolk facade edits appear necessary.
+  - Do not print secrets or raw authorization headers.

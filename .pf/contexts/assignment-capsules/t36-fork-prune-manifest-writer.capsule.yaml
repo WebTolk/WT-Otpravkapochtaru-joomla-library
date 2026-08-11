@@ -1,0 +1,42 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t36-fork-prune-manifest-writer
+project_root: .
+mode: shell-worker
+product_code_policy: scoped_write
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-lapaygroup-thin-wrapper-prune-manifests-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+allowed_product_writes:
+  - lib_webtolk_otpravkapochtaru/otpravkapochtaru.xml
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - script.php
+  - plg_system_wt_otpravkapochtaru/wtotpravkapochtaru.xml
+  - lib_webtolk_otpravkapochtaru/src/Configuration
+  - lib_webtolk_otpravkapochtaru/src/Dictionaries
+  - lib_webtolk_otpravkapochtaru/src/Entity
+  - lib_webtolk_otpravkapochtaru/src/Exception
+  - lib_webtolk_otpravkapochtaru/src/Transport
+  - lib_webtolk_otpravkapochtaru/src/Request.php
+  - lib_webtolk_otpravkapochtaru/src/SoapRequest.php
+  - lib_webtolk_otpravkapochtaru/src/TrackingEntity.php
+forbidden_product_writes:
+  - composer.json
+  - build
+  - .github
+  - README.md
+  - docs
+  - tests
+  - lib_webtolk_otpravkapochtaru/src/Fields
+  - lib_webtolk_otpravkapochtaru/src/Service
+  - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Run only after T34B and T35D complete.
+  - Use PHPStorm MCP for inspection/navigation.

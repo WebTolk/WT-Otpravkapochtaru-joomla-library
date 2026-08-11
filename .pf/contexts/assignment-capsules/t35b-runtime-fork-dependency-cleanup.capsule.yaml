@@ -1,0 +1,38 @@
+schema_version: 1
+run_id: lapaygroup-thin-wrapper-implementation-20260811
+task_id: t35b-runtime-fork-dependency-cleanup
+project_root: .
+mode: shell-worker
+product_code_policy: scoped_write
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/worker-lapaygroup-thin-wrapper-runtime-cleanup-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+allowed_product_writes:
+  - lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php
+  - lib_webtolk_otpravkapochtaru/src/Joomla
+  - lib_webtolk_otpravkapochtaru/src/Transport
+forbidden_product_writes:
+  - composer.json
+  - build
+  - .github
+  - README.md
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru/src/Fields
+  - lib_webtolk_otpravkapochtaru/src/Service
+  - lib_webtolk_otpravkapochtaru/src/Configuration
+  - lib_webtolk_otpravkapochtaru/src/Dictionaries
+  - lib_webtolk_otpravkapochtaru/src/Entity
+  - lib_webtolk_otpravkapochtaru/src/Exception
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+tool_policy:
+  required_mcp:
+    - phpstorm
+notes:
+  - Use PHPStorm MCP for inspection/navigation.
+  - Do not delete old fork files in this task.

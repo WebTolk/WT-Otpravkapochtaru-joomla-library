@@ -3,6 +3,12 @@
 defined('_JEXEC') || define('_JEXEC', 1);
 defined('JPATH_SITE') || define('JPATH_SITE', 'D:/OSPanel/home/joomla.local/public');
 
+$sdkAutoload = __DIR__ . '/../lib_webtolk_otpravkapochtaru/src/libraries/vendor/autoload.php';
+
+if (is_file($sdkAutoload)) {
+    require_once $sdkAutoload;
+}
+
 spl_autoload_register(
     static function (string $class): void {
         $joomlaRoot = 'D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.0';

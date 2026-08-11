@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <extension type="library" method="upgrade">
     <name>WT Otpravkapochtaru library</name>
     <libraryname>Webtolk/Otpravkapochtaru</libraryname>
-    <version>3.0.0</version>
+    <version>__DEPLOY_VERSION__</version>
     <description>Russian Post integration library for Joomla.</description>
-    <creationDate>08.07.2026</creationDate>
+    <creationDate>__DEPLOY_DATE__</creationDate>
     <author>Sergey Tolkachyov</author>
     <authorEmail>info@web-tolk.ru</authorEmail>
     <authorUrl>https://web-tolk.ru</authorUrl>
@@ -12,6 +12,11 @@
     <namespace path="src">Webtolk\Otpravkapochtaru</namespace>
     <files>
         <folder>src</folder>
+        <folder>src/libraries</folder>
         <filename>otpravkapochtaru.xml</filename>
     </files>
+    <media folder="media" destination="lib_wt_otpravkapochtaru">
+        <filename>joomla.asset.json</filename>
+        <folder>js</folder>
+    </media>
 </extension>

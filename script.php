@@ -69,7 +69,15 @@ return new class () implements ServiceProviderInterface {
                  * @var    string
                  * @since  3.0.0
                  */
-                protected string $minimumPhp = '8.1';
+                protected string $minimumPhp = '8.3.0';
+
+                /**
+                 * PHP extensions required by the package runtime.
+                 *
+                 * @var    array<int, string>
+                 * @since  3.0.0
+                 */
+                protected array $requiredPhpExtensions = ['mbstring'];
 
                 /**
                  * Store Joomla application and database services used by installer lifecycle hooks.
@@ -146,6 +154,10 @@ return new class () implements ServiceProviderInterface {
                         return false;
                     }
 
+                    if (!$this->checkRequiredPhpExtensions()) {
+                        return false;
+                    }
+
                     if (in_array($type, ['install', 'discover_install'], true) && !$this->removeLegacyPochtaruLibrary()) {
                         return false;
                     }
@@ -190,11 +202,16 @@ return new class () implements ServiceProviderInterface {
                  */
                 protected function renderInstallationMessage(string $type, string $version): string
                 {
-                    $smile = '';
+                    $smile               = '';
+                    $optionalSoapWarning = '';
 
                     if ($type !== 'uninstall') {
                         $smiles = ['&#9786;', '&#128512;', '&#128521;', '&#128525;', '&#128526;', '&#128522;', '&#128591;'];
                         $smile  = $smiles[array_rand($smiles)];
+
+                        if (!extension_loaded('soap')) {
+                            $optionalSoapWarning = '<div class="alert alert-warning mt-3">' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_WARNING_OPTIONAL_SOAP_MISSING') . '</div>';
+                        }
                     }
 
                     $typeUpper = strtoupper($type);
@@ -205,6 +222,7 @@ return new class () implements ServiceProviderInterface {
                             <h2>' . $smile . ' ' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_AFTER_' . $typeUpper) . ' <br/>' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU') . '</h2>
                             ' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION') . '
                             ' . Text::sprintf('PKG_LIB_WT_OTPRAVKAPOCHTARU_WHATS_NEW', $version) . '
+                            ' . $optionalSoapWarning . '
                         </div>
                         <div class="col-12 col-md-4 p-0 d-flex flex-column justify-content-start">
                             <img width="180" src="https://web-tolk.ru/web_tolk_logo_wide.png" alt="WebTolk">
@@ -325,6 +343,34 @@ return new class () implements ServiceProviderInterface {
                     );
 
                     return false;
+                }
+
+                /**
+                 * Verify required PHP extensions and enqueue a localized installer error for missing items.
+                 *
+                 * @return  bool
+                 *
+                 * @since   3.0.0
+                 */
+                protected function checkRequiredPhpExtensions(): bool
+                {
+                    foreach ($this->requiredPhpExtensions as $extension) {
+                        if (extension_loaded($extension)) {
+                            continue;
+                        }
+
+                        $this->app->enqueueMessage(
+                            Text::sprintf(
+                                'PKG_LIB_WT_OTPRAVKAPOCHTARU_ERROR_REQUIRED_PHP_EXTENSION',
+                                $extension
+                            ),
+                            'error'
+                        );
+
+                        return false;
+                    }
+
+                    return true;
                 }
             }
         );

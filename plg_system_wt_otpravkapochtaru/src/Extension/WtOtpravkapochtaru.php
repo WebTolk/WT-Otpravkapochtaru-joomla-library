@@ -15,18 +15,20 @@ namespace Webtolk\Plugin\System\WtOtpravkapochtaru\Extension;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Event\Application\AfterDispatchEvent;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Session\Session;
-use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
-use Webtolk\Otpravkapochtaru\Exception\ConfigurationException;
-use Webtolk\Otpravkapochtaru\Exception\TransportException;
+use Joomla\Event\SubscriberInterface;
+use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 use Webtolk\Otpravkapochtaru\Service\LinkedSelectOptionsService;
 
-final class WtOtpravkapochtaru extends CMSPlugin
+final class WtOtpravkapochtaru extends CMSPlugin implements SubscriberInterface
 {
+    private const LINKED_SELECT_ASSET = 'lib_wt_otpravkapochtaru.linked-select-fields';
+
     /**
      * Ask Joomla to load plugin language files when the plugin is instantiated.
      *
@@ -34,6 +36,61 @@ final class WtOtpravkapochtaru extends CMSPlugin
      * @since  3.0.0
      */
     protected $autoloadLanguage = true;
+
+    /**
+     * Return plugin events handled through Joomla's subscriber API.
+     *
+     * @return  array<string, string>
+     *
+     * @since   3.0.0
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onAfterDispatch'         => 'onAfterDispatch',
+            'onAjaxWtotpravkapochtaru' => 'onAjaxWtotpravkapochtaru',
+        ];
+    }
+
+    /**
+     * Activate linked-select field assets after component output is prepared and before document rendering.
+     *
+     * @param   AfterDispatchEvent  $event  Joomla application event.
+     *
+     * @return  void
+     *
+     * @since   3.0.0
+     */
+    public function onAfterDispatch(AfterDispatchEvent $event): void
+    {
+        $app = $event->getApplication();
+
+        if (!$app->isClient('administrator') && !$app->isClient('site')) {
+            return;
+        }
+
+        $document = $app->getDocument();
+
+        if (!method_exists($document, 'getBuffer')) {
+            return;
+        }
+
+        $componentBuffer = $document->getBuffer('component');
+
+        if (!is_string($componentBuffer) || !str_contains($componentBuffer, 'wt-linked-select-field')) {
+            return;
+        }
+
+        $webAssetManager = $document->getWebAssetManager();
+
+        if (!$webAssetManager->assetExists('script', self::LINKED_SELECT_ASSET)) {
+            $webAssetManager->getRegistry()->addExtensionRegistryFile('lib_wt_otpravkapochtaru');
+        }
+
+        if ($webAssetManager->assetExists('script', self::LINKED_SELECT_ASSET)) {
+            $webAssetManager->useScript(self::LINKED_SELECT_ASSET);
+        }
+    }
 
     /**
      * Plugin event handler for Joomla's com_ajax endpoint.
@@ -116,11 +173,13 @@ final class WtOtpravkapochtaru extends CMSPlugin
 
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
             $shippingPoints = $apiClient->getShippingPoints();
-        } catch (ConfigurationException) {
-            $app->setHeader('status', 403, true);
+        } catch (\RuntimeException $exception) {
+            if ($this->isConfigurationError($exception)) {
+                $app->setHeader('status', 403, true);
 
-            return new \RuntimeException(Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AJAX_CONFIG_MISSING'), 403);
-        } catch (TransportException | \RuntimeException) {
+                return new \RuntimeException(Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AJAX_CONFIG_MISSING'), 403);
+            }
+
             $app->setHeader('status', 502, true);
 
             return new \RuntimeException(Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_AJAX_API_UNAVAILABLE'), 502);
@@ -163,5 +222,24 @@ final class WtOtpravkapochtaru extends CMSPlugin
         }
 
         return ['options' => $optionsService->getMailCategoryOptions($shippingPoints, $postOfficeCode, $mailType)];
+    }
+
+    /**
+     * Determine whether the exception is caused by configuration or plugin availability issues.
+     *
+     * @param   \Throwable  $exception  Thrown exception.
+     *
+     * @return  bool
+     *
+     * @since   3.0.0
+     */
+    private function isConfigurationError(\Throwable $exception): bool
+    {
+        $message = strtoupper((string) $exception->getMessage());
+
+        return str_contains($message, 'REQUIRED CONFIGURATION VALUE')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU IS DISABLED')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU CONFIGURATION IS EMPTY')
+            || str_contains($message, 'TRACKING CREDENTIALS ARE NOT CONFIGURED');
     }
 }

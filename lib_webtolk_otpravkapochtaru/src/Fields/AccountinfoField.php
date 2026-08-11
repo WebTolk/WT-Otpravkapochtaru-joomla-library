@@ -18,9 +18,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Form\Field\NoteField;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
-use Webtolk\Otpravkapochtaru\Exception\ConfigurationException;
-use Webtolk\Otpravkapochtaru\Exception\TransportException;
+use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 final class AccountinfoField extends NoteField
@@ -45,13 +43,14 @@ final class AccountinfoField extends NoteField
      */
     protected function getInput(): string
     {
-        $apiClient = new Otpravkapochtaru(new CredentialsProvider($this->getFormParams()));
-
         try {
+            $apiClient  = new Otpravkapochtaru(new CredentialsProvider($this->getFormParams()));
             $accountInfo = $apiClient->getAccountInfo();
-        } catch (ConfigurationException) {
-            return $this->renderState('warning', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_CONFIG_MISSING'));
-        } catch (TransportException $e) {
+        } catch (\RuntimeException $e) {
+            if ($this->isConfigurationError($e)) {
+                return $this->renderState('warning', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_CONFIG_MISSING'));
+            }
+
             if ($this->isUnauthorized($e)) {
                 return $this->renderState('danger', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_UNAUTHORIZED'));
             }
@@ -61,7 +60,7 @@ final class AccountinfoField extends NoteField
                 Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_API_ERROR'),
                 $this->escape($e->getMessage())
             );
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->renderState(
                 'danger',
                 Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_API_ERROR'),
@@ -94,7 +93,7 @@ final class AccountinfoField extends NoteField
                 } else {
                     $apiLimitWarning = Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_API_RESTRICTED');
                 }
-            } catch (TransportException | \Exception) {
+            } catch (\Throwable) {
                 $apiLimitWarning = Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_ACCOUNT_INFO_API_RESTRICTED');
             }
         }
@@ -241,16 +240,35 @@ final class AccountinfoField extends NoteField
     /**
      * Detect authorization failures from HTTP status or Russian Post error text.
      *
-     * @param   TransportException  $exception  Transport error raised by the API client.
+     * @param   \Throwable  $exception  Error raised by the API client.
      *
      * @return  bool
      *
      * @since   3.0.0
      */
-    private function isUnauthorized(TransportException $exception): bool
+    private function isUnauthorized(\Throwable $exception): bool
     {
         return $exception->getCode() === 401
             || str_contains(strtoupper($exception->getMessage()), 'UNAUTHORIZED');
+    }
+
+    /**
+     * Determine whether the exception is caused by configuration or plugin availability issues.
+     *
+     * @param   \Throwable  $exception  Thrown exception.
+     *
+     * @return  bool
+     *
+     * @since   3.0.0
+     */
+    private function isConfigurationError(\Throwable $exception): bool
+    {
+        $message = strtoupper((string) $exception->getMessage());
+
+        return str_contains($message, 'REQUIRED CONFIGURATION VALUE')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU IS DISABLED')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU CONFIGURATION IS EMPTY')
+            || str_contains($message, 'TRACKING CREDENTIALS ARE NOT CONFIGURED');
     }
 
     /**

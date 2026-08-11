@@ -18,9 +18,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
-use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
-use Webtolk\Otpravkapochtaru\Exception\ConfigurationException;
-use Webtolk\Otpravkapochtaru\Exception\TransportException;
+use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 use Webtolk\Otpravkapochtaru\Service\LinkedSelectOptionsService;
 
@@ -70,11 +68,17 @@ final class MailtypesField extends LinkedSelectField
         try {
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
             $shippingPoints = $apiClient->getShippingPoints();
-        } catch (ConfigurationException) {
+        } catch (\RuntimeException $e) {
+            if ($this->isConfigurationError($e)) {
+                return [
+                    HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_CONFIG_MISSING')),
+                ];
+            }
+
             return [
-                HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_CONFIG_MISSING')),
+                HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_API_ERROR')),
             ];
-        } catch (TransportException | \Exception) {
+        } catch (\Throwable) {
             return [
                 HTMLHelper::_('select.option', '', Text::_('PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_API_ERROR')),
             ];
@@ -108,5 +112,24 @@ final class MailtypesField extends LinkedSelectField
         }
 
         return $options;
+    }
+
+    /**
+     * Determine whether the exception is caused by configuration or plugin availability issues.
+     *
+     * @param   \Throwable  $exception  Thrown exception.
+     *
+     * @return  bool
+     *
+     * @since   3.0.0
+     */
+    private function isConfigurationError(\Throwable $exception): bool
+    {
+        $message = strtoupper((string) $exception->getMessage());
+
+        return str_contains($message, 'REQUIRED CONFIGURATION VALUE')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU IS DISABLED')
+            || str_contains($message, 'SYSTEM PLUGIN WTOTPRAVKAPOCHTARU CONFIGURATION IS EMPTY')
+            || str_contains($message, 'TRACKING CREDENTIALS ARE NOT CONFIGURED');
     }
 }

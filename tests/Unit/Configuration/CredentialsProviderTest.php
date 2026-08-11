@@ -3,7 +3,7 @@
 namespace Webtolk\Tests\Unit\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Webtolk\Otpravkapochtaru\Configuration\CredentialsProvider;
+use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 
 final class CredentialsProviderTest extends TestCase
 {

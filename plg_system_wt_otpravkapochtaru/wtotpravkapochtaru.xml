@@ -2,18 +2,14 @@
 <extension type="plugin" group="system" method="upgrade">
     <name>System - WT Otpravka.pochta.ru</name>
     <author>Sergey Tolkachyov</author>
-    <creationDate>08.07.2026</creationDate>
-    <version>3.0.0</version>
+    <creationDate>__DEPLOY_DATE__</creationDate>
+    <version>__DEPLOY_VERSION__</version>
     <description>System plugin with settings for the WT Otpravkapochtaru Joomla library.</description>
     <namespace path="src">Webtolk\Plugin\System\WtOtpravkapochtaru</namespace>
     <files>
         <folder plugin="wtotpravkapochtaru">services</folder>
         <folder plugin="wtotpravkapochtaru">src</folder>
     </files>
-    <media folder="media" destination="plg_system_wtotpravkapochtaru">
-        <filename>joomla.asset.json</filename>
-        <folder>js</folder>
-    </media>
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_system_wtotpravkapochtaru.ini</language>
         <language tag="en-GB">en-GB/plg_system_wtotpravkapochtaru.sys.ini</language>

@@ -8,8 +8,10 @@
 .phpunit.result.cache
 .php-cs-fixer.cache
 vendor/
+build/.tmp/
+build/.stage/
 node_modules/
-build/
+dist/
 !.dist/
 !.dist/build/
 !.dist/build/package.config.json

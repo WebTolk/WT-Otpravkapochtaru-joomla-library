@@ -1,0 +1,25 @@
+schema_version: 1
+run_id: soap-policy-worker-audit-20260811
+task_id: t33-soap-policy-review
+project_root: .
+mode: shell-worker-reviewer
+product_code_policy: read_only
+stand_write_policy: read_only
+allowed_public_outputs:
+  - .pf/artifacts/reviewer-soap-policy-worker-audit-20260811.md
+allowed_runtime_writes:
+  - .pf/runtime
+forbidden_product_writes:
+  - README.md
+  - composer.json
+  - script.php
+  - language
+  - lib_webtolk_otpravkapochtaru
+  - plg_system_wt_otpravkapochtaru
+  - pkg_lib_wt_otpravkapochtaru.xml
+  - phing.xml
+model_policy:
+  worker: gpt-5.3-codex-spark
+notes:
+  - Run after T30-T32 reports exist.
+  - Do not edit product code.

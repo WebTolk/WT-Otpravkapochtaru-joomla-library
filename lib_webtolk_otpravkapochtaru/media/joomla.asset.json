@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "lib_wt_otpravkapochtaru",
+  "version": "3.0.0",
+  "description": "WT Otpravkapochtaru library assets",
+  "license": "GPL-3.0-or-later",
+  "assets": [
+    {
+      "name": "lib_wt_otpravkapochtaru.linked-select-fields",
+      "type": "script",
+      "uri": "lib_wt_otpravkapochtaru/js/linked-select-fields.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    }
+  ]
+}

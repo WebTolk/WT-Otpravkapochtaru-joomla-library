@@ -18,11 +18,14 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Uri\Uri;
 
 abstract class LinkedSelectField extends ListField
 {
+    private static bool $fallbackScriptRendered = false;
+
     /**
-     * Use Joomla's native list layout; the field activates its own web asset from getInput().
+     * Use Joomla's native list layout; the field activates its own web asset during setup().
      *
      * @var    string
      * @since  3.0.0
@@ -46,13 +49,14 @@ abstract class LinkedSelectField extends ListField
 
         if ($isSetup) {
             $this->addLinkedSelectAttributes();
+            $this->useLinkedSelectScript();
         }
 
         return $isSetup;
     }
 
     /**
-     * Render the select field and activate the linked-select controller asset.
+     * Render the select and a guarded fallback script tag for forms where WebAssetManager misses field assets.
      *
      * @return  string
      *
@@ -60,9 +64,7 @@ abstract class LinkedSelectField extends ListField
      */
     protected function getInput(): string
     {
-        $this->useLinkedSelectScript();
-
-        return parent::getInput();
+        return parent::getInput() . self::renderFallbackScriptTag();
     }
 
     /**
@@ -75,7 +77,11 @@ abstract class LinkedSelectField extends ListField
     private function useLinkedSelectScript(): void
     {
         $webAssetManager = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $scriptName      = 'plg_system_wtotpravkapochtaru.linked-select-fields';
+        $scriptName      = 'lib_wt_otpravkapochtaru.linked-select-fields';
+
+        if (!$webAssetManager->assetExists('script', $scriptName)) {
+            $webAssetManager->getRegistry()->addExtensionRegistryFile('lib_wt_otpravkapochtaru');
+        }
 
         if ($webAssetManager->assetExists('script', $scriptName)) {
             $webAssetManager->useScript($scriptName);
@@ -85,11 +91,30 @@ abstract class LinkedSelectField extends ListField
 
         $webAssetManager->registerAndUseScript(
             $scriptName,
-            'plg_system_wtotpravkapochtaru/linked-select-fields.js',
+            'lib_wt_otpravkapochtaru/js/linked-select-fields.js',
             [],
             ['defer' => true],
             ['core']
         );
+    }
+
+    /**
+     * Render a single direct script tag as a fallback for plugin/edit form field rendering.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
+    private static function renderFallbackScriptTag(): string
+    {
+        if (self::$fallbackScriptRendered) {
+            return '';
+        }
+
+        self::$fallbackScriptRendered = true;
+        $src                          = rtrim(Uri::root(true), '/') . '/media/lib_wt_otpravkapochtaru/js/linked-select-fields.js';
+
+        return '<script src="' . htmlspecialchars($src, ENT_QUOTES, 'UTF-8') . '" defer></script>';
     }
 
     /**
