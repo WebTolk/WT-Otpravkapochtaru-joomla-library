@@ -1499,3 +1499,30 @@
 - worker monitoring:
   - no active project shell-worker process found; observed Node/OSPanel PHP processes are browser/MCP and OSPanel runtime background processes
 - artifact: `.pf/artifacts/git-delivery-audit-20260811.md`
+
+## 2026-08-11 17:22 +04:00 - Whats New Localization And Local Package Build
+
+- agent/role: Codex / release language and packaging
+- task: move install/update "What's new" release copy into language constants, rebuild local package, commit and push for GitHub Actions verification
+- product files changed:
+  - `language/ru-RU/pkg_lib_wt_otpravkapochtaru.sys.ini`
+  - `language/en-GB/pkg_lib_wt_otpravkapochtaru.sys.ini`
+  - `pkg_lib_wt_otpravkapochtaru.xml`
+  - `plg_system_wt_otpravkapochtaru/wtotpravkapochtaru.xml`
+- changes:
+  - refreshed RU/EN `PKG_LIB_WT_OTPRAVKAPOCHTARU_WHATS_NEW` with release-specific notes for the SDK facade, plugin credentials, Joomla Form fields, and optional SOAP behavior
+  - corrected the installer message plugin filter link to `filter[element]=wtotpravkapochtaru`
+  - changed package and plugin manifest descriptions to language constants
+- package:
+  - rebuilt `.packages/WT Otpravkapochtaru_3.0.0.zip`
+  - archive: `65` entries, `212560` bytes
+  - archive contains required package language files, plugin manifest, and `lib_webtolk_otpravkapochtaru/media/joomla.asset.json`
+  - archive excludes `.pf`, `.dist`, `.git`, `dist`, `docs`, `tests`, `build`, and `tools`
+- verification:
+  - XML parse check passed for package and plugin manifests
+  - INI parse check passed for package/plugin RU and EN sys language files
+  - archive RU/EN `WHATS_NEW` strings and corrected plugin link verified inside ZIP
+  - PHPUnit passed: `15 tests, 57 assertions`
+  - `git diff --check` passed
+- worker monitoring:
+  - no active `process-forge` / `shell-worker` / `phing` / `composer` / `phpunit` process found after verification; observed `php-cgi` processes are OSPanel runtime

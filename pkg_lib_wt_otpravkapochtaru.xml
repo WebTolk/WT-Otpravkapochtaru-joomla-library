@@ -8,7 +8,7 @@
     <url>https://web-tolk.ru</url>
     <packager>Sergey Tolkachyov</packager>
     <packagerurl>https://web-tolk.ru</packagerurl>
-    <description>Russian Post integration library package for Joomla.</description>
+    <description>PKG_LIB_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION</description>
     <license>GNU GPL 3.0</license>
     <changelogurl>https://web-tolk.ru/jchangelog?element=lib_wt_otpravkapochtaru&amp;debug=1</changelogurl>
     <scriptfile>script.php</scriptfile>

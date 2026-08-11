@@ -4,7 +4,7 @@
     <author>Sergey Tolkachyov</author>
     <creationDate>__DEPLOY_DATE__</creationDate>
     <version>__DEPLOY_VERSION__</version>
-    <description>System plugin with settings for the WT Otpravkapochtaru Joomla library.</description>
+    <description>PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION</description>
     <namespace path="src">Webtolk\Plugin\System\WtOtpravkapochtaru</namespace>
     <files>
         <folder plugin="wtotpravkapochtaru">services</folder>
