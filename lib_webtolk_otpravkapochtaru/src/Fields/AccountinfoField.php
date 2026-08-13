@@ -21,6 +21,11 @@ use Joomla\Registry\Registry;
 use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+/**
+ * Note field that shows account and API status in plugin parameters.
+ *
+ * @since  0.1.0
+ */
 final class AccountinfoField extends NoteField
 {
     /**

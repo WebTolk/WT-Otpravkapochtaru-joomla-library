@@ -1,61 +1,65 @@
-# Developer API
+# Работа с SDK LapayGroup
 
-This document describes the package boundary after the 3.0.0 thin-wrapper migration.
+Фасад `Otpravkapochtaru` не повторяет методы SDK. Он только подготавливает авторизацию из Joomla и возвращает настроенные провайдеры `lapaygroup/russianpost`, поэтому примеры ниже вызывают методы этих провайдеров напрямую.
 
-## Runtime Layers
-
-| Layer | Public surface | Purpose |
-| --- | --- | --- |
-| Joomla facade | `Webtolk\Otpravkapochtaru\Otpravkapochtaru` | Stable entry point for account, orders, batches, tariffs, post offices, returns, documents, and tracking. |
-| Joomla glue | `Webtolk\Otpravkapochtaru\Joomla\*` | Credentials, PSR-18 transport creation, and uploaded-file serialization for Joomla runtime. |
-| Upstream SDK | `LapayGroup\RussianPost\*` | REST/SOAP providers and entities bundled into the release archive at build time. |
-
-The removed fork-level request, SOAP, tracking, entity, dictionary, and configuration classes are not part of the current public API. Use the facade for application code. Use upstream SDK classes only when a task explicitly needs SDK-level objects.
-
-## Basic Usage
+## Основной REST API
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
-$client = new Otpravkapochtaru(
-    new CredentialsProvider([
-        'access_token' => '...',
-        'auth_mode' => 'key',
-        'user_key' => '...',
-    ])
-);
+defined('_JEXEC') or die;
 
-$result = $client->getTariffAndDeliveryPeriod(
+$client = new Otpravkapochtaru();
+$api = $client->otpravkaApi();
+
+$settings = $api->settings();
+$shippingPoints = $api->shippingPoints();
+$orders = $api->findOrderByShopId('ORDER-1001');
+```
+
+## Расчет Тарифа
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$client = new Otpravkapochtaru();
+
+$result = $client->calculation()->getTariffAndDeliveryPeriod(
     27030,
     [
-        'from-index' => '410000',
-        'to-index' => '685000',
-        'mail-type' => 'POSTAL_PARCEL',
-        'mail-category' => 'ORDINARY',
-        'mass' => 1000,
-    ]
+        'from' => 410012,
+        'to' => 455001,
+        'weight' => 1000,
+    ],
+    []
 );
 ```
 
-If no credentials provider is passed, the facade reads enabled system plugin settings through Joomla.
+## Трекинг
 
-## Payloads
+```php
+<?php
 
-Facade methods accept arrays for the common Joomla integration path. Where the upstream SDK requires entities, the facade hydrates `LapayGroup\RussianPost` objects internally and keeps legacy key styles tolerant for existing integrations.
+declare(strict_types=1);
 
-For new code, prefer API field names such as `index-to`, `recipient-name`, `mail-type`, `mail-category`, and `mass`.
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
-## SOAP Policy
+defined('_JEXEC') or die;
 
-Composer/GitHub builds require `ext-soap` because upstream tracking support depends on SOAP classes. Joomla package installation does not hard-fail when SOAP is missing; the installer shows a warning and tracking methods remain unavailable until SOAP is enabled.
+$client = new Otpravkapochtaru();
+$operations = $client->trackingApi()->getOperationsByRpo('80000000000000', 'RUS');
+```
 
-## Related Pages
+## Сущности SDK
 
-- [Facade method reference](facade-method-reference.md)
-- [Thin wrapper architecture](thin-wrapper-architecture.md)
-- [Low-level API status](low-level-api.md)
+Для методов, которые в коде LapayGroup вызывают `asArr()` или `getParams()`, нужно использовать сущности SDK. Фасад больше не преобразует произвольные массивы заказов, получателей или возвратов в эти объекты.

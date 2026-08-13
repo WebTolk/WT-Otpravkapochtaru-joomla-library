@@ -1,46 +1,26 @@
-# Thin wrapper architecture and build/install contract
+# Архитектура тонкого фасада
 
-## What this package is
+## Граница Ответственности
 
-- `WT Otpravkapochtaru` is implemented as a Joomla wrapper on top of the upstream SDK package `lapaygroup/russianpost`.
-- Runtime behavior is exposed through `Webtolk\Otpravkapochtaru\Otpravkapochtaru` and uses `LapayGroup\RussianPost` classes/services under the hood.
+`WT Otpravkapochtaru` является Joomla-оберткой над `lapaygroup/russianpost`, а не самостоятельной реализацией API Почты России. Пакет берет на себя Joomla-часть: хранение параметров в системном плагине, чтение этих параметров, сборку транспорта через Joomla HTTP, подключение autoload SDK и предоставление Joomla Form полей.
 
-## GitHub / Composer and package build
+Операции с API выполняет SDK LapayGroup. Для этого фасад возвращает три настроенных провайдера: `OtpravkaApi`, `Calculation` и `Tracking`.
 
-- `composer.json` declares:
-  - `lapaygroup/russianpost`
-  - `ext-soap`
-  - `ext-zip`
-  - PHP extension requirements required by runtime
-- Release tooling stages SDK runtime from `build/.tmp/composer-vendor`.
-- `build/release.php` copies SDK source from composer vendor into:
-  - `lib_webtolk_otpravkapochtaru/src/libraries/vendor/lapaygroup/russianpost/src`
-  - `lib_webtolk_otpravkapochtaru/src/libraries/vendor/autoload.php` (generated local bootstrap)
-- Runtime façade includes the local SDK autoloader before service setup.
+## Что Делает Фасад
 
-## ZIP-ready behavior and SOAP warning
+- Создает `CredentialsProvider` из параметров системного плагина, массива, `Registry` или явно переданного provider-объекта.
+- Создает `Psr18Transport` через `Psr18TransportFactory`.
+- Создает `OtpravkaApi` и `Calculation` сразу при построении объекта.
+- Создает `Tracking` лениво, потому что SOAP нужен не всем установкам.
+- Оставляет `getAccountInfo()`, `getShippingPoints()` и `getApiLimit()` как helper-методы для Joomla Form полей.
 
-- The release build writes ready ZIP files to `dist/*.zip`.
-- Installer checks required extensions from runtime policy:
-  - `mbstring` is required in installer preflight
-  - SOAP is optional in installer policy
-- If SOAP is unavailable, installer message includes warning block `PKG_LIB_WT_OTPRAVKAPOCHTARU_WARNING_OPTIONAL_SOAP_MISSING`.
-- Runtime SOAP failures are still surfaced on SOAP-specific methods when used without proper SOAP setup.
+## Что Делает LapayGroup SDK
 
-## Joomla form fields and web assets
+- `OtpravkaApi` работает с REST-методами аккаунта, заказов, партий, документов, возвратов, ОПС и части справочников.
+- `Calculation` работает с расчетом тарифа, сроков доставки и тарифными справочниками.
+- `Tracking` работает с SOAP-трекингом.
+- Сущности SDK, например `Order`, `Recipient` и `ReturnShipment`, остаются ответственностью вызывающего кода там, где конкретный метод SDK ожидает объект.
 
-- Form fields and linked JS are now library-owned:
-  - `lib_webtolk_otpravkapochtaru/src/Fields/*`
-  - `lib_webtolk_otpravkapochtaru/media/joomla.asset.json`
-  - `lib_webtolk_otpravkapochtaru/media/js/linked-select-fields.js`
-- Plugin manifest no longer declares plugin-owned media for these assets.
+## Почему Нет Дублирования Методов
 
-## Current residual test coverage and risk notes
-
-- Automated coverage added in `tests/Unit/Architecture/ThinWrapperContractTest.php` includes:
-  - Composer dependency check (`lapaygroup/russianpost` and `ext-soap`)
-  - Installer required extensions list excludes SOAP hard-fail
-  - Release ZIP contains local SDK autoload and SDK directory entries
-- Runtime/field source has no deleted fork namespace references.
-- Remaining risk:
-  - SOAP behavior and some response-level edge behavior are still validated by integration smoke and live stand workflows rather than exhaustive unit tests.
+Предыдущая расширенная версия фасада повторяла методы SDK и добавляла собственную нормализацию массивов. Это делало библиотеку похожей на отдельную SDK-обертку поверх LapayGroup, усложняло документацию и закрепляло поведение, которого нет в исходной библиотеке. Текущая архитектура возвращает управление разработчику: Joomla предоставляет авторизацию и удобные поля, а предметная работа идет напрямую через LapayGroup.

@@ -8,6 +8,7 @@
  * @author      Sergey Tolkachyov
  * @copyright   Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
  * @license     GNU/GPL 3.0
+ * @since       3.0.0
  */
 
 namespace Webtolk\Otpravkapochtaru\Joomla;
@@ -18,11 +19,25 @@ use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * Normalize uploaded file responses for legacy facade callers.
+ *
+ * @since  3.0.0
  */
 final class UploadedFileSerializer
 {
     /**
      * Convert an uploaded file to an associative array response.
+     *
+     * @param   UploadedFileInterface  $file  Uploaded file returned by the upstream SDK.
+     *
+     * @return  array{
+     *     content: string,
+     *     contentType: string,
+     *     fileName: string|null,
+     *     statusCode: int,
+     *     headers: array<string, mixed>
+     * }
+     *
+     * @since   3.0.0
      */
     public static function toArray(UploadedFileInterface $file): array
     {
@@ -45,6 +60,15 @@ final class UploadedFileSerializer
         ];
     }
 
+    /**
+     * Sanitize an upstream filename for facade response metadata.
+     *
+     * @param   string|null  $fileName  Raw upstream filename.
+     *
+     * @return  string|null
+     *
+     * @since   3.0.0
+     */
     private static function sanitizeFileName(?string $fileName): ?string
     {
         if ($fileName === null) {

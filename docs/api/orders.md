@@ -1,8 +1,34 @@
-# Orders And Recipient Checks
+# Заказы
 
-Use `Webtolk\Otpravkapochtaru\Otpravkapochtaru` for order workflows.
+Заказы обрабатываются напрямую через `LapayGroup\RussianPost\Providers\OtpravkaApi`, который возвращает метод `Otpravkapochtaru::otpravkaApi()`. Фасад больше не принимает массивы заказов и не нормализует их в сущности SDK.
 
-## Create Orders
+## Создание Заказов
+
+В поставляемом коде LapayGroup метод `createOrders($orders)` передает массив дальше в общий вызов API, поэтому передавайте данные в форме, которую ожидает SDK и API Почты России; если вы строите заказ через `Order`, преобразуйте его в массив самостоятельно через `asArr()`.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use LapayGroup\RussianPost\Entity\Order;
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$order = new Order();
+$order->setIndexTo('455001');
+$order->setRecipientName('Иванов Иван');
+$order->setTelAddress('79000000000');
+$order->setMailType('POSTAL_PARCEL');
+$order->setMailCategory('ORDINARY');
+$order->setMass(1000);
+
+$client = new Otpravkapochtaru();
+$created = $client->otpravkaApi()->createOrders([$order->asArr()]);
+```
+
+## Поиск И Изменение
 
 ```php
 <?php
@@ -11,37 +37,30 @@ declare(strict_types=1);
 
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
-$client = new Otpravkapochtaru();
+defined('_JEXEC') or die;
 
-$created = $client->createOrders([
-    [
-        'order-num' => 'joomla-' . date('Ymd-His'),
-        'recipient-name' => 'Ivanov Ivan',
-        'tel-address' => '79000000000',
-        'index-to' => '685000',
-        'region-to' => 'Magadan region',
-        'place-to' => 'Magadan',
-        'street-to' => 'Lenina',
-        'house-to' => '1',
-        'mail-type' => 'POSTAL_PARCEL',
-        'mail-category' => 'ORDINARY',
-        'mass' => 1000,
-    ],
-]);
+$client = new Otpravkapochtaru();
+$api = $client->otpravkaApi();
+
+$byId = $api->findOrderById(123456);
+$byShopId = $api->findOrderByShopId('ORDER-1001');
+$byRpo = $api->findOrderByRpo('80000000000000');
 ```
 
-The facade accepts arrays and hydrates upstream SDK entities internally.
+Для `editOrder($order, $id)` SDK вызывает `$order->asArr()`, поэтому туда нужен объект `LapayGroup\RussianPost\Entity\Order`, а не произвольный массив.
 
-## Supported Methods
+## Удаление И Возврат В Новые
 
-- `createOrders(array $orders): array`
-- `editOrder(int|string $id, array|object $order): array`
-- `findOrderById(int|string $id): array`
-- `findOrderByShopId(int|string $shopId): array`
-- `findOrderByRpo(string $rpo): array`
-- `getRecipientReliability(array|object $recipient): array`
-- `getRecipientsReliability(array $recipients): array`
-- `deleteOrders(array $ids): array`
-- `returnOrdersToNew(array $ids): array`
+```php
+<?php
 
-For new code, prefer API-style payload keys. Compatibility normalization for common legacy key styles is handled inside the facade.
+declare(strict_types=1);
+
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$client = new Otpravkapochtaru();
+$client->otpravkaApi()->deleteOrders([123456]);
+$client->otpravkaApi()->returnToNew([123456]);
+```

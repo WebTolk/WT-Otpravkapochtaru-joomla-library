@@ -25,8 +25,18 @@ use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 use Webtolk\Otpravkapochtaru\Service\LinkedSelectOptionsService;
 
+/**
+ * System plugin that exposes assets and AJAX endpoints for library fields.
+ *
+ * @since  0.1.0
+ */
 final class WtOtpravkapochtaru extends CMSPlugin implements SubscriberInterface
 {
+    /**
+     * WebAssetManager asset name for linked select controls.
+     *
+     * @since  3.0.0
+     */
     private const LINKED_SELECT_ASSET = 'lib_wt_otpravkapochtaru.linked-select-fields';
 
     /**
@@ -98,6 +108,8 @@ final class WtOtpravkapochtaru extends CMSPlugin implements SubscriberInterface
      * @param   mixed  $event  Joomla event object on Joomla 4/5/6, unused on older dispatch paths.
      *
      * @return  array<string, mixed>
+     *
+     * @throws  \Throwable
      *
      * @since   3.0.0
      */

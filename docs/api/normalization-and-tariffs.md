@@ -1,8 +1,6 @@
-# Normalization, Tariffs, And Delivery Periods
+# Тарифы и расчет доставки
 
-The 3.0.0 public package API exposes tariff operations through the facade. Dedicated public facade methods for REST normalization routes are not documented yet; add them before publishing normalization examples as supported API.
-
-## Tariff
+Тонкий фасад не нормализует параметры тарифа. Передавайте в `LapayGroup\RussianPost\Providers\Calculation` те ключи, которые ожидает SDK и API Почты России.
 
 ```php
 <?php
@@ -11,36 +9,20 @@ declare(strict_types=1);
 
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+defined('_JEXEC') or die;
+
 $client = new Otpravkapochtaru();
+$calculation = $client->calculation();
 
-$tariff = $client->getTariff(
-    27030,
-    [
-        'from-index' => '410000',
-        'to-index' => '685000',
-        'mail-type' => 'POSTAL_PARCEL',
-        'mail-category' => 'ORDINARY',
-        'mass' => 1000,
-    ],
-    [2, 15]
-);
+$params = [
+    'from' => 410012,
+    'to' => 455001,
+    'weight' => 1000,
+];
+
+$tariff = $calculation->getTariff(27030, $params, []);
+$period = $calculation->getTariffAndDeliveryPeriod(27030, $params, []);
+$countries = $calculation->getCountryList();
 ```
 
-## Tariff And Delivery Period
-
-```php
-$result = $client->getTariffAndDeliveryPeriod(
-    27030,
-    [
-        'from-index' => '410000',
-        'to-index' => '685000',
-        'mail-type' => 'POSTAL_PARCEL',
-        'mail-category' => 'ORDINARY',
-        'mass' => 1000,
-    ]
-);
-
-$period = $result['delivery-time'] ?? [];
-```
-
-Money values from Russian Post responses are normally expressed in kopecks.
+Дополнительные услуги передаются третьим аргументом массивом; внутри SDK они преобразуются в строку параметра `service`.

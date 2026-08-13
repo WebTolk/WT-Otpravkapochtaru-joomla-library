@@ -1,8 +1,6 @@
-# Post Offices And Countries
+# ОПС и справочники
 
-Use the facade for post-office and country operations.
-
-## Countries
+Методы ОПС находятся в `LapayGroup\RussianPost\Providers\OtpravkaApi`, а тарифные справочники находятся в `LapayGroup\RussianPost\Providers\Calculation`.
 
 ```php
 <?php
@@ -11,16 +9,31 @@ declare(strict_types=1);
 
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+defined('_JEXEC') or die;
+
 $client = new Otpravkapochtaru();
-$countries = $client->getCountryList();
+$api = $client->otpravkaApi();
+
+$office = $api->searchPostOfficeByIndex('410012');
+$nearAddress = $api->searchPostOfficeByAddress('Саратов, Московская, 109', 3);
+$nearCoordinates = $api->searchPostOfficeByCoordinates([
+    'latitude' => '51.533557',
+    'longitude' => '46.034257',
+    'top' => 3,
+]);
+$services = $api->getPostOfficeServices('410012');
+$codes = $api->getPostalCodesInLocality('Саратов', 'Саратовская область');
 ```
 
-## Post Offices
+```php
+<?php
 
-- `searchPostOfficeByIndex(int|string $postalCode, ?string $latitude = null, ?string $longitude = null, ?string $currentDateTime = null, bool $filterByOfficeType = true, bool $ufpsPostalCode = false): array`
-- `searchPostOfficeByAddress(string $address, ?string $top = null): array`
-- `searchPostOfficeByCoordinates(string $latitude, string $longitude, ?string $top = null): array`
-- `getPostOfficeServices(int|string $postalCode): array`
-- `getPostalCodesInLocality(string $region, string $place, ?string $area = null, ?string $street = null): array`
+declare(strict_types=1);
 
-The old package-owned country dictionary is no longer a public API; the facade delegates country lookup to the upstream SDK.
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$client = new Otpravkapochtaru();
+$countries = $client->calculation()->getCountryList();
+```

@@ -1,25 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * Capture real JSON response snapshots for the WT Otpravkapochtaru facade.
+ * Capture real JSON response snapshots through the thin Joomla facade.
  *
  * Run from the repository root:
  *
  * php tools/capture-api-snapshots.php --joomla-root=/path/to/joomla
- *
- * By default the script uses safe sample inputs for mutating methods. Those
- * calls still hit the facade and usually capture real validation/API errors,
- * but they avoid intentionally creating, deleting, or changing shipments.
  */
+
+declare(strict_types=1);
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
 use Joomla\Session\SessionInterface;
+use LapayGroup\RussianPost\Entity\AddressReturn;
+use LapayGroup\RussianPost\Entity\Order;
+use LapayGroup\RussianPost\Entity\Recipient;
+use LapayGroup\RussianPost\Entity\ReturnShipment;
+use LapayGroup\RussianPost\Providers\OtpravkaApi;
+use Psr\Http\Message\UploadedFileInterface;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
-const SNAPSHOT_SCHEMA_VERSION = 1;
+const SNAPSHOT_SCHEMA_VERSION = 2;
 
 $options = parseOptions($argv);
 $repoRoot = dirname(__DIR__);
@@ -63,10 +65,11 @@ foreach ($cases as $case) {
     }
 
     $snapshot = captureCase($client, $case);
-    $fileName = methodFileName($case['method']) . '.json';
+    $fileName = methodFileName($case['target'] . '-' . $case['method']) . '.json';
     writeJson($outputDir . '/' . $fileName, $snapshot);
 
     $index['methods'][] = [
+        'target' => $case['target'],
         'method' => $case['method'],
         'file' => $fileName,
         'group' => $case['group'],
@@ -75,7 +78,7 @@ foreach ($cases as $case) {
         'duration_ms' => $snapshot['duration_ms'],
     ];
 
-    echo $case['method'] . ': ' . $snapshot['status'] . ' -> ' . $fileName . PHP_EOL;
+    echo $case['target'] . '::' . $case['method'] . ': ' . $snapshot['status'] . ' -> ' . $fileName . PHP_EOL;
 }
 
 if ($methodFilter === null) {
@@ -163,55 +166,71 @@ function registerLibraryAutoloaders(string $joomlaRoot): void
 function buildCases(bool $includeLiveMutating): array
 {
     $rpo = preg_replace('/\D+/', '', (string) (getenv('WT_OTPRAVKA_SNAPSHOT_RPO') ?: '80214523462306')) ?: '80214523462306';
-    $orderId = (string) (getenv('WT_OTPRAVKA_SNAPSHOT_ORDER_ID') ?: '0');
+    $orderId = (int) (getenv('WT_OTPRAVKA_SNAPSHOT_ORDER_ID') ?: 0);
     $shopId = (string) (getenv('WT_OTPRAVKA_SNAPSHOT_SHOP_ID') ?: 'docs-nonexistent-' . gmdate('Ymd'));
     $batchName = (string) (getenv('WT_OTPRAVKA_SNAPSHOT_BATCH') ?: 'DOCS-NONEXISTENT-BATCH');
     $ticket = (string) (getenv('WT_OTPRAVKA_SNAPSHOT_TICKET') ?: 'DOCS-NONEXISTENT-TICKET');
-
-    $orderPayload = $includeLiveMutating ? sampleOrderPayload() : [[]];
-    $returnShipmentPayload = $includeLiveMutating ? sampleReturnShipmentPayload() : [[]];
+    $orderPayload = $includeLiveMutating ? [sampleOrderEntity()->asArr()] : [[]];
+    $returnPayload = $includeLiveMutating ? [sampleReturnShipmentEntity()->asArr()] : [[]];
 
     return [
-        caseDef('account', 'getAccountInfo', 'read', []),
-        caseDef('account', 'getShippingPoints', 'read', []),
-        caseDef('account', 'getApiLimit', 'read', []),
-        caseDef('account', 'getSettings', 'read', []),
-        caseDef('orders', 'createOrders', $includeLiveMutating ? 'mutating' : 'safe-error', [$orderPayload]),
-        caseDef('orders', 'editOrder', 'safe-error', [sampleOrderPayload(), $orderId]),
-        caseDef('orders', 'findOrderById', 'read', [$orderId]),
-        caseDef('orders', 'findOrderByShopId', 'read', [$shopId]),
-        caseDef('orders', 'findOrderByRpo', 'read', [$rpo]),
-        caseDef('orders', 'getRecipientReliability', 'read', [sampleRecipientPayload()]),
-        caseDef('orders', 'getRecipientsReliability', 'read', [[sampleRecipientPayload()]]),
-        caseDef('orders', 'deleteOrders', 'safe-error', [[0]]),
-        caseDef('orders', 'returnOrdersToNew', 'safe-error', [[0]]),
-        caseDef('batches', 'createBatch', 'safe-error', [[0], null, false]),
-        caseDef('batches', 'getAllBatches', 'read', []),
-        caseDef('batches', 'getOrdersInBatch', 'read', [$batchName]),
-        caseDef('documents', 'generateDocumentPackage', 'safe-error', [$batchName, 'paper', 'one-sided']),
-        caseDef('documents', 'generateDocumentF103', 'safe-error', [$batchName]),
-        caseDef('returns', 'createReturnShipment', 'safe-error', ['00000000000000', 'UNDEFINED']),
-        caseDef('returns', 'createReturnShipments', $includeLiveMutating ? 'mutating' : 'safe-error', [$returnShipmentPayload]),
-        caseDef('returns', 'editReturnShipment', 'safe-error', [sampleReturnShipmentPayload()[0], '00000000000000']),
-        caseDef('returns', 'deleteReturnShipment', 'safe-error', ['00000000000000']),
-        caseDef('tariffs', 'getTariff', 'read', [27030, sampleTariffPayload()]),
-        caseDef('tariffs', 'getTariffAndDeliveryPeriod', 'read', [27030, sampleTariffPayload()]),
-        caseDef('dictionaries', 'getCountryList', 'read', []),
-        caseDef('post-offices', 'searchPostOfficeByIndex', 'read', ['410012']),
-        caseDef('post-offices', 'searchPostOfficeByAddress', 'read', ['Саратов, Московская, 109', 3]),
-        caseDef('post-offices', 'searchPostOfficeByCoordinates', 'read', [['latitude' => '51.533557', 'longitude' => '46.034257', 'top' => 3]]),
-        caseDef('post-offices', 'getPostOfficeServices', 'read', ['410012']),
-        caseDef('post-offices', 'getPostalCodesInLocality', 'read', ['Саратов', 'Саратовская область']),
-        caseDef('tracking', 'getOperationsByRpo', 'tracking-read', [$rpo, 'RUS']),
-        caseDef('tracking', 'getNpayInfo', 'tracking-read', [$rpo, 'RUS']),
-        caseDef('tracking', 'getTickets', 'tracking-mutating', [[$rpo], 'RUS']),
-        caseDef('tracking', 'getOperationsByTicket', 'tracking-read', [$ticket]),
+        caseDef('facade', 'account', 'getAccountInfo', 'read', []),
+        caseDef('facade', 'account', 'getShippingPoints', 'read', []),
+        caseDef('facade', 'account', 'getApiLimit', 'read', []),
+        caseDef('otpravka', 'account', 'settings', 'read', []),
+        caseDef('otpravka', 'account', 'shippingPoints', 'read', []),
+        caseDef('otpravka', 'account', 'getBalance', 'read', []),
+        caseDef('otpravka', 'orders', 'createOrders', $includeLiveMutating ? 'mutating' : 'safe-error', [$orderPayload]),
+        caseDef('otpravka', 'orders', 'createOrdersV2', $includeLiveMutating ? 'mutating' : 'safe-error', [$orderPayload]),
+        caseDef('otpravka', 'orders', 'editOrder', 'safe-error', [sampleOrderEntity(), $orderId]),
+        caseDef('otpravka', 'orders', 'findOrderById', 'read', [$orderId]),
+        caseDef('otpravka', 'orders', 'findOrderByShopId', 'read', [$shopId]),
+        caseDef('otpravka', 'orders', 'findOrderByRpo', 'read', [$rpo]),
+        caseDef('otpravka', 'orders', 'findOrderInBatch', 'read', [$orderId]),
+        caseDef('otpravka', 'orders', 'untrustworthyRecipient', 'read', [sampleRecipientEntity()]),
+        caseDef('otpravka', 'orders', 'untrustworthyRecipients', 'read', [[sampleRecipientEntity()]]),
+        caseDef('otpravka', 'orders', 'deleteOrders', 'safe-error', [[0]]),
+        caseDef('otpravka', 'orders', 'returnToNew', 'safe-error', [[0]]),
+        caseDef('otpravka', 'batches', 'createBatch', 'safe-error', [[0], null, false]),
+        caseDef('otpravka', 'batches', 'getAllBatches', 'read', []),
+        caseDef('otpravka', 'batches', 'moveOrdersToBatch', 'safe-error', [$batchName, [0]]),
+        caseDef('otpravka', 'batches', 'findBatchByName', 'read', [$batchName]),
+        caseDef('otpravka', 'batches', 'addOrdersToBatch', 'safe-error', [$batchName, $orderPayload]),
+        caseDef('otpravka', 'batches', 'deleteOrdersInBatch', 'safe-error', [[0]]),
+        caseDef('otpravka', 'batches', 'getOrdersInBatch', 'read', [$batchName]),
+        caseDef('otpravka', 'batches', 'changeBatchSendingDay', 'safe-error', [$batchName, new DateTimeImmutable('tomorrow')]),
+        caseDef('otpravka', 'batches', 'getArchivedBatches', 'read', []),
+        caseDef('otpravka', 'batches', 'archivingBatch', 'safe-error', [[$batchName]]),
+        caseDef('otpravka', 'batches', 'unarchivingBatch', 'safe-error', [[$batchName]]),
+        caseDef('otpravka', 'documents', 'generateDocPackage', 'safe-error', [$batchName, OtpravkaApi::PRINT_FILE]),
+        caseDef('otpravka', 'documents', 'generateDocF103', 'safe-error', [$batchName, OtpravkaApi::PRINT_FILE]),
+        caseDef('otpravka', 'documents', 'generateReturnLabel', 'safe-error', [$rpo, OtpravkaApi::PRINT_FILE]),
+        caseDef('otpravka', 'returns', 'returnShipment', 'safe-error', [$rpo, 'UNDEFINED']),
+        caseDef('otpravka', 'returns', 'createReturnShipment', $includeLiveMutating ? 'mutating' : 'safe-error', [$returnPayload]),
+        caseDef('otpravka', 'returns', 'editReturnShipment', 'safe-error', [sampleReturnShipmentEntity(), $rpo]),
+        caseDef('otpravka', 'returns', 'deleteReturnShipment', 'safe-error', [$rpo]),
+        caseDef('otpravka', 'post-offices', 'searchPostOfficeByIndex', 'read', ['410012']),
+        caseDef('otpravka', 'post-offices', 'searchPostOfficeByAddress', 'read', ['Саратов, Московская, 109', 3]),
+        caseDef('otpravka', 'post-offices', 'searchPostOfficeByCoordinates', 'read', [['latitude' => '51.533557', 'longitude' => '46.034257', 'top' => 3]]),
+        caseDef('otpravka', 'post-offices', 'getPostOfficeServices', 'read', ['410012']),
+        caseDef('otpravka', 'post-offices', 'getPostalCodesInLocality', 'read', ['Саратов', 'Саратовская область']),
+        caseDef('calculation', 'tariffs', 'getCategoryList', 'read', []),
+        caseDef('calculation', 'tariffs', 'getCategoryDescription', 'read', [27030]),
+        caseDef('calculation', 'tariffs', 'getTariff', 'read', [27030, sampleTariffPayload(), []]),
+        caseDef('calculation', 'tariffs', 'getTariffAndDeliveryPeriod', 'read', [27030, sampleTariffPayload(), []]),
+        caseDef('calculation', 'tariffs', 'getObjectInfo', 'read', [27030]),
+        caseDef('calculation', 'tariffs', 'getCountryList', 'read', []),
+        caseDef('tracking', 'tracking', 'getOperationsByRpo', 'tracking-read', [$rpo, 'RUS']),
+        caseDef('tracking', 'tracking', 'getNpayInfo', 'tracking-read', [$rpo, 'RUS']),
+        caseDef('tracking', 'tracking', 'getTickets', 'tracking-mutating', [[$rpo], 'RUS']),
+        caseDef('tracking', 'tracking', 'getOperationsByTicket', 'tracking-read', [$ticket]),
     ];
 }
 
-function caseDef(string $group, string $method, string $sideEffects, array $arguments): array
+function caseDef(string $target, string $group, string $method, string $sideEffects, array $arguments): array
 {
     return [
+        'target' => $target,
         'group' => $group,
         'method' => $method,
         'side_effects' => $sideEffects,
@@ -225,6 +244,7 @@ function captureCase(Otpravkapochtaru $client, array $case): array
     $snapshot = [
         'schema_version' => SNAPSHOT_SCHEMA_VERSION,
         'captured_at' => gmdate('c'),
+        'target' => $case['target'],
         'method' => $case['method'],
         'group' => $case['group'],
         'side_effects' => $case['side_effects'],
@@ -236,9 +256,11 @@ function captureCase(Otpravkapochtaru $client, array $case): array
     ];
 
     try {
+        $target = resolveTarget($client, $case['target']);
         $snapshot['result'] = redactAccountSnapshot(
+            $case['target'],
             $case['method'],
-            redact($client->{$case['method']}(...$case['arguments']))
+            redact($target->{$case['method']}(...$case['arguments']))
         );
     } catch (Throwable $exception) {
         $snapshot['status'] = 'error';
@@ -250,68 +272,70 @@ function captureCase(Otpravkapochtaru $client, array $case): array
     return $snapshot;
 }
 
+function resolveTarget(Otpravkapochtaru $client, string $target): object
+{
+    return match ($target) {
+        'facade' => $client,
+        'otpravka' => $client->otpravkaApi(),
+        'calculation' => $client->calculation(),
+        'tracking' => $client->trackingApi(),
+        default => throw new InvalidArgumentException('Unknown snapshot target: ' . $target),
+    };
+}
+
 function sampleTariffPayload(): array
 {
     return [
-        'from-index' => '410012',
-        'to-index' => '455001',
-        'mail-type' => 'POSTAL_PARCEL',
-        'mail-category' => 'ORDINARY',
-        'mass' => 1000,
+        'from' => 410012,
+        'to' => 455001,
+        'weight' => 1000,
     ];
 }
 
-function sampleRecipientPayload(): array
+function sampleRecipientEntity(): Recipient
 {
-    return [
-        'index-to' => '455001',
-        'region-to' => 'Челябинская область',
-        'place-to' => 'Магнитогорск',
-        'street-to' => 'Ленина',
-        'house-to' => '1',
-        'recipient-name' => 'Иванов Иван',
-        'tel-address' => '79000000000',
-    ];
+    $recipient = new Recipient();
+    $recipient->setAddress('455001, Челябинская область, Магнитогорск, Ленина, 1');
+    $recipient->setName('Иванов Иван');
+    $recipient->setPhone('79000000000');
+
+    return $recipient;
 }
 
-function sampleOrderPayload(): array
+function sampleOrderEntity(): Order
 {
-    return [
-        [
-            'order-num' => 'docs-' . gmdate('Ymd-His'),
-            'recipient-name' => 'Иванов Иван',
-            'tel-address' => '79000000000',
-            'index-to' => '455001',
-            'region-to' => 'Челябинская область',
-            'place-to' => 'Магнитогорск',
-            'street-to' => 'Ленина',
-            'house-to' => '1',
-            'mail-type' => 'POSTAL_PARCEL',
-            'mail-category' => 'ORDINARY',
-            'mass' => 1000,
-        ],
-    ];
+    $order = new Order();
+    $order->setOrderNum('docs-' . gmdate('Ymd-His'));
+    $order->setIndexTo('455001');
+    $order->setRegionTo('Челябинская область');
+    $order->setPlaceTo('Магнитогорск');
+    $order->setStreetTo('Ленина');
+    $order->setHouseTo('1');
+    $order->setRecipientName('Иванов Иван');
+    $order->setTelAddress('79000000000');
+    $order->setMailType('POSTAL_PARCEL');
+    $order->setMailCategory('ORDINARY');
+    $order->setMass(1000);
+
+    return $order;
 }
 
-function sampleReturnShipmentPayload(): array
+function sampleReturnShipmentEntity(): ReturnShipment
 {
-    return [
-        [
-            'postoffice-code' => '410012',
-            'address-from' => [
-                'index' => '410012',
-                'place' => 'Саратов',
-                'street' => 'Московская',
-                'house' => '109',
-            ],
-            'address-to' => [
-                'index' => '455001',
-                'place' => 'Магнитогорск',
-                'street' => 'Ленина',
-                'house' => '1',
-            ],
-        ],
-    ];
+    $from = new AddressReturn();
+    $from->setIndex('410012');
+    $from->setPlace('Саратов');
+    $from->setStreet('Московская');
+    $from->setHouse('109');
+
+    $shipment = new ReturnShipment();
+    $shipment->setAddressFrom($from);
+    $shipment->setMailType('UNDEFINED');
+    $shipment->setRecipientName('Иванов Иван');
+    $shipment->setSenderName('ООО Ромашка');
+    $shipment->setPostofficeCode('410012');
+
+    return $shipment;
 }
 
 function exceptionToArray(Throwable $exception): array
@@ -335,6 +359,15 @@ function exceptionToArray(Throwable $exception): array
 
 function redact(mixed $value): mixed
 {
+    if ($value instanceof UploadedFileInterface) {
+        return [
+            'client_filename' => $value->getClientFilename(),
+            'client_media_type' => $value->getClientMediaType(),
+            'size' => $value->getSize(),
+            'error' => $value->getError(),
+        ];
+    }
+
     if (is_array($value)) {
         $result = [];
 
@@ -353,16 +386,20 @@ function redact(mixed $value): mixed
     }
 
     if (is_string($value)) {
-        $value = preg_replace('/(AccessToken|Authorization|X-User-Authorization|Password|Login|Email|Phone|Inn|Hid|AgreementNumber)(\\s*[:=]\\s*)[^\\s,;]+/i', '$1$2[redacted]', $value) ?? $value;
-        $value = preg_replace('/Bearer\\s+[A-Za-z0-9._~+\\/-]+=*/i', 'Bearer [redacted]', $value) ?? $value;
+        $value = preg_replace('/(AccessToken|Authorization|X-User-Authorization|Password|Login|Email|Phone|Inn|Hid|AgreementNumber)(\s*[:=]\s*)[^\s,;]+/i', '$1$2[redacted]', $value) ?? $value;
+        $value = preg_replace('/Bearer\s+[A-Za-z0-9._~+\/-]+=*/i', 'Bearer [redacted]', $value) ?? $value;
     }
 
     return $value;
 }
 
-function redactAccountSnapshot(string $method, mixed $value): mixed
+function redactAccountSnapshot(string $target, string $method, mixed $value): mixed
 {
-    if (!in_array($method, ['getAccountInfo', 'getSettings'], true) || !is_array($value)) {
+    if ($target !== 'facade' && $target !== 'otpravka') {
+        return $value;
+    }
+
+    if (!in_array($method, ['getAccountInfo', 'settings'], true) || !is_array($value)) {
         return $value;
     }
 

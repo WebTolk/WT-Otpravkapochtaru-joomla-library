@@ -8,6 +8,7 @@
  * @author      Sergey Tolkachyov
  * @copyright   Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
  * @license     GNU/GPL 3.0
+ * @since       3.0.0
  */
 
 namespace Webtolk\Otpravkapochtaru\Joomla;
@@ -19,24 +20,53 @@ use Joomla\Registry\Registry;
 
 /**
  * Thin wrapper credentials source.
+ *
+ * @since  3.0.0
  */
 final class CredentialsProvider
 {
+    /**
+     * Joomla plugin group used as the default credentials source.
+     *
+     * @since  3.0.0
+     */
     private const PLUGIN_GROUP = 'system';
+
+    /**
+     * Joomla plugin element used as the default credentials source.
+     *
+     * @since  3.0.0
+     */
     private const PLUGIN_NAME = 'wtotpravkapochtaru';
 
+    /**
+     * Resolved configuration values.
+     *
+     * @since  3.0.0
+     */
     private Registry $params;
 
     /**
      * Accept legacy provider objects, explicit arrays, Registry instances, or read plugin params.
      *
-     * @param array<string, mixed>|Registry|object|null $source
+     * @param   array<string, mixed>|Registry|object|null  $source  Explicit configuration source.
+     *
+     * @since   3.0.0
      */
     public function __construct(array|object|null $source = null)
     {
         $this->initFromSource($source);
     }
 
+    /**
+     * Return the REST access token.
+     *
+     * @return  string
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   3.0.0
+     */
     public function getAccessToken(): string
     {
         $value = trim((string) $this->params()->get('access_token', ''));
@@ -52,6 +82,13 @@ final class CredentialsProvider
         return $value;
     }
 
+    /**
+     * Return selected user authorization mode.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getAuthMode(): string
     {
         return (string) $this->params()->get(
@@ -60,31 +97,73 @@ final class CredentialsProvider
         );
     }
 
+    /**
+     * Return user authorization key.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getUserKey(): string
     {
         return (string) $this->params()->get('user_key', $this->params()->get('user_auth_key', ''));
     }
 
+    /**
+     * Return user login for login/password authorization mode.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getUserLogin(): string
     {
         return $this->params()->get('user_login', '');
     }
 
+    /**
+     * Return user password for login/password authorization mode.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getUserPassword(): string
     {
         return $this->params()->get('user_password', '');
     }
 
+    /**
+     * Return SOAP tracking login.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getTrackingLogin(): string
     {
         return $this->params()->get('tracking_login', '');
     }
 
+    /**
+     * Return SOAP tracking password.
+     *
+     * @return  string
+     *
+     * @since   3.0.0
+     */
     public function getTrackingPassword(): string
     {
         return $this->params()->get('tracking_password', '');
     }
 
+    /**
+     * Return configured HTTP timeout.
+     *
+     * @return  int
+     *
+     * @since   3.0.0
+     */
     public function getHttpTimeout(): int
     {
         return (int) $this->params()->get('http_timeout', 60);
@@ -94,6 +173,12 @@ final class CredentialsProvider
      * Build the `X-User-Authorization` header value.
      *
      * User-key mode returns the key as is; login/password mode returns a base64 encoded pair.
+     *
+     * @return  string
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   3.0.0
      */
     public function getUserAuthorizationHeader(): string
     {
@@ -122,6 +207,15 @@ final class CredentialsProvider
         return base64_encode($login . ':' . $password);
     }
 
+    /**
+     * Return resolved credentials registry.
+     *
+     * @return  Registry
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   3.0.0
+     */
     public function params(): Registry
     {
         if (isset($this->params)) {
@@ -133,6 +227,17 @@ final class CredentialsProvider
         return $this->params;
     }
 
+    /**
+     * Initialize credentials from an explicit source.
+     *
+     * @param   array<string, mixed>|object|null  $source  Explicit configuration source.
+     *
+     * @return  void
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   3.0.0
+     */
     private function initFromSource(array|object|null $source): void
     {
         if ($source instanceof Registry) {
@@ -164,6 +269,15 @@ final class CredentialsProvider
         }
     }
 
+    /**
+     * Load credentials from the enabled system plugin.
+     *
+     * @return  Registry
+     *
+     * @throws  \RuntimeException
+     *
+     * @since   3.0.0
+     */
     private function loadFromPlugin(): Registry
     {
         if (!PluginHelper::isEnabled(self::PLUGIN_GROUP, self::PLUGIN_NAME)) {

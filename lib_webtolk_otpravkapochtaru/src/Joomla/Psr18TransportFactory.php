@@ -8,6 +8,7 @@
  * @author      Sergey Tolkachyov
  * @copyright   Copyright (c) 2026 Sergey Tolkachyov, WebTolk. All rights reserved.
  * @license     GNU/GPL 3.0
+ * @since       3.0.0
  */
 
 namespace Webtolk\Otpravkapochtaru\Joomla;
@@ -22,13 +23,19 @@ use LapayGroup\RussianPost\Http\Psr18Transport;
 
 /**
  * Helper for building upstream PSR-18 transport from Joomla HTTP layer.
+ *
+ * @since  3.0.0
  */
 final class Psr18TransportFactory
 {
     /**
      * Build PSR-18 transport with Joomla HTTP client and Laminas factories.
      *
-     * @param int $timeout Request timeout in seconds.
+     * @param   int  $timeout  Request timeout in seconds.
+     *
+     * @return  Psr18Transport
+     *
+     * @since   3.0.0
      */
     public static function create(int $timeout = 60): Psr18Transport
     {

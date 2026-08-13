@@ -1,8 +1,36 @@
-# Return Shipments
+# Возвраты
 
-Use `Webtolk\Otpravkapochtaru\Otpravkapochtaru` for return shipment workflows.
+Возвратные отправления создаются методами `LapayGroup\RussianPost\Providers\OtpravkaApi`, полученного через `otpravkaApi()`. Для отдельного возврата без прямого ШПИ SDK ожидает массив объектов `ReturnShipment`.
 
-## Create Return Shipment
+```php
+<?php
+
+declare(strict_types=1);
+
+use LapayGroup\RussianPost\Entity\AddressReturn;
+use LapayGroup\RussianPost\Entity\ReturnShipment;
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$from = new AddressReturn();
+$from->setIndex('410012');
+$from->setPlace('Саратов');
+$from->setStreet('Московская');
+$from->setHouse('109');
+
+$shipment = new ReturnShipment();
+$shipment->setAddressFrom($from);
+$shipment->setMailType('UNDEFINED');
+$shipment->setRecipientName('Иванов Иван');
+$shipment->setSenderName('ООО Ромашка');
+$shipment->setPostofficeCode('410012');
+
+$client = new Otpravkapochtaru();
+$result = $client->otpravkaApi()->createReturnShipment([$shipment->asArr()]);
+```
+
+Для возврата ранее созданного отправления используйте прямой метод SDK:
 
 ```php
 <?php
@@ -11,27 +39,8 @@ declare(strict_types=1);
 
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+defined('_JEXEC') or die;
+
 $client = new Otpravkapochtaru();
-
-$result = $client->createReturnShipment([
-    'address-from' => [
-        'index' => '410000',
-        'region' => 'Saratov region',
-        'place' => 'Saratov',
-    ],
-    'address-to' => [
-        'index' => '685000',
-        'region' => 'Magadan region',
-        'place' => 'Magadan',
-    ],
-]);
+$result = $client->otpravkaApi()->returnShipment('80000000000000', 'UNDEFINED');
 ```
-
-## Supported Methods
-
-- `createReturnShipment(array|object $shipment): array`
-- `createReturnShipments(array $shipments): array`
-- `editReturnShipment(int|string $id, array|object $shipment): array`
-- `deleteReturnShipment(int|string $id): array`
-
-The facade hydrates upstream SDK return entities internally when array payloads are passed.

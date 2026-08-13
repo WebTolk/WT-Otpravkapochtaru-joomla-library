@@ -19,6 +19,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\NoteField;
 use Joomla\CMS\Language\Text;
 
+/**
+ * Note field that renders WebTolk plugin information.
+ *
+ * @since  0.1.0
+ */
 class PlugininfoField extends NoteField
 {
     /**

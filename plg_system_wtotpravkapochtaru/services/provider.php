@@ -24,7 +24,11 @@ return new class () implements ServiceProviderInterface {
     /**
      * Register the plugin extension class in Joomla's dependency injection container.
      *
-     * @since 3.0.0
+     * @param   Container  $container  Joomla dependency injection container.
+     *
+     * @return  void
+     *
+     * @since   3.0.0
      */
     public function register(Container $container): void
     {

@@ -1,14 +1,52 @@
-# Entity Surface Status
+# Сущности LapayGroup
 
-Version 3.0.0 removed the package-owned fork entities from the public API.
+Фасад `Otpravkapochtaru` больше не преобразует массивы в сущности SDK. Если метод `lapaygroup/russianpost` ожидает объект, вызывающий код должен создать этот объект самостоятельно и заполнить его через setter-ы SDK.
 
-The facade still accepts associative arrays for orders, recipients, returns, customs data, and related payloads. Internally it hydrates upstream `LapayGroup\RussianPost` entities before calling the SDK providers.
+## Заказ
 
-## Current Guidance
+```php
+<?php
 
-- Application code should call `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
-- New payloads should use API-style keys, for example `index-to`, `recipient-name`, `mail-type`, `mail-category`, and `mass`.
-- Existing payloads using common camelCase keys are normalized by the facade where compatibility is implemented.
-- Direct entity usage should target upstream SDK classes under `LapayGroup\RussianPost\Entity`.
+declare(strict_types=1);
 
-The old package-owned entity examples are available only in Git history and should not be used for new integrations.
+use LapayGroup\RussianPost\Entity\Order;
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$order = new Order();
+$order->setIndexTo('455001');
+$order->setRecipientName('Иванов Иван');
+$order->setTelAddress('79000000000');
+$order->setMailType('POSTAL_PARCEL');
+$order->setMailCategory('ORDINARY');
+$order->setMass(1000);
+
+$client = new Otpravkapochtaru();
+$result = $client->otpravkaApi()->editOrder($order, 123456);
+```
+
+## Получатель
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use LapayGroup\RussianPost\Entity\Recipient;
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$recipient = new Recipient();
+$recipient->setAddress('455001, Челябинская область, Магнитогорск, Ленина, 1');
+$recipient->setName('Иванов Иван');
+$recipient->setPhone('79000000000');
+
+$client = new Otpravkapochtaru();
+$result = $client->otpravkaApi()->untrustworthyRecipient($recipient);
+```
+
+## Возвратное Отправление
+
+Для отдельного возвратного отправления SDK использует `LapayGroup\RussianPost\Entity\ReturnShipment` и вложенные `AddressReturn`. Заполняйте их по setter-ам SDK и передавайте в методы `otpravkaApi()->createReturnShipment()` или `otpravkaApi()->editReturnShipment()`.

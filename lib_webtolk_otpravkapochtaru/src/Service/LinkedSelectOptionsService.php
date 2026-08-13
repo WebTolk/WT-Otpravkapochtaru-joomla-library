@@ -300,6 +300,9 @@ final class LinkedSelectOptionsService
      * Load plugin language constants used by library fields in third-party extension forms.
      *
      * @return  void
+     *
+     * @throws  \Exception
+     *
      * @since  3.0.0
      */
     private function loadLanguage(): void

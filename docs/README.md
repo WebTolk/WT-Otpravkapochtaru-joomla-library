@@ -1,19 +1,33 @@
 # WT Otpravkapochtaru: документация
 
-Документация относится к Joomla-пакету `WT Otpravkapochtaru` 3.x. Основная публичная точка входа для разработчика - фасад `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
+Документация относится к Joomla-пакету `WT Otpravkapochtaru` 3.x. Пакет не является самостоятельной заменой `lapaygroup/russianpost`: он настраивает эту SDK-библиотеку из параметров Joomla-плагина, предоставляет готовые Joomla Form поля и возвращает уже сконфигурированные клиенты для работы с API Почты России.
 
-## Начало работы
+## Начало Работы
 
-- [Корневой файл README](../README.md) - системные требования, установка, быстрый старт и первый пример.
+- [Корневой README](../README.md) - системные требования, установка и первый пример.
 - [Настройка пакета в Joomla](joomla-user-guide.md) - параметры системного плагина и проверка подключения.
-- [Архитектура тонкой обертки](thin-wrapper-architecture.md) - как Joomla-пакет использует `lapaygroup/russianpost`.
+- [Архитектура тонкого фасада](thin-wrapper-architecture.md) - границы ответственности Joomla-обертки и SDK LapayGroup.
 
-## Интерфейс для разработчика
+## API Для Разработчика
 
-- [Публичный API фасада](public-api.md) - актуальный русский справочник по всем публичным методам библиотеки.
-- [JSON-снимки ответов API](api-snapshots/README.md) - как были собраны реальные обезличенные ответы и ошибки.
-- [Индекс снимков](api-snapshots/latest/index.json) - машинно-читаемый список всех зафиксированных методов.
+- [Публичный контракт фасада](public-api.md) - актуальные методы класса `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
+- [Справочник методов фасада](facade-method-reference.md) - короткая сводка по текущей публичной поверхности.
+- [Работа с SDK LapayGroup](developer-api.md) - примеры прямых вызовов через `otpravkaApi()`, `calculation()` и `trackingApi()`.
+- [Сущности LapayGroup](entities-reference.md) - какие объекты SDK нужны для заказов, получателей и возвратов.
+- [Низкоуровневый слой](low-level-api.md) - как фасад собирает транспорт и авторизацию.
 
-## Исторические материалы
+## Тематические Разделы
 
-Файлы `developer-api.md`, `facade-method-reference.md`, `low-level-api.md`, `entities-reference.md` и документы в `api/` оставлены как вспомогательные материалы. Перед публикацией или копированием примеров сверяйте их с актуальным справочником [public-api.md](public-api.md), потому что публичный контракт версии 3.x строится вокруг фасада и библиотеки `lapaygroup/russianpost`.
+- [Аккаунт и конфигурация](api/account-and-configuration.md)
+- [Заказы](api/orders.md)
+- [Партии и документы](api/batches-and-documents.md)
+- [Возвраты](api/returns.md)
+- [Тарифы и справочники расчета](api/normalization-and-tariffs.md)
+- [ОПС и справочники](api/post-offices-and-dictionaries.md)
+- [Трекинг](api/tracking.md)
+
+## Снимки Ответов
+
+- [JSON-снимки ответов API](api-snapshots/README.md)
+
+Снимки в `api-snapshots/latest/` являются обезличенными примерами реальных ответов API. Они помогают понять форму данных, но после перехода к тонкому фасаду не являются перечнем методов класса `Otpravkapochtaru`, потому что большинство операций теперь вызывается напрямую у провайдеров LapayGroup.

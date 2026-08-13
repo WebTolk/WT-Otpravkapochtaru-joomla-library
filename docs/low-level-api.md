@@ -1,8 +1,16 @@
-# Low-Level API Status
+# Низкоуровневый слой
 
-This page is intentionally short after the 3.0.0 thin-wrapper migration.
+Низкоуровневый слой нужен только для сборки SDK-клиентов внутри Joomla. Обычно расширениям достаточно создать `Otpravkapochtaru` и получить один из провайдеров LapayGroup.
 
-The old fork-level request, SOAP, tracking, entity, dictionary, and configuration classes are no longer a public API of this Joomla package. Application code should use the facade:
+## Авторизация
+
+`Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` читает параметры системного плагина `wtotpravkapochtaru` либо принимает явный массив, `Registry` или legacy-объект с методом `params()`. Он возвращает `AccessToken`, значение `X-User-Authorization`, логин и пароль SOAP-трекинга, а также таймаут HTTP-запросов.
+
+## Транспорт
+
+`Webtolk\Otpravkapochtaru\Joomla\Psr18TransportFactory` создает `LapayGroup\RussianPost\Http\Psr18Transport` на базе Joomla HTTP клиента и Laminas PSR-7 фабрик. Этот транспорт передается в `OtpravkaApi` и `Calculation`; трекинг использует SOAP-клиент LapayGroup.
+
+## Прямой Доступ
 
 ```php
 <?php
@@ -11,16 +19,9 @@ declare(strict_types=1);
 
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+defined('_JEXEC') or die;
+
 $client = new Otpravkapochtaru();
+$transport = $client->transport();
+$credentials = $client->credentialsProvider();
 ```
-
-For operations that need SDK objects directly, use the upstream package classes shipped in the release archive under `lib_webtolk_otpravkapochtaru/src/libraries/vendor/lapaygroup/russianpost/src`.
-
-## Current Public Boundary
-
-- `Webtolk\Otpravkapochtaru\Otpravkapochtaru` remains the Joomla facade.
-- `Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` reads Joomla plugin settings or explicit arrays/registries.
-- `LapayGroup\RussianPost\*` is the upstream SDK surface used by the facade.
-- REST normalization routes that are not exposed by facade methods need a new facade method before they are documented as supported package API.
-
-The pre-3.0 low-level examples were retained in Git history only. Do not copy them into new code.

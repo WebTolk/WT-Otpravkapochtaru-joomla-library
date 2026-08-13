@@ -22,6 +22,11 @@ use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 use Webtolk\Otpravkapochtaru\Service\LinkedSelectOptionsService;
 
+/**
+ * List field with mail categories for selected OPS and mail type.
+ *
+ * @since  3.0.0
+ */
 final class MailcategoriesField extends LinkedSelectField
 {
     /**

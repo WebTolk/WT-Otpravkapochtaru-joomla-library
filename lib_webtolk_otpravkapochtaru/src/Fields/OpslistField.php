@@ -22,6 +22,11 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
+/**
+ * List field that loads the configured account shipping points.
+ *
+ * @since  0.1.0
+ */
 final class OpslistField extends ListField
 {
     /**

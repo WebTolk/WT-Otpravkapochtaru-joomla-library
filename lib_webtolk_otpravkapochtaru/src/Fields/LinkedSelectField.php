@@ -20,8 +20,18 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Uri\Uri;
 
+/**
+ * Base field for linked Joomla select controls.
+ *
+ * @since  3.0.0
+ */
 abstract class LinkedSelectField extends ListField
 {
+    /**
+     * Whether the fallback script tag has already been rendered.
+     *
+     * @since  3.0.0
+     */
     private static bool $fallbackScriptRendered = false;
 
     /**
@@ -40,6 +50,8 @@ abstract class LinkedSelectField extends ListField
      * @param   string|null       $group    The field name group control value.
      *
      * @return  bool
+     *
+     * @throws  \Exception
      *
      * @since   3.0.0
      */
@@ -71,6 +83,8 @@ abstract class LinkedSelectField extends ListField
      * Activate the linked-select controller through Joomla WebAssetManager.
      *
      * @return  void
+     *
+     * @throws  \Exception
      *
      * @since   3.0.0
      */
@@ -120,7 +134,9 @@ abstract class LinkedSelectField extends ListField
     /**
      * Add field metadata used by the linked-select JS controller.
      *
-     * @since 3.0.0
+     * @return  void
+     *
+     * @since   3.0.0
      */
     private function addLinkedSelectAttributes(): void
     {

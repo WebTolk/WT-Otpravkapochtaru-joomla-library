@@ -1965,3 +1965,123 @@
   - short-sentence heuristic over `docs/public-api.md` returned no matches
   - side-effect phrase scan over `docs/public-api.md` returned no old short-form matches
   - all 36 PHP examples extracted from `docs/public-api.md` pass `php -l`
+
+## 2026-08-13 15:00 +04:00 - Documentation Codebase Conformance Audit
+
+- agent/role: Codex / documentation contract auditor
+- task: verify public documentation against the actual codebase and fix any inaccurate examples or behavioral claims
+- files changed:
+  - `README.md`
+  - `docs/public-api.md`
+  - `.pf/logs/orchestrator.md`
+- code facts verified with Serena:
+  - `Otpravkapochtaru::__construct()` stores the passed value as `$credentialsProvider` and calls credential accessor methods on it, so `Registry` must not be passed directly to the facade
+  - `CredentialsProvider::__construct()` accepts `Registry`, arrays, legacy objects with `params()`, or plugin params
+  - order, recipient, and return shipment object inputs must be concrete `LapayGroup\RussianPost\Entity\...` entities; arbitrary objects such as `Registry` must be converted to arrays before calling the facade method
+  - `normalizePayloadKey()` supports `snake_case` and `kebab-case` payload keys for normalized entity payloads
+  - tariff params are not key-normalized; `normalizeTariffParams()` only adds the `object` key
+  - document print values are normalized through `PRINT_TYPE_MAP` and `PRINT_TYPE_FORM_MAP`, with default fallbacks
+- fixes:
+  - changed explicit configuration example to `new Otpravkapochtaru(new CredentialsProvider($config))`
+  - added the required `CredentialsProvider` namespace import
+  - clarified accepted object types for orders, recipients, and return shipments
+  - clarified print type defaults and removed historical claims not proven by the current codebase
+- verification:
+  - `docs/public-api.md` method list matches all 34 public facade methods excluding the constructor
+  - all 36 PHP examples extracted from `docs/public-api.md` pass `php -l`
+  - all 34 snapshot links in `docs/public-api.md` resolve to existing JSON files
+  - all 35 JSON snapshot files parse successfully
+  - public docs scan found no direct `new Otpravkapochtaru($config)`, broad arbitrary object wording, old English drafting terms, or local absolute paths
+
+## 2026-08-13 15:42 +04:00 - Joomla PHPDoc Standardization
+
+- agent/role: Codex / Joomla PHPDoc maintainer
+- task: read PhpStorm inspections across Joomla wrapper files and bring PHP doc blocks to Joomla-style contracts
+- files changed:
+  - `lib_webtolk_otpravkapochtaru/src/Fields/AccountinfoField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/LinkedSelectField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Joomla/CredentialsProvider.php`
+  - `lib_webtolk_otpravkapochtaru/src/Joomla/Psr18TransportFactory.php`
+  - `lib_webtolk_otpravkapochtaru/src/Joomla/RewindingPsr18Client.php`
+  - `lib_webtolk_otpravkapochtaru/src/Joomla/UploadedFileSerializer.php`
+  - `lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php`
+  - `lib_webtolk_otpravkapochtaru/src/Service/LinkedSelectOptionsService.php`
+  - `plg_system_wtotpravkapochtaru/services/provider.php`
+  - `plg_system_wtotpravkapochtaru/src/Extension/WtOtpravkapochtaru.php`
+  - `plg_system_wtotpravkapochtaru/src/Field/PlugininfoField.php`
+  - `.pf/logs/orchestrator.md`
+- inspection findings:
+  - no PhpStorm `error` findings across the 15 PHP files
+  - real PHPDoc findings were missing class/method/property `@since` entries and incomplete `@throws` tags
+  - remaining PhpStorm weak warnings are mostly duplicate declarations from `build`/`.stage`, project policy around fully qualified global classes, typed-constant suggestions, and non-docblock flow hints
+- verification:
+  - `php -l` passed for all 15 Joomla wrapper PHP files
+  - PHPCS passed for all 15 own PHP files with the project ruleset
+  - PhpStorm `lint_files` with `min_severity=error` returned no items
+  - `git diff --check` passed
+
+## 2026-08-13 16:20 +04:00 - Thin Facade Alignment
+
+- agent/role: Codex / ProcessForge orchestrator
+- task: align `Webtolk\Otpravkapochtaru\Otpravkapochtaru` with the expected thin Joomla facade contract
+- scope:
+  - keep Joomla plugin-parameter authorization and transport setup in the wrapper
+  - keep Joomla Form convenience helpers required by bundled fields
+  - expose configured LapayGroup clients for all other API operations
+  - update documentation and tests so they describe current code instead of the previously expanded facade surface
+- context loaded:
+  - `.pf/AGENTS.md`
+  - `.pf/process-forge.yaml`
+  - `.pf/contexts/project-context.snapshot.md`
+  - `.pf/artifacts/worker-lapaygroup-thin-wrapper-runtime-20260811.md`
+  - `.pf/artifacts/worker-thin-wrapper-joomla-fields-contract-20260811.md`
+  - `.pf/artifacts/worker-lapaygroup-data-parity-risk-matrix-20260811.md`
+- tooling:
+  - Serena symbol overview used for `Otpravkapochtaru.php`
+  - Joomla platform contract read; referenced toolkit paths are stale in this workspace, actual docs root is `D:\.agents\docs\joomla`
+- status: in progress
+- residual risks:
+  - documentation generated for the expanded facade must be rewritten or removed
+  - snapshot capture tooling may need to target LapayGroup provider methods directly
+
+## 2026-08-13 16:55 +04:00 - Thin Facade Alignment Result
+
+- agent/role: Codex / ProcessForge implementer
+- task: finish thin facade alignment and documentation correction
+- files changed in this slice:
+  - `lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php`
+  - `tools/capture-api-snapshots.php`
+  - `tests/Unit/Facade/ThinFacadeContractTest.php`
+  - `tests/Unit/Facade/OrderPayloadNormalizationTest.php`
+  - `README.md`
+  - `docs/README.md`
+  - `docs/public-api.md`
+  - `docs/facade-method-reference.md`
+  - `docs/developer-api.md`
+  - `docs/entities-reference.md`
+  - `docs/low-level-api.md`
+  - `docs/thin-wrapper-architecture.md`
+  - `docs/api/*.md`
+  - `docs/api-snapshots/README.md`
+- implementation:
+  - reduced `Otpravkapochtaru` public surface to SDK provider accessors, transport/credentials accessors, and Joomla Form helpers
+  - removed facade-owned order, return, document, tariff, post-office, and tracking operation aliases from the class
+  - fixed constructor handling so arrays, `Registry` instances, and explicit `CredentialsProvider` objects resolve through `CredentialsProvider`
+  - replaced the old facade normalization unit test with a thin public-surface contract test
+  - changed snapshot capture routing from removed facade methods to `facade`, `otpravka`, `calculation`, and `tracking` targets
+  - rewrote public docs so API operations are shown as direct LapayGroup calls through configured providers
+- verification:
+  - `php -l` passed for `Otpravkapochtaru.php`, `tools/capture-api-snapshots.php`, and `ThinFacadeContractTest.php`
+  - PHPCS passed for the same three PHP files
+  - PHPStan passed for the same three PHP files
+  - PhpStorm `lint_files` with `min_severity=error` returned no items for the same three PHP files
+  - PHPUnit full suite passed: 17 tests, 67 assertions
+  - active docs/tooling scan found no stale `$client->createOrders()`-style calls to removed facade methods
+  - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
+  - `git diff --check` passed
+- residual risks:
+  - `docs/api-snapshots/latest/` still contains historical JSON files from the older capture run; docs now mark them as data-shape examples until snapshots are recaptured with schema version 2
+  - this slice was not committed or pushed because the user did not request commit in this turn
