@@ -8,7 +8,7 @@
     <namespace path="src">Webtolk\Plugin\System\WtOtpravkapochtaru</namespace>
     <files>
         <folder plugin="wtotpravkapochtaru">services</folder>
-        <folder plugin="wtotpravkapochtaru">src</folder>
+        <folder>src</folder>
     </files>
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_system_wtotpravkapochtaru.ini</language>
