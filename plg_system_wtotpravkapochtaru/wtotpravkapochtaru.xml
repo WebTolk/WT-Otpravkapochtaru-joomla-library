@@ -82,28 +82,6 @@
                     default="60"
                     min="1"
                 />
-                <field
-                    name="linked_test_shipping_point"
-                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
-                    type="opslist"
-                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_OPSLIST_LABEL"
-                />
-                <field
-                    name="linked_test_mail_type"
-                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
-                    type="mailtypes"
-                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_MAIL_TYPE_LABEL"
-                    requestfields="{&quot;postoffice_code&quot;:&quot;linked_test_shipping_point&quot;}"
-                    url="index.php?option=com_ajax&amp;plugin=wtotpravkapochtaru&amp;group=system&amp;format=json&amp;action=getMailTypes"
-                />
-                <field
-                    name="linked_test_mail_category"
-                    addfieldprefix="Webtolk\Otpravkapochtaru\Fields"
-                    type="mailcategories"
-                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_MAIL_CATEGORY_LABEL"
-                    requestfields="{&quot;postoffice_code&quot;:&quot;linked_test_shipping_point&quot;,&quot;mail_type&quot;:&quot;linked_test_mail_type&quot;}"
-                    url="index.php?option=com_ajax&amp;plugin=wtotpravkapochtaru&amp;group=system&amp;format=json&amp;action=getMailCategories"
-                />
             </fieldset>
             <fieldset
                 name="developer_examples"
