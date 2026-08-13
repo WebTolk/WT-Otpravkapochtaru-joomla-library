@@ -12,7 +12,6 @@
     <namespace path="src">Webtolk\Otpravkapochtaru</namespace>
     <files>
         <folder>src</folder>
-        <folder>src/libraries</folder>
         <filename>otpravkapochtaru.xml</filename>
     </files>
     <media folder="media" destination="lib_wt_otpravkapochtaru">

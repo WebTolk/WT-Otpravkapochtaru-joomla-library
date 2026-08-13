@@ -105,6 +105,18 @@
                     url="index.php?option=com_ajax&amp;plugin=wtotpravkapochtaru&amp;group=system&amp;format=json&amp;action=getMailCategories"
                 />
             </fieldset>
+            <fieldset
+                name="developer_examples"
+                label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_DEVELOPER_EXAMPLES_FIELDSET_LABEL"
+            >
+                <field
+                    name="shipping_points_code_example"
+                    type="note"
+                    label="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_SHIPPING_POINTS_EXAMPLE_LABEL"
+                    description="PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_SHIPPING_POINTS_EXAMPLE_DESC"
+                    class="alert alert-info"
+                />
+            </fieldset>
         </fields>
     </config>
 </extension>

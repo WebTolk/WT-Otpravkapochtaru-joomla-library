@@ -1648,3 +1648,173 @@
 - blocked checks:
   - PHPUnit was not available because `vendor/` is absent
   - Composer validate was blocked by the local PHP/Composer environment missing the `openssl` extension
+
+## 2026-08-13 11:48 +04:00 - Installer Legacy Cleanup Lifecycle Simplification
+
+- agent/role: Codex / Joomla installer implementation
+- task: avoid split `removeLegacyPochtaruLibrary()` calls across `update()` and `preflight()`
+- files changed:
+  - `script.php`
+- result:
+  - legacy library removal is now centralized in `preflight()` for `install`, `discover_install`, and `update`
+  - `update()` now returns `true` and no longer invokes cleanup directly
+- verification:
+  - PHP lint passed for `script.php`
+  - repository search shows one caller for `removeLegacyPochtaruLibrary()`
+
+## 2026-08-13 11:56 +04:00 - Joomla ExtensionHelper Legacy Lookup
+
+- agent/role: Codex / Joomla installer implementation
+- task: replace direct legacy library SQL lookup with Joomla `ExtensionHelper`
+- files changed:
+  - `script.php`
+- result:
+  - `removeLegacyPochtaruLibrary()` now uses `ExtensionHelper::getExtensionRecord('Webtolk/Pochtaru', 'library')`
+  - direct query construction and `loadResult()` were removed from the legacy library lookup
+- verification:
+  - PHP lint passed for `script.php`
+  - repository search confirms `ExtensionHelper` usage in the legacy lookup
+
+## 2026-08-13 12:13 +04:00 - Local Joomla Package Build And Install Test
+
+- agent/role: Codex / Joomla release assurance
+- task: build package and test installation on local Joomla
+- source state:
+  - includes current uncommitted `script.php` changes for installer lifecycle cleanup and `ExtensionHelper` lookup
+- package:
+  - archive: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - entries: `93`
+  - size: `122178` bytes
+  - package manifest version: `3.0.0`
+  - plugin manifest version: `3.0.0`
+  - package plugin child: `id="wtotpravkapochtaru"` -> `plg_system_wtotpravkapochtaru`
+- local Joomla stand:
+  - root: `D:\OSPanel\home\joomla.local\public`
+  - Joomla CLI version: `Joomla! 6.1.1 (debug: Yes)`
+  - PHP CLI used: `D:\OSPanel\modules\PHP-8.4\php.exe`
+- install result:
+  - command: `extension:install --path=<archive>`
+  - result: `[OK] Extension installed successfully.`
+- installed records:
+  - package: `pkg_lib_wt_otpravkapochtaru`, version `3.0.0`, enabled `1`
+  - library: `Webtolk/Otpravkapochtaru`, version `3.0.0`, enabled `1`
+  - plugin: `wtotpravkapochtaru`, folder `system`, version `3.0.0`, enabled `1`
+  - legacy library `Webtolk/Pochtaru` was not present after install
+- filesystem proof:
+  - `libraries\Webtolk\Otpravkapochtaru` exists
+  - `plugins\system\wtotpravkapochtaru` exists
+  - `plugins\system\plg_system_wtotpravkapochtaru` does not exist
+  - `plugins\system\plg_system_wt_otpravkapochtaru` does not exist
+- admin proof:
+  - Playwright login opened plugin edit page for `extension_id=389`
+  - page title: `Plugins: System - WT Otpravka.pochta.ru - WebTolk Test local - Administration`
+  - screenshot: `wt-otpravkapochtaru-plugin-edit-installed.png`
+
+## 2026-08-13 12:31 +04:00 - Installer Whats New Copy Refresh
+
+- agent/role: Codex / release copy update
+- task: rewrite package installer `What's new` text as a comparison with library version `2.0`
+- files changed:
+  - `language/ru-RU/pkg_lib_wt_otpravkapochtaru.sys.ini`
+  - `language/en-GB/pkg_lib_wt_otpravkapochtaru.sys.ini`
+- result:
+  - Russian and English `PKG_LIB_WT_OTPRAVKAPOCHTARU_WHATS_NEW` now describe the release against `2.0`
+  - copy highlights expanded Russian Post API coverage, shipment tracking, LapayGroup RussianPost SDK wrapper architecture, reuse from custom Joomla extensions, and shared API settings in the system plugin
+- verification:
+  - both language files parse via PHP `parse_ini_file`
+  - namespace text `Webtolk\Otpravkapochtaru` is preserved in parsed values
+
+## 2026-08-13 12:47 +04:00 - Library Manifest Nested Folder Delete Fix
+
+- agent/role: Codex / Joomla installer regression repair
+- task: fix repeated install error `Joomla\Filesystem\File::delete: Failed deleting libraries`
+- root cause:
+  - library manifest listed both `<folder>src</folder>` and nested `<folder>src/libraries</folder>`
+  - Joomla `LibraryAdapter` removes `<files>` children relative to `libraries\Webtolk\Otpravkapochtaru`
+  - after deleting `src`, the later `src/libraries` entry no longer exists and Joomla falls through to `File::delete()`
+- files changed:
+  - `lib_webtolk_otpravkapochtaru/otpravkapochtaru.xml`
+- result:
+  - removed duplicate nested `<folder>src/libraries</folder>` entry
+  - `src` still packages recursively, so bundled vendor files remain included
+- verification:
+  - library manifest parses as XML
+  - package rebuilt: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - archive has `93` entries and size `122539` bytes
+  - archive library manifest contains `<folder>src</folder>` and `<filename>otpravkapochtaru.xml</filename>`, with no `src/libraries` entry
+  - archive still contains `lib_webtolk_otpravkapochtaru/src/libraries/vendor/autoload.php`
+  - repeated Joomla CLI install over existing package returned `[OK] Extension installed successfully.`
+  - installed manifest no longer contains `src/libraries`
+  - installed vendor autoload exists at `libraries\Webtolk\Otpravkapochtaru\src\libraries\vendor\autoload.php`
+  - installed records remain `3.0.0` for package `pkg_lib_wt_otpravkapochtaru`, library `Webtolk/Otpravkapochtaru`, and plugin `wtotpravkapochtaru`
+
+## 2026-08-13 12:53 +04:00 - Explicit ExtensionHelper Legacy Removal Guard
+
+- agent/role: Codex / Joomla installer cleanup
+- task: make legacy library removal explicitly conditional on `ExtensionHelper` lookup
+- files changed:
+  - `script.php`
+- result:
+  - `removeLegacyPochtaruLibrary()` now returns early when `ExtensionHelper::getExtensionRecord('Webtolk/Pochtaru', 'library')` returns no extension or no `extension_id`
+  - `Installer::uninstall('library', ...)` is called only after a concrete extension record is found
+- verification:
+  - PHP lint passed for `script.php`
+
+## 2026-08-13 12:37 +04:00 - Plugin Developer Example Tab
+
+- agent/role: Codex / Joomla plugin configuration UX
+- task: add a system plugin tab with a self-contained code example for loading post office shipping points
+- files changed:
+  - `plg_system_wtotpravkapochtaru/wtotpravkapochtaru.xml`
+  - `plg_system_wtotpravkapochtaru/language/ru-RU/plg_system_wtotpravkapochtaru.ini`
+  - `plg_system_wtotpravkapochtaru/language/en-GB/plg_system_wtotpravkapochtaru.ini`
+- result:
+  - added `developer_examples` fieldset/tab
+  - added Joomla `note` field `shipping_points_code_example`
+  - note text includes a complete `Otpravkapochtaru::getShippingPoints()` example using credentials from the system plugin
+- verification:
+  - plugin manifest parses as XML
+  - Russian and English plugin language files parse via PHP `parse_ini_file`
+  - package rebuilt: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - repeated local Joomla CLI install returned `[OK] Extension installed successfully.`
+  - installed plugin XML contains `developer_examples`
+  - Playwright admin check opened plugin edit page and confirmed the `Developer examples` tab plus `Getting shipping points` note with `getShippingPoints()` code
+
+## 2026-08-13 12:42 +04:00 - Installer MAX Link Update
+
+- agent/role: Codex / Joomla installer copy
+- task: update the MAX messenger channel link in the package installer script
+- files changed:
+  - `script.php`
+- result:
+  - replaced the MAX community button URL with `https://max.ru/channel_joomla`
+- verification:
+  - `script.php` contains `https://max.ru/channel_joomla`
+  - old MAX invite URL is absent from the matched installer link
+  - PHP lint passed for `script.php`
+  - `git diff --check` passed
+
+## 2026-08-13 12:51 +04:00 - Package Rebuild Commit And Push
+
+- agent/role: Codex / Joomla release delivery
+- task: rebuild the package, verify local installation, commit, and push
+- source state:
+  - includes installer lifecycle cleanup with `ExtensionHelper` legacy lookup
+  - includes library manifest nested-folder delete fix
+  - includes refreshed package `What's new` copy
+  - includes system plugin developer example tab
+  - includes MAX channel URL update to `https://max.ru/channel_joomla`
+- package:
+  - archive: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - entries: `93`
+  - size: `123358` bytes
+  - archive `script.php` contains `https://max.ru/channel_joomla`
+  - archive `script.php` does not contain the old MAX invite URL
+- verification:
+  - PHP lint passed for `script.php`
+  - library and plugin manifests parse as XML
+  - Russian and English package/plugin language files parse via PHP `parse_ini_file`
+  - `git diff --check` passed
+  - repeated local Joomla CLI install returned `[OK] Extension installed successfully.`
+- delivery:
+  - source state prepared for requested commit and push in this run

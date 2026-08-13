@@ -14,6 +14,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Extension\ExtensionHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
@@ -131,7 +132,7 @@ return new class () implements ServiceProviderInterface {
                  */
                 public function update(InstallerAdapter $adapter): bool
                 {
-                    return $this->removeLegacyPochtaruLibrary();
+                    return true;
                 }
 
                 /**
@@ -158,7 +159,7 @@ return new class () implements ServiceProviderInterface {
                         return false;
                     }
 
-                    if (in_array($type, ['install', 'discover_install'], true) && !$this->removeLegacyPochtaruLibrary()) {
+                    if (in_array($type, ['install', 'discover_install', 'update'], true) && !$this->removeLegacyPochtaruLibrary()) {
                         return false;
                     }
 
@@ -234,7 +235,7 @@ return new class () implements ServiceProviderInterface {
                             <div class="btn-group-vertical mb-3 web-tolk-btn-links" role="group" aria-label="WebTolk community links">
                                 <a class="btn btn-danger text-white w-100" href="https://t.me/joomlaru" target="_blank" rel="noopener noreferrer">' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_JOOMLARU_TELEGRAM_CHAT') . '</a>
                                 <a class="btn btn-primary text-white w-100" href="https://t.me/webtolkru" target="_blank" rel="noopener noreferrer">' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_WEBTOLK_TELEGRAM_CHANNEL') . '</a>
-                                <a class="btn btn-success text-white w-100" href="https://max.ru/join/LChBfwGDmArJpK6--oS0qVAJA1WdRk0OPXciwryF4ZY" target="_blank" rel="noopener noreferrer">' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_MAX_CHANNEL') . '</a>
+                                <a class="btn btn-success text-white w-100" href="https://max.ru/channel_joomla" target="_blank" rel="noopener noreferrer">' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_MAX_CHANNEL') . '</a>
                             </div>
                             ' . Text::_('PKG_LIB_WT_OTPRAVKAPOCHTARU_MAYBE_INTERESTING') . '
                         </div>
@@ -271,17 +272,13 @@ return new class () implements ServiceProviderInterface {
                  */
                 protected function removeLegacyPochtaruLibrary(): bool
                 {
-                    $query = $this->db->getQuery(true)
-                        ->select($this->db->quoteName('extension_id'))
-                        ->from($this->db->quoteName('#__extensions'))
-                        ->where($this->db->quoteName('type') . ' = ' . $this->db->quote('library'))
-                        ->where($this->db->quoteName('element') . ' = ' . $this->db->quote('Webtolk/Pochtaru'));
+                    $extension = ExtensionHelper::getExtensionRecord('Webtolk/Pochtaru', 'library');
 
-                    $extensionId = (int) $this->db->setQuery($query)->loadResult();
-
-                    if ($extensionId === 0) {
+                    if ($extension === null || empty($extension->extension_id)) {
                         return true;
                     }
+
+                    $extensionId = (int) $extension->extension_id;
 
                     if (Installer::getInstance()->uninstall('library', $extensionId)) {
                         return true;
