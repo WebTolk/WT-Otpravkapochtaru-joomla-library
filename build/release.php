@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 const ARCHIVE_BASENAME = 'WT-Otpravkapochtaru-Joomla-library';
-const DEFAULT_VERSION = '1.0.0';
 const DEFAULT_PACKAGE = 'lapaygroup/russianpost';
+const DEFAULT_PACKAGE_CONFIG = '.dist/build/package.config.json';
 const DEFAULT_VENDOR_SOURCE = 'build/.tmp/composer-vendor';
 const DEFAULT_VENDOR_TARGET = 'lib_webtolk_otpravkapochtaru/src/libraries/vendor';
 const DEFAULT_STAGE_DIR = 'build/.stage/package';
@@ -35,14 +35,22 @@ switch ($command)
 			resolvePath($projectRoot, $options['lock-file'] ?? 'composer.lock'),
 			trim((string) ($options['package'] ?? DEFAULT_PACKAGE)),
 		);
-		appendMetadataEnvFile($metadata, trim((string) ($options['env-file'] ?? '')));
+		$deployVersion = resolveDeployVersion(
+			trim((string) ($options['version'] ?? '')),
+			resolvePackageConfigVersion(resolvePath($projectRoot, $options['config-file'] ?? DEFAULT_PACKAGE_CONFIG))
+		);
+		appendMetadataEnvFile($metadata, trim((string) ($options['env-file'] ?? '')), $deployVersion);
 		writeMetadataJson($metadata);
 		break;
 
 	case 'package':
+		$deployVersion = resolveDeployVersion(
+			trim((string) ($options['version'] ?? '')),
+			resolvePackageConfigVersion(resolvePath($projectRoot, $options['config-file'] ?? DEFAULT_PACKAGE_CONFIG))
+		);
 		buildPackage(
 			$projectRoot,
-			ltrim(trim((string) ($options['version'] ?? DEFAULT_VERSION)), 'v'),
+			$deployVersion,
 			trim((string) ($options['date'] ?? date(DEFAULT_BUILD_DATE_FORMAT))),
 			resolvePath($projectRoot, $options['stage-dir'] ?? DEFAULT_STAGE_DIR),
 			resolvePath($projectRoot, $options['output-dir'] ?? DEFAULT_OUTPUT_DIR),
@@ -56,7 +64,7 @@ switch ($command)
 		);
 		$deployVersion = resolveDeployVersion(
 			trim((string) ($options['version'] ?? '')),
-			$metadata['version']
+			resolvePackageConfigVersion(resolvePath($projectRoot, $options['config-file'] ?? DEFAULT_PACKAGE_CONFIG))
 		);
 		$deployDate = resolveDeployDate(
 			trim((string) ($options['date'] ?? '')),
@@ -181,7 +189,12 @@ function appendMetadataEnvFile(array $metadata, string $envFile, ?string $deploy
 		return;
 	}
 
-	$resolvedDeployVersion = resolveDeployVersion((string) $deployVersion, $metadata['version']);
+	$resolvedDeployVersion = ltrim(trim((string) $deployVersion), 'v');
+	if ($resolvedDeployVersion === '')
+	{
+		fail('Deploy version must be supplied before writing package metadata env variables.');
+	}
+
 	$resolvedDeployDate = resolveDeployDate((string) $deployDate, $metadata['date'], false);
 	$lines = [
 		'SDK_BUILD_VERSION=' . $metadata['version'],
@@ -278,6 +291,44 @@ function resolveDeployVersion(string $overrideVersion, string $fallbackVersion):
 	}
 
 	return ltrim(trim($fallbackVersion), 'v');
+}
+
+function resolvePackageConfigVersion(string $configFile): string
+{
+	if (!is_file($configFile))
+	{
+		fail(sprintf('Package config file not found: %s', $configFile));
+	}
+
+	$contents = file_get_contents($configFile);
+
+	if ($contents === false)
+	{
+		fail(sprintf('Failed to read package config file: %s', $configFile));
+	}
+
+	try
+	{
+		$config = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+	}
+	catch (JsonException $e)
+	{
+		fail(sprintf('Failed to decode package config file %s: %s', $configFile, $e->getMessage()));
+	}
+
+	if (!is_array($config))
+	{
+		fail(sprintf('Package config file must contain a JSON object: %s', $configFile));
+	}
+
+	$version = ltrim(trim((string) ($config['version'] ?? '')), 'v');
+
+	if ($version === '')
+	{
+		fail(sprintf('Package version is missing in package config file: %s', $configFile));
+	}
+
+	return $version;
 }
 
 function resolveDeployDate(string $overrideDate, string $fallbackDate, bool $useCurrentDateForOverride): string
@@ -557,9 +608,9 @@ function printUsageAndExit(): never
 	$message = <<<TEXT
 Usage:
   php build/release.php prepare-sdk [--source-dir=...]
-  php build/release.php resolve-metadata [--lock-file=...] [--package=lapaygroup/russianpost] [--env-file=...]
-  php build/release.php package [--version=...] [--date=...] [--stage-dir=...] [--output-dir=...]
-  php build/release.php package-from-lock [--lock-file=...] [--package=lapaygroup/russianpost] [--env-file=...] [--version=...] [--date=...] [--source-dir=...] [--target-dir=...] [--stage-dir=...] [--output-dir=...]
+  php build/release.php resolve-metadata [--config-file=.dist/build/package.config.json] [--lock-file=...] [--package=lapaygroup/russianpost] [--env-file=...] [--version=...]
+  php build/release.php package [--config-file=.dist/build/package.config.json] [--version=...] [--date=...] [--stage-dir=...] [--output-dir=...]
+  php build/release.php package-from-lock [--config-file=.dist/build/package.config.json] [--lock-file=...] [--package=lapaygroup/russianpost] [--env-file=...] [--version=...] [--date=...] [--source-dir=...] [--target-dir=...] [--stage-dir=...] [--output-dir=...]
 TEXT;
 
 	fwrite(STDERR, $message . PHP_EOL);

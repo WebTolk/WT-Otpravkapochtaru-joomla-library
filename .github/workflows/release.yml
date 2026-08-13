@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       package_version:
-        description: 'Optional Joomla package version (example: 0.1.0.1). If not set, version from lockfile is used.'
+        description: 'Optional Joomla package version (example: 3.0.1). If not set, version from .dist/build/package.config.json is used.'
         required: false
         type: string
   push:

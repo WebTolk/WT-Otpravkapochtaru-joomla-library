@@ -44,6 +44,32 @@ final class ThinWrapperContractTest extends TestCase
         self::assertNotSame('', (string) $requires[self::REQUIRED_ZIP]);
     }
 
+    public function testGithubReleasePackageVersionFallsBackToProjectConfigNotUpstreamLock(): void
+    {
+        $packageConfig = $this->readJsonFile($this->projectPath('.dist/build/package.config.json'));
+        self::assertNotSame('', trim((string) ($packageConfig['version'] ?? '')));
+
+        $releaseScript = file_get_contents($this->projectPath('build/release.php'));
+        self::assertIsString($releaseScript);
+        self::assertStringContainsString('DEFAULT_PACKAGE_CONFIG', $releaseScript);
+        self::assertStringContainsString('resolvePackageConfigVersion', $releaseScript);
+        self::assertStringNotContainsString(
+            "resolveDeployVersion(\n\t\t\ttrim((string) (\$options['version'] ?? '')),\n\t\t\t\$metadata['version']",
+            $releaseScript,
+            'Joomla package version must not fall back to the upstream SDK version from composer.lock.'
+        );
+        self::assertStringNotContainsString(
+            "resolveDeployVersion((string) \$deployVersion, \$metadata['version'])",
+            $releaseScript,
+            'Metadata env export must not fall back to the upstream SDK version.'
+        );
+
+        $workflow = file_get_contents($this->projectPath('.github/workflows/release.yml'));
+        self::assertIsString($workflow);
+        self::assertStringContainsString('.dist/build/package.config.json', $workflow);
+        self::assertStringNotContainsString('version from lockfile is used', $workflow);
+    }
+
     public function testInstallerRequiredExtensionsDoNotHardFailSoap(): void
     {
         $script = file_get_contents($this->projectPath('script.php'));

@@ -1526,3 +1526,24 @@
   - `git diff --check` passed
 - worker monitoring:
   - no active `process-forge` / `shell-worker` / `phing` / `composer` / `phpunit` process found after verification; observed `php-cgi` processes are OSPanel runtime
+
+## 2026-08-13 10:22 +04:00 - GitHub Release Version Policy
+
+- agent/role: Codex / build workflow
+- task: remove the fallback that allowed the Joomla release package version to inherit the upstream `lapaygroup/russianpost` version
+- files changed:
+  - `.github/workflows/release.yml`
+  - `build/release.php`
+  - `tests/Unit/Architecture/ThinWrapperContractTest.php`
+- changes:
+  - `build/release.php` now reads the fallback Joomla package version from `.dist/build/package.config.json`
+  - `--version` remains the manual override used by the GitHub `package_version` input
+  - upstream lockfile metadata still feeds `SDK_BUILD_VERSION`, but no longer feeds `PACKAGE_BUILD_VERSION`
+  - workflow input copy now documents the `.dist/build/package.config.json` fallback instead of lockfile fallback
+- verification:
+  - `php -l D:\Dev\WT-Otpravkapochtaru-joomla-library\build\release.php` passed
+  - focused PHPUnit passed: `5 tests, 27 assertions`
+  - full PHPUnit passed: `16 tests, 68 assertions`
+  - smoke with fake upstream version `9.9.9-upstream-test` wrote `PACKAGE_BUILD_VERSION=3.0.0` from project config
+- residual risks:
+  - GitHub Actions was not run remotely in this local pass
