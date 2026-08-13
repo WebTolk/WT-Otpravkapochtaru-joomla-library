@@ -121,7 +121,3 @@ Joomla Form helper для полей выбора ОПС, видов и кате
 ### `getApiLimit(): array`
 
 Joomla Form helper для информационного поля лимитов API. В текущей версии LapayGroup SDK нет отдельного публичного метода для `/1.0/settings/limit`, поэтому фасад выполняет этот узкий служебный запрос через тот же авторизованный транспорт.
-
-## Чего Больше Нет В Фасаде
-
-Методы `createOrders()`, `editOrder()`, `findOrderById()`, `getTariff()`, `searchPostOfficeByIndex()`, `getOperationsByRpo()` и другие операции API больше не являются методами `Otpravkapochtaru`. Для них нужно получить соответствующий провайдер SDK и вызвать метод LapayGroup напрямую.

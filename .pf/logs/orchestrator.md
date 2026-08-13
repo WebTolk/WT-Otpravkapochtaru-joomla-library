@@ -2085,3 +2085,19 @@
 - residual risks:
   - `docs/api-snapshots/latest/` still contains historical JSON files from the older capture run; docs now mark them as data-shape examples until snapshots are recaptured with schema version 2
   - this slice was not committed or pushed because the user did not request commit in this turn
+
+## 2026-08-13 17:10 +04:00 - Public Release Documentation Wording
+
+- agent/role: Codex / ProcessForge documentation editor
+- task: remove "what is no longer in the facade" wording because 3.0.0 is the first public release of this API shape
+- files changed:
+  - `docs/public-api.md`
+  - `docs/thin-wrapper-architecture.md`
+  - `.pf/logs/orchestrator.md`
+- result:
+  - removed the `Чего Больше Нет В Фасаде` section from public API docs
+  - replaced historical wording about the expanded facade with a neutral explanation of the current 3.0.0 thin-wrapper architecture
+- verification:
+  - scan over `README.md`, `docs/*.md`, and `docs/api/*.md` found no `Чего Больше Нет В Фасаде`, `больше не являются методами`, `Предыдущая расширенная версия`, `старый фасад`, or `старого фасада`
+  - `git diff --check` passed
+  - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
