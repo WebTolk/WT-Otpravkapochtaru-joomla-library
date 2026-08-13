@@ -2167,3 +2167,28 @@
   - plugin language INI files parse successfully
   - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
   - `git diff --check` passed
+
+## 2026-08-13 16:53 +04:00 - Russian Heading Style Cleanup
+
+- agent/role: Codex / ProcessForge documentation editor
+- task: change Markdown headings to Russian sentence-style capitalization
+- files changed:
+  - `README.md`
+  - `docs/README.md`
+  - `docs/public-api.md`
+  - `docs/facade-method-reference.md`
+  - `docs/developer-api.md`
+  - `docs/entities-reference.md`
+  - `docs/low-level-api.md`
+  - `docs/thin-wrapper-architecture.md`
+  - `docs/api/account-and-configuration.md`
+  - `docs/api/orders.md`
+  - `docs/api/tracking.md`
+  - `docs/api-snapshots/README.md`
+- result:
+  - changed title-case Russian headings to sentence-style headings
+  - preserved product names, method signatures, acronyms, and protocol names
+- verification:
+  - heading scan over `README.md` and `docs/**/*.md` shows sentence-style capitalization, with technical names and acronyms preserved
+  - regex scan found no Russian headings with two consecutive title-cased Russian words
+  - `git diff --check` passed

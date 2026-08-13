@@ -10,7 +10,7 @@
 
 `Webtolk\Otpravkapochtaru\Joomla\Psr18TransportFactory` создает `LapayGroup\RussianPost\Http\Psr18Transport` на базе Joomla HTTP клиента и Laminas PSR-7 фабрик. Этот транспорт передается в `OtpravkaApi` и `Calculation`; трекинг использует SOAP-клиент LapayGroup.
 
-## Прямой Доступ
+## Прямой доступ
 
 ```php
 <?php

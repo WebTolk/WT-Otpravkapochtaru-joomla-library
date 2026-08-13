@@ -21,7 +21,7 @@ $shippingPoints = $api->shippingPoints();
 $orders = $api->findOrderByShopId('ORDER-1001');
 ```
 
-## Расчет Тарифа
+## Расчет тарифа
 
 ```php
 <?php

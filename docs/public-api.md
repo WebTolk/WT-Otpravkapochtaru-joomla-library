@@ -2,7 +2,7 @@
 
 Класс `Webtolk\Otpravkapochtaru\Otpravkapochtaru` является тонким Joomla-фасадом над `lapaygroup/russianpost`. Он читает параметры включенного системного плагина, строит транспорт на базе Joomla HTTP и возвращает готовые провайдеры SDK; операции с заказами, партиями, документами, тарифами, ОПС и трекингом выполняются методами LapayGroup, а не собственными методами фасада.
 
-## Создание Клиента
+## Создание клиента
 
 ```php
 <?php
@@ -39,7 +39,7 @@ $config = new Registry([
 $client = new Otpravkapochtaru($config);
 ```
 
-## Методы Фасада
+## Методы фасада
 
 ### `credentialsProvider(): CredentialsProvider`
 

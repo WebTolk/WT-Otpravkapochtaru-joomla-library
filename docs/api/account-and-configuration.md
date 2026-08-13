@@ -2,7 +2,7 @@
 
 Фасад читает параметры системного плагина Joomla и передает их в `LapayGroup\RussianPost\Providers\OtpravkaApi`. Состояние аккаунта и список ОПС можно получить напрямую через SDK, а методы `getAccountInfo()` и `getApiLimit()` оставлены в фасаде только как вспомогательные методы для информационного поля аккаунта.
 
-## Настройки Аккаунта
+## Настройки аккаунта
 
 ```php
 <?php
@@ -20,7 +20,7 @@ $settings = new Registry($client->otpravkaApi()->settings());
 echo (string) $settings->get('account-name', '');
 ```
 
-## ОПС Отправителя
+## ОПС отправителя
 
 ```php
 <?php
@@ -39,7 +39,7 @@ $postcodes = ArrayHelper::getColumn($points, 'operator-postcode');
 print_r(array_values(array_filter($postcodes)));
 ```
 
-## Вспомогательные Методы Для Полей
+## Вспомогательные методы для полей
 
 - `getAccountInfo()` вызывает `otpravkaApi()->settings()`.
 - Поля выбора ОПС, видов и категорий отправлений используют `otpravkaApi()->shippingPoints()` напрямую.

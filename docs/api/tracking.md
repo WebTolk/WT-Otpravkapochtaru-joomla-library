@@ -2,7 +2,7 @@
 
 Трекинг выполняется через `LapayGroup\RussianPost\Providers\Tracking`, который фасад создает лениво при вызове `trackingApi()`. Для работы нужны параметры `tracking_login` и `tracking_password`, а также PHP extension `soap`.
 
-## История Одного Отправления
+## История одного отправления
 
 ```php
 <?php
@@ -17,7 +17,7 @@ $client = new Otpravkapochtaru();
 $operations = $client->trackingApi()->getOperationsByRpo('80000000000000', 'RUS');
 ```
 
-## Наложенный Платеж
+## Наложенный платеж
 
 ```php
 <?php
@@ -32,7 +32,7 @@ $client = new Otpravkapochtaru();
 $events = $client->trackingApi()->getNpayInfo('80000000000000', 'RUS');
 ```
 
-## Пакетный Запрос
+## Пакетный запрос
 
 ```php
 <?php

@@ -2,7 +2,7 @@
 
 Заказы обрабатываются напрямую через `LapayGroup\RussianPost\Providers\OtpravkaApi`, который возвращает метод `Otpravkapochtaru::otpravkaApi()`. Фасад не принимает массивы заказов и не нормализует их в сущности SDK.
 
-## Создание Заказов
+## Создание заказов
 
 В поставляемом коде LapayGroup метод `createOrders($orders)` передает массив дальше в общий вызов API, поэтому передавайте данные в форме, которую ожидает SDK и API Почты России; если вы строите заказ через `Order`, преобразуйте его в массив самостоятельно через `asArr()`.
 
@@ -28,7 +28,7 @@ $client = new Otpravkapochtaru();
 $created = $client->otpravkaApi()->createOrders([$order->asArr()]);
 ```
 
-## Поиск И Изменение
+## Поиск и изменение
 
 ```php
 <?php
@@ -49,7 +49,7 @@ $byRpo = $api->findOrderByRpo('80000000000000');
 
 Для `editOrder($order, $id)` SDK вызывает `$order->asArr()`, поэтому туда нужен объект `LapayGroup\RussianPost\Entity\Order`, а не произвольный массив.
 
-## Удаление И Возврат В Новые
+## Удаление и возврат в новые
 
 ```php
 <?php

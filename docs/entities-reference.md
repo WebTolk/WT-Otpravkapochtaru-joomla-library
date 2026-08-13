@@ -47,6 +47,6 @@ $client = new Otpravkapochtaru();
 $result = $client->otpravkaApi()->untrustworthyRecipient($recipient);
 ```
 
-## Возвратное Отправление
+## Возвратное отправление
 
 Для отдельного возвратного отправления SDK использует `LapayGroup\RussianPost\Entity\ReturnShipment` и вложенные `AddressReturn`. Заполняйте их методами установки значений из SDK и передавайте в методы `otpravkaApi()->createReturnShipment()` или `otpravkaApi()->editReturnShipment()`.

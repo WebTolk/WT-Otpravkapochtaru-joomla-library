@@ -2,7 +2,7 @@
 
 Текущий фасад `Webtolk\Otpravkapochtaru\Otpravkapochtaru` содержит только методы, связанные с Joomla-настройкой и доступом к провайдерам LapayGroup.
 
-## Провайдеры И Служебные Объекты
+## Провайдеры и служебные объекты
 
 - `credentialsProvider(): Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider`
 - `transport(): LapayGroup\RussianPost\Http\Psr18Transport`
@@ -10,7 +10,7 @@
 - `calculation(): LapayGroup\RussianPost\Providers\Calculation`
 - `trackingApi(): LapayGroup\RussianPost\Providers\Tracking`
 
-## Вспомогательные Методы Для Joomla Form
+## Вспомогательные методы для Joomla Form
 
 - `getAccountInfo(): array`
 - `getApiLimit(): array`
