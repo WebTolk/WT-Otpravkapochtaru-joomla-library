@@ -3,7 +3,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->in([
         __DIR__ . '/lib_webtolk_otpravkapochtaru',
-        __DIR__ . '/plg_system_wt_otpravkapochtaru',
+        __DIR__ . '/plg_system_wtotpravkapochtaru',
         __DIR__ . '/tests',
     ])
     ->append([

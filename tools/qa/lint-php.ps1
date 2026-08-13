@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $paths = @(
     'lib_webtolk_otpravkapochtaru',
-    'plg_system_wt_otpravkapochtaru',
+    'plg_system_wtotpravkapochtaru',
     'tests'
 )
 

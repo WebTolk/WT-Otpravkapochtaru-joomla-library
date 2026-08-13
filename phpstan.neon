@@ -2,8 +2,8 @@ parameters:
     level: 1
     paths:
         - lib_webtolk_otpravkapochtaru/src
-        - plg_system_wt_otpravkapochtaru/services
-        - plg_system_wt_otpravkapochtaru/src
+        - plg_system_wtotpravkapochtaru/services
+        - plg_system_wtotpravkapochtaru/src
         - script.php
         - tests
     bootstrapFiles:

@@ -258,7 +258,7 @@ function buildPackage(
 		'LICENSE',
 		'language',
 		'lib_webtolk_otpravkapochtaru',
-		'plg_system_wt_otpravkapochtaru',
+		'plg_system_wtotpravkapochtaru',
 	];
 
 	foreach ($itemsToPackage as $relativePath)

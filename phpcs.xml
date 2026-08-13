@@ -3,7 +3,7 @@
     <description>Project-local PHPCS configuration using the shared PHP QA rules as the base.</description>
 
     <file>lib_webtolk_otpravkapochtaru</file>
-    <file>plg_system_wt_otpravkapochtaru</file>
+    <file>plg_system_wtotpravkapochtaru</file>
     <file>script.php</file>
     <file>tests</file>
 

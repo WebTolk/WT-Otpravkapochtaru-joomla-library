@@ -1547,3 +1547,104 @@
   - smoke with fake upstream version `9.9.9-upstream-test` wrote `PACKAGE_BUILD_VERSION=3.0.0` from project config
 - residual risks:
   - GitHub Actions was not run remotely in this local pass
+
+## 2026-08-13 10:35 +04:00 - Post-Push ProcessForge Immersion Audit
+
+- agent/role: Codex / project context audit
+- task: perform the missed `.pf` project immersion after the GitHub release version policy commit/push
+- files analyzed:
+  - `.pf/AGENTS.md`
+  - `.pf/START_AGENT_HERE.md`
+  - `.pf/process-forge.yaml`
+  - `.pf/contexts/project-context.snapshot.md`
+  - `.pf/contexts/project-context.snapshot.yaml`
+  - `.pf/assignments/*.yaml`
+  - `.pf/artifacts/session-status-report.md`
+  - `.pf/runs/*/{plan.md,task-index.md}`
+  - `.pf/logs/orchestrator.md`
+  - `D:\.agents\platforms\joomla\platform.json`
+  - `D:\.agents\docs\joomla\core\joomla-toolkit\README.md`
+  - `D:\.agents\docs\joomla\core\joomla-toolkit\joomla-architecture-rules.md`
+- current status:
+  - live Git is clean and synchronized at `bebc93a` on `main` / `origin/main`
+  - project context snapshot `ctx-20260811-065737-fb9633` is fresh until `2026-08-18T06:57:35Z`
+  - `project-context-check --project-root .` returned `POLICY_ACTION: continue`
+  - all `.pf/assignments/*.yaml` entries are `done` or `completed`; the later 2026-08-11 work is represented by `.pf/runs` and `.pf/artifacts`
+- drift and warnings:
+  - `.pf/artifacts/session-status-report.md` is stale (`2026-08-06`) and still names `first-assignment` as active
+  - `.pf/START_AGENT_HERE.md` also still points to `first-assignment`, so it must be treated as onboarding-era guidance, not current live work
+  - `doctor-project --project-root .` fails on manifest schema package id `processforge.official.software-development` and reports local absolute paths in `project-context.snapshot.yaml`
+  - Joomla platform contract references `D:/.agents/docs/joomla-toolkit/`, but the current local toolkit path is `D:\.agents\docs\joomla\core\joomla-toolkit\`
+- follow-up:
+  - do not treat the pushed `bebc93a` change as ProcessForge-clean delivery until the operator decides whether to patch `.pf` drift and commit a follow-up process artifact update
+
+## 2026-08-13 10:50 +04:00 - Public ProcessForge Sensitive Data Audit
+
+- agent/role: Codex / public artifact audit
+- task: check public `.pf` files for sensitive data
+- scope:
+  - scanned Git-tracked `.pf` files
+  - excluded `.pf/process-forge.local.yaml`, `.pf/runtime/**`, `.pf/tmp/**`, `.pf/cache/**`, `.pf/private-notes/**`
+  - confirmed there are no untracked non-ignored public `.pf` files
+- findings:
+  - no concrete GitHub/OpenAI/Bearer/private-key style tokens were found
+  - `.pf/process-forge.local.yaml` is ignored by `.gitignore` and is not tracked
+  - literal default Joomla admin credentials exist in legacy migration evidence:
+    - `.pf/artifacts/legacy-webtolk-migration/webtolk-flow-core/context/joomla-extension.project-context.template.yaml`
+    - `.pf/artifacts/legacy-webtolk-migration/webtolk-flow-core/context/project-context.yaml`
+  - Otpravka credential diagnostic artifacts use `<redacted>` or presence/length reporting instead of real values
+  - public `.pf` files contain many local absolute paths; this is not an API secret, but it violates public cleanliness and exposes local machine layout
+- counts:
+  - public tracked `.pf` files scanned: `389`
+  - absolute-path matches: `530` across `106` files
+  - non-legacy absolute-path matches: `270`
+- follow-up:
+  - redact the two legacy `admin_credentials` blocks before any public `.pf` publication
+  - decide whether to normalize or move absolute-path-heavy process evidence before treating `.pf` as public-clean
+
+## 2026-08-13 11:12 +04:00 - Plugin Source Folder Element Consistency Check
+
+- agent/role: Codex / Joomla package audit
+- task: check whether `plg_system_wt_otpravkapochtaru` matches the plugin element
+- files analyzed:
+  - `pkg_lib_wt_otpravkapochtaru.xml`
+  - `plg_system_wt_otpravkapochtaru/wtotpravkapochtaru.xml`
+  - `build/release.php`
+  - `script.php`
+  - `tests/bootstrap.php`
+  - local Joomla installer reference files
+- findings:
+  - mismatch confirmed: package source folder is `plg_system_wt_otpravkapochtaru`, while the Joomla plugin element is `wtotpravkapochtaru`
+  - package manifest maps the source folder to `id="wtotpravkapochtaru"`, and all runtime plugin references use `wtotpravkapochtaru`
+  - Joomla package installation uses the package child folder as the temporary source directory, while the plugin adapter installs to `plugins/system/{element}`
+  - current package is likely installable, but the source/archive folder naming is confusing and inconsistent with the plugin element
+- recommendation:
+  - if product naming consistency is required, rename the source package folder and related build/test references in one follow-up change
+
+## 2026-08-13 11:28 +04:00 - Plugin Source Folder Rename Implementation
+
+- agent/role: Codex / Joomla package implementation
+- task: rename plugin source folder so it matches plugin element naming
+- files changed:
+  - `.php-cs-fixer.dist.php`
+  - `build/release.php`
+  - `composer.json`
+  - `phpcs.xml`
+  - `phpstan.neon`
+  - `pkg_lib_wt_otpravkapochtaru.xml`
+  - `tests/bootstrap.php`
+  - `tools/qa/lint-php.ps1`
+  - `plg_system_wtotpravkapochtaru/**`
+- result:
+  - source folder renamed from `plg_system_wt_otpravkapochtaru` to `plg_system_wtotpravkapochtaru`
+  - package manifest plugin child now has `id="wtotpravkapochtaru"` and points to `plg_system_wtotpravkapochtaru`
+  - runtime Joomla plugin element remains `wtotpravkapochtaru`
+- verification:
+  - PHP lint passed for `build/release.php`, `script.php`, and plugin PHP files
+  - package and plugin manifests parse as XML
+  - package ZIP rebuilt in `dist`
+  - archive contains `0` old plugin source-folder entries and `17` new source-folder entries
+  - `git diff --check` passed
+- blocked checks:
+  - PHPUnit was not available because `vendor/` is absent
+  - Composer validate was blocked by the local PHP/Composer environment missing the `openssl` extension

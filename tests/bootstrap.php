@@ -14,7 +14,7 @@ spl_autoload_register(
         $joomlaRoot = 'D:/.agents/docs/joomla/core/Joomla-core/6.x/6.1.0';
         $prefixes   = [
             'Webtolk\\Otpravkapochtaru\\'                   => __DIR__ . '/../lib_webtolk_otpravkapochtaru/src/',
-            'Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\' => __DIR__ . '/../plg_system_wt_otpravkapochtaru/src/',
+            'Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\' => __DIR__ . '/../plg_system_wtotpravkapochtaru/src/',
             'Joomla\\CMS\\'                                 => $joomlaRoot . '/libraries/src/',
             'Joomla\\Application\\'                         => $joomlaRoot . '/libraries/vendor/joomla/application/src/',
             'Joomla\\Archive\\'                             => $joomlaRoot . '/libraries/vendor/joomla/archive/src/',

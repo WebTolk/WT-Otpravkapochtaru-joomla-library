@@ -14,7 +14,7 @@
   "autoload": {
     "psr-4": {
       "Webtolk\\Otpravkapochtaru\\": "lib_webtolk_otpravkapochtaru/src/",
-      "Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\": "plg_system_wt_otpravkapochtaru/src/"
+      "Webtolk\\Plugin\\System\\WtOtpravkapochtaru\\": "plg_system_wtotpravkapochtaru/src/"
     }
   },
   "scripts": {
