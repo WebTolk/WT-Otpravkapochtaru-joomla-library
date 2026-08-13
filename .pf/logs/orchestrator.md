@@ -1818,3 +1818,48 @@
   - repeated local Joomla CLI install returned `[OK] Extension installed successfully.`
 - delivery:
   - source state prepared for requested commit and push in this run
+
+## 2026-08-13 13:02 +04:00 - Plugin Info Description Key Cleanup
+
+- agent/role: Codex / Joomla plugin configuration UX
+- task: make the plugin info field display `PLG_SYSTEM_WTOTPRAVKAPOCHTARU_DESC` and rename the old plugin XML description key
+- files changed:
+  - `plg_system_wtotpravkapochtaru/wtotpravkapochtaru.xml`
+  - `plg_system_wtotpravkapochtaru/language/ru-RU/plg_system_wtotpravkapochtaru.sys.ini`
+  - `plg_system_wtotpravkapochtaru/language/en-GB/plg_system_wtotpravkapochtaru.sys.ini`
+  - `plg_system_wtotpravkapochtaru/src/Field/PlugininfoField.php`
+- result:
+  - plugin manifest description now points to `PLG_SYSTEM_WTOTPRAVKAPOCHTARU_DESC`
+  - old `PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION` plugin key was replaced in source language files
+  - `PlugininfoField` loads the plugin sys language file, translates the manifest description key, and escapes rendered version/description values
+- verification:
+  - PHP lint passed for `PlugininfoField.php`
+  - plugin manifest parses as XML
+  - Russian and English plugin `.ini` and `.sys.ini` files parse via PHP `parse_ini_file`
+  - public source search finds `PLG_SYSTEM_WTOTPRAVKAPOCHTARU_DESC` in manifest/language/field fallback and no `PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION`
+  - `git diff --check` passed
+  - package rebuilt: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - archive has `93` entries and contains the new plugin description key in manifest/sys language files
+  - repeated local Joomla CLI install returned `[OK] Extension installed successfully.`
+  - Playwright admin check confirmed the `Plugin` tab renders `System plugin with settings for the WT Otpravkapochtaru Joomla library.` and does not render either language key
+
+## 2026-08-13 13:18 +04:00 - Developer Example Code Markup
+
+- agent/role: Codex / Joomla plugin configuration UX
+- task: wrap the shipping-points code example with proper `pre` and `code` markup
+- files changed:
+  - `plg_system_wtotpravkapochtaru/language/ru-RU/plg_system_wtotpravkapochtaru.ini`
+  - `plg_system_wtotpravkapochtaru/language/en-GB/plg_system_wtotpravkapochtaru.ini`
+- result:
+  - code example now uses `<pre><code class='language-php'>... </code></pre>` in both plugin language files
+  - PHP code remains HTML-escaped inside the code block
+- verification:
+  - Russian and English plugin language files parse via PHP `parse_ini_file`
+  - `git diff --check` passed
+  - package rebuilt: `dist/WT-Otpravkapochtaru-Joomla-library_3.0.0.zip`
+  - archive has `93` entries, size `123600` bytes, and both language files contain `<pre><code class='language-php'>`
+  - archive plugin manifest keeps `linked_test_shipping_point`, `linked_test_mail_type`, and `linked_test_mail_category`
+  - repeated local Joomla CLI install returned `[OK] Extension installed successfully.`
+  - installed admin language files contain `<pre><code class='language-php'>`
+  - installed plugin manifest keeps the linked test fields
+  - Playwright admin check confirmed the `Developer examples` tab renders a code node with the `getShippingPoints()` example

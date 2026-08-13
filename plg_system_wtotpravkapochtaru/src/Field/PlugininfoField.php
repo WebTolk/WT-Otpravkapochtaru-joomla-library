@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\NoteField;
+use Joomla\CMS\Language\Text;
 
 class PlugininfoField extends NoteField
 {
@@ -29,7 +30,7 @@ class PlugininfoField extends NoteField
     protected $type = 'Plugininfo';
 
     /**
-     * Render the WebTolk info block with plugin version and manifest description.
+     * Render the WebTolk info block with plugin version and translated manifest description.
      *
      * @return  string  The field input markup.
      *
@@ -40,10 +41,15 @@ class PlugininfoField extends NoteField
     protected function getInput(): string
     {
         $data    = $this->form->getData();
-        $element = $data->get('element');
-        $folder  = $data->get('folder');
+        $element = (string) $data->get('element');
+        $folder  = (string) $data->get('folder');
 
-        $doc = Factory::getApplication()->getDocument();
+        $app = Factory::getApplication();
+        $extension = 'plg_' . $folder . '_' . $element;
+        $app->getLanguage()->load($extension . '.sys', JPATH_ADMINISTRATOR)
+            || $app->getLanguage()->load($extension . '.sys', JPATH_SITE);
+
+        $doc = $app->getDocument();
         $wa  = $doc->getWebAssetManager();
         $wa->addInlineStyle("
 			.plugin-info-img-svg:hover * {
@@ -51,7 +57,12 @@ class PlugininfoField extends NoteField
 			}
 		");
 
-        $wt_plugin_info = simplexml_load_file(JPATH_SITE . '/plugins/' . $folder . '/' . $element . '/' . $element . '.xml');
+        $manifestPath = JPATH_SITE . '/plugins/' . $folder . '/' . $element . '/' . $element . '.xml';
+        $pluginInfo   = is_file($manifestPath) ? simplexml_load_file($manifestPath) : false;
+
+        $version        = $pluginInfo instanceof \SimpleXMLElement ? (string) $pluginInfo->version : '';
+        $descriptionKey = $pluginInfo instanceof \SimpleXMLElement ? (string) $pluginInfo->description : '';
+        $description    = Text::_($descriptionKey ?: 'PLG_SYSTEM_WTOTPRAVKAPOCHTARU_DESC');
 
         return '<div class="d-flex shadow p-4">
 			<div class="flex-shrink-0">
@@ -72,8 +83,8 @@ class PlugininfoField extends NoteField
 				</a>
 			</div>
 			<div class="flex-grow-1 ms-3">
-				<span class="badge bg-success text-white">v.' . $wt_plugin_info->version . '</span>
-				' . $wt_plugin_info->description . '
+				<span class="badge bg-success text-white">v.' . htmlspecialchars($version, ENT_QUOTES, 'UTF-8') . '</span>
+				' . htmlspecialchars($description, ENT_QUOTES, 'UTF-8') . '
 			</div>
 		</div>';
     }

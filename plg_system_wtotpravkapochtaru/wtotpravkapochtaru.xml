@@ -4,7 +4,7 @@
     <author>Sergey Tolkachyov</author>
     <creationDate>__DEPLOY_DATE__</creationDate>
     <version>__DEPLOY_VERSION__</version>
-    <description>PLG_SYSTEM_WT_OTPRAVKAPOCHTARU_XML_DESCRIPTION</description>
+    <description>PLG_SYSTEM_WTOTPRAVKAPOCHTARU_DESC</description>
     <namespace path="src">Webtolk\Plugin\System\WtOtpravkapochtaru</namespace>
     <files>
         <folder plugin="wtotpravkapochtaru">services</folder>
