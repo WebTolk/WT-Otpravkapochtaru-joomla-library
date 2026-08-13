@@ -1863,3 +1863,105 @@
   - installed admin language files contain `<pre><code class='language-php'>`
   - installed plugin manifest keeps the linked test fields
   - Playwright admin check confirmed the `Developer examples` tab renders a code node with the `getShippingPoints()` example
+
+## 2026-08-13 14:00 +04:00 - Russian API Documentation Kickoff
+
+- agent/role: Codex / Process Forge orchestrator
+- task: create detailed Russian documentation from real API JSON snapshots for all public facade methods
+- Process Forge context:
+  - loaded `.pf/AGENTS.md`, `.pf/process-forge.yaml`, `.pf/contexts/project-context.snapshot.md`, and current `.pf` status artifacts before implementation
+  - PHPStorm MCP used for Git status and Composer dependency verification
+  - Serena used to locate and inspect the `Otpravkapochtaru` facade symbol overview
+- files changed or created:
+  - `tools/capture-api-snapshots.php`
+  - `docs/api-snapshots/latest/*.json`
+  - `.pf/artifacts/api-documentation-plan-20260813.md`
+  - `.pf/assignments/t07a-api-snapshot-capture.yaml`
+  - `.pf/assignments/t07b-docs-account-orders.yaml`
+  - `.pf/assignments/t07c-docs-batches-returns.yaml`
+  - `.pf/assignments/t07d-docs-tariffs-postoffices-tracking.yaml`
+  - `.pf/assignments/t07e-readme-doc-index.yaml`
+- snapshot capture:
+  - script bootstraps the local Joomla installation and installed library
+  - full run captured 34 public facade methods, including tracking methods
+  - output directory contains 34 method JSON files plus `index.json`
+  - default mode uses safe error inputs for mutating operations
+  - public redaction covers secrets, auth headers, account emails, phones, INN/KPP, HID values, names, and agreement numbers
+- verification:
+  - `php -l tools/capture-api-snapshots.php` passed
+  - full capture command completed with exit code 0
+  - `docs/api-snapshots/latest/index.json` contains 34 method entries
+  - explicit marker scan for known test credentials/account identifiers returned no matches
+  - `.dist/build/package.config.json` excludes `docs/`, `tools/`, and `*.md`
+- delegation:
+  - requested `gpt-5.3 codex spark` is not exposed in current MCP model list
+  - account/settings/orders draft completed by worker `019ffa8c-b491-7c93-bebe-cffe423dc46f`
+  - batches/documents/returns draft completed by worker `019ffa8c-d06a-7f20-881e-4ad9114e5c3b`
+  - tariffs/post offices/tracking draft assigned to worker `019ffa8f-e728-7090-bc9a-35a37945b081`
+- next:
+  - integrate worker drafts into `docs/public-api.md`
+  - add `docs/api-snapshots/README.md`
+  - refresh repository `README.md`
+
+## 2026-08-13 14:00 +04:00 - Russian API Documentation Integration
+
+- agent/role: Codex / documentation integrator
+- task: integrate worker drafts into public Russian repository documentation
+- files changed or created:
+  - `README.md`
+  - `docs/README.md`
+  - `docs/public-api.md`
+  - `docs/api-snapshots/README.md`
+  - `.pf/assignments/t07d-docs-tariffs-postoffices-tracking.yaml`
+  - `.pf/assignments/t07e-readme-doc-index.yaml`
+- result:
+  - root README now contains badges for Joomla, PHP, Russian Post API, and upstream wrapper
+  - root README includes system requirements, quick start, and one self-contained `getShippingPoints()` example
+  - docs index now points to the current facade API guide and snapshot documentation
+  - `docs/public-api.md` documents all 34 public facade methods with signatures, inputs, code examples, response/error snapshot links, and side-effect notes
+  - `docs/api-snapshots/README.md` documents snapshot format, safe-error mode, redaction, and rerun commands without local absolute paths
+- delegation:
+  - worker `019ffa8f-e728-7090-bc9a-35a37945b081` completed the tariffs/post offices/tracking draft
+  - assignment `t07d-docs-tariffs-postoffices-tracking` marked completed
+  - assignment `t07e-readme-doc-index` marked completed
+- public-data check:
+  - `getAccountInfo` and `getSettings` top-level account `address` values are `[redacted]`
+  - explicit scan of JSON snapshots found no known test e-mails, phones, INN/KPP, HID values, agreement number, or bearer token
+  - explicit scan of public markdown files found no Windows absolute local paths
+- next:
+  - run final repository checks and review Git diff
+- final verification:
+  - `php -l tools/capture-api-snapshots.php` passed after removing the local default Joomla path
+  - all 35 JSON snapshot files parse successfully
+  - public markdown/tool scan found no Windows absolute local paths
+  - explicit JSON marker scan found no known test e-mails, phones, INN/KPP, HID values, agreement number, or bearer token
+  - `git diff --check` passed
+  - current branch is `main`; worktree has expected unstaged/untracked documentation and `.pf` artifacts only
+
+## 2026-08-13 14:00 +04:00 - Russian Documentation Editorial Audit
+
+- agent/role: Codex / Russian technical editor
+- task: remove unnecessary anglicisms, improve Russian prose, merge overly short sentences, and verify that documentation describes actual code behavior
+- files changed:
+  - `README.md`
+  - `docs/README.md`
+  - `docs/public-api.md`
+  - `docs/api-snapshots/README.md`
+  - `.pf/logs/orchestrator.md`
+- code facts verified with Serena:
+  - `getAccountInfo()` calls `$this->otpravkaApi->settings()`
+  - `getSettings()` calls `$this->otpravkaApi->settings()`
+  - `createOrders()` delegates to `$this->otpravkaApi->createOrders($this->normalizeUpstreamOrders($orders))`
+  - `generateDocumentPackage()` delegates to `generateDocPackage()` and returns `normalizeUploadedFile($result)`
+  - `getTickets()` delegates to `trackingApi()->getTickets($rpoList, $lang)`
+  - `getTariff()` delegates to the calculation service with normalized tariff params
+- editorial changes:
+  - replaced explanatory `upstream`, `endpoint`, `payload`, `transport`, and `backlog` wording with Russian equivalents
+  - kept technical identifiers only where they are method names, variable names, file names, formats, or API terms
+  - merged short statements such as standalone side-effect notes into fuller explanatory sentences
+  - rewrote `getSettings()` wording to reference the real `settings()` call instead of a loose endpoint claim
+- verification:
+  - public docs scan found no plain prose occurrences of `upstream`, `endpoint`, `payload`, `transport`, `mutating`, `live`, `copy-paste`, or `backlog`
+  - short-sentence heuristic over `docs/public-api.md` returned no matches
+  - side-effect phrase scan over `docs/public-api.md` returned no old short-form matches
+  - all 36 PHP examples extracted from `docs/public-api.md` pass `php -l`

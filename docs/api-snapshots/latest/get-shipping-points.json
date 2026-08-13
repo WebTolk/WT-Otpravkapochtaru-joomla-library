@@ -1,0 +1,396 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:01+00:00",
+    "method": "getShippingPoints",
+    "group": "account",
+    "side_effects": "read",
+    "input": [],
+    "status": "success",
+    "duration_ms": 176,
+    "result": [
+        {
+            "additional-operator-postcode": "800000",
+            "additional-operator-postcodes": [
+                "800000"
+            ],
+            "available-additional-operator-postcodes": [
+                "111712",
+                "115742",
+                "141700",
+                "000000"
+            ],
+            "available-mail-types": [
+                "SMALL_PACKET",
+                "ONLINE_COURIER",
+                "EMS",
+                "EMS_OPTIMAL",
+                "PARCEL_CLASS_1",
+                "ONLINE_PARCEL",
+                "ECOM",
+                "POSTAL_PARCEL",
+                "EMS_TENDER"
+            ],
+            "available-products": [
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_ORDINARY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "ECOM",
+                    "product-type": "ECOM_ORDINARY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS",
+                    "product-type": "INTERNATIONAL_EMS_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_ORDINARY"
+                },
+                {
+                    "mail-category": "COMBINED_ORDINARY",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_COMBINED_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_COMPULSORY_PAYMENT",
+                    "mail-type": "ECOM",
+                    "product-type": "ECOM_WITH_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDERED",
+                    "mail-type": "SMALL_PACKET",
+                    "product-type": "SMALL_PACKET_ORDERED"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "COMBINED_WITH_DECLARED_VALUE",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_COMBINED_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "COMBINED_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "ONLINE_PARCEL",
+                    "product-type": "ONLINE_PARCEL_COMBINED_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                }
+            ],
+            "courier-call": false,
+            "enabled": true,
+            "is-agreement": true,
+            "operator-postcode": "109012",
+            "ops-address": "ул. Никольская, д.7-9, стр.4, г. Москва",
+            "pre-postal-preparation": true,
+            "return-address-type": "SENDER_ADDRESS",
+            "temporary": false,
+            "user-available-mail-types": [
+                "SMALL_PACKET",
+                "ONLINE_COURIER",
+                "EMS",
+                "EMS_OPTIMAL",
+                "PARCEL_CLASS_1",
+                "POSTAL_PARCEL",
+                "EMS_TENDER"
+            ],
+            "user-available-products": [
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_ORDINARY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS",
+                    "product-type": "INTERNATIONAL_EMS_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "INTERNATIONAL_POSTAL_PARCEL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "POSTAL_PARCEL",
+                    "product-type": "POSTAL_PARCEL_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "PARCEL_CLASS_1",
+                    "product-type": "PARCEL_CLASS_1_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDERED",
+                    "mail-type": "SMALL_PACKET",
+                    "product-type": "SMALL_PACKET_ORDERED"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "ONLINE_COURIER",
+                    "product-type": "ONLINE_COURIER_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "ORDINARY",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_ORDINARY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY",
+                    "mail-type": "EMS",
+                    "product-type": "EMS_WITH_DECLARED_VALUE_AND_CASH_ON_DELIVERY"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE",
+                    "mail-type": "EMS_OPTIMAL",
+                    "product-type": "EMS_OPTIMAL_WITH_DECLARED_VALUE"
+                },
+                {
+                    "mail-category": "WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT",
+                    "mail-type": "EMS_TENDER",
+                    "product-type": "EMS_TENDER_WITH_DECLARED_VALUE_AND_COMPULSORY_PAYMENT"
+                }
+            ],
+            "user-return-address": {
+                "manual-address-input": false
+            },
+            "vsd-enabled": true
+        }
+    ],
+    "error": null
+}

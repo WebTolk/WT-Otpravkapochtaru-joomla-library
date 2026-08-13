@@ -1,0 +1,196 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:08+00:00",
+    "method": "searchPostOfficeByCoordinates",
+    "group": "post-offices",
+    "side_effects": "read",
+    "input": [
+        {
+            "latitude": "51.533557",
+            "longitude": "46.034257",
+            "top": 3
+        }
+    ],
+    "status": "success",
+    "duration_ms": 195,
+    "result": [
+        {
+            "address-source": "Московская ул, 72",
+            "distance": 137.60038274044598,
+            "is-closed": false,
+            "is-private-category": true,
+            "is-temporary-closed": false,
+            "latitude": 51.534772,
+            "longitude": 46.03387,
+            "postal-code": "410042",
+            "region": "Саратовская обл",
+            "settlement": "Саратов",
+            "type-code": "ГОПС",
+            "type-id": 8,
+            "working-hours": [
+                {
+                    "begin-worktime": "08:00:00.000",
+                    "end-worktime": "12:00:00.000",
+                    "weekday-id": 1
+                },
+                {
+                    "begin-worktime": "08:00:00.000",
+                    "end-worktime": "17:00:00.000",
+                    "weekday-id": 2
+                },
+                {
+                    "begin-worktime": "08:00:00.000",
+                    "end-worktime": "12:00:00.000",
+                    "weekday-id": 3
+                },
+                {
+                    "begin-worktime": "08:00:00.000",
+                    "end-worktime": "17:00:00.000",
+                    "weekday-id": 4
+                },
+                {
+                    "begin-worktime": "08:00:00.000",
+                    "end-worktime": "12:00:00.000",
+                    "weekday-id": 5
+                },
+                {
+                    "weekday-id": 6
+                },
+                {
+                    "weekday-id": 7
+                }
+            ],
+            "works-on-saturdays": false,
+            "works-on-sundays": false
+        },
+        {
+            "address-source": "Московская ул, 66",
+            "distance": 175.34751443454275,
+            "is-closed": false,
+            "is-private-category": false,
+            "is-temporary-closed": false,
+            "latitude": 51.533719,
+            "longitude": 46.036781,
+            "postal-code": "916368",
+            "region": "Саратовская обл",
+            "settlement": "Саратов",
+            "type-code": "ПОЧТОМАТ",
+            "type-id": 33,
+            "working-hours": [
+                {
+                    "weekday-id": 1
+                },
+                {
+                    "begin-worktime": "10:00:00.000",
+                    "end-worktime": "20:00:00.000",
+                    "weekday-id": 2
+                },
+                {
+                    "begin-worktime": "10:00:00.000",
+                    "end-worktime": "20:00:00.000",
+                    "weekday-id": 3
+                },
+                {
+                    "begin-worktime": "10:00:00.000",
+                    "end-worktime": "20:00:00.000",
+                    "weekday-id": 4
+                },
+                {
+                    "begin-worktime": "10:00:00.000",
+                    "end-worktime": "20:00:00.000",
+                    "weekday-id": 5
+                },
+                {
+                    "begin-worktime": "10:00:00.000",
+                    "end-worktime": "20:00:00.000",
+                    "weekday-id": 6
+                },
+                {
+                    "weekday-id": 7
+                }
+            ],
+            "works-on-saturdays": true,
+            "works-on-sundays": false
+        },
+        {
+            "address-source": "Московская ул, 66",
+            "distance": 175.34751443454275,
+            "is-closed": false,
+            "is-private-category": false,
+            "is-temporary-closed": false,
+            "latitude": 51.533719,
+            "longitude": 46.036781,
+            "postal-code": "410084",
+            "region": "Саратовская обл",
+            "settlement": "Саратов",
+            "type-code": "ГОПС",
+            "type-id": 8,
+            "working-hours": [
+                {
+                    "begin-worktime": "09:00:00.000",
+                    "end-worktime": "18:00:00.000",
+                    "lunches": [
+                        {
+                            "begin-lunchtime": "13:00:00.000",
+                            "end-lunchtime": "14:00:00.000"
+                        }
+                    ],
+                    "weekday-id": 1
+                },
+                {
+                    "begin-worktime": "09:00:00.000",
+                    "end-worktime": "18:00:00.000",
+                    "lunches": [
+                        {
+                            "begin-lunchtime": "13:00:00.000",
+                            "end-lunchtime": "14:00:00.000"
+                        }
+                    ],
+                    "weekday-id": 2
+                },
+                {
+                    "begin-worktime": "09:00:00.000",
+                    "end-worktime": "18:00:00.000",
+                    "lunches": [
+                        {
+                            "begin-lunchtime": "13:00:00.000",
+                            "end-lunchtime": "14:00:00.000"
+                        }
+                    ],
+                    "weekday-id": 3
+                },
+                {
+                    "begin-worktime": "09:00:00.000",
+                    "end-worktime": "18:00:00.000",
+                    "lunches": [
+                        {
+                            "begin-lunchtime": "13:00:00.000",
+                            "end-lunchtime": "14:00:00.000"
+                        }
+                    ],
+                    "weekday-id": 4
+                },
+                {
+                    "begin-worktime": "09:00:00.000",
+                    "end-worktime": "18:00:00.000",
+                    "lunches": [
+                        {
+                            "begin-lunchtime": "13:00:00.000",
+                            "end-lunchtime": "14:00:00.000"
+                        }
+                    ],
+                    "weekday-id": 5
+                },
+                {
+                    "weekday-id": 6
+                },
+                {
+                    "weekday-id": 7
+                }
+            ],
+            "works-on-saturdays": false,
+            "works-on-sundays": false
+        }
+    ],
+    "error": null
+}

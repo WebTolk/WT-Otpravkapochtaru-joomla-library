@@ -1,0 +1,22 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:05+00:00",
+    "method": "createReturnShipment",
+    "group": "returns",
+    "side_effects": "safe-error",
+    "input": [
+        "00000000000000",
+        "UNDEFINED"
+    ],
+    "status": "success",
+    "duration_ms": 172,
+    "result": {
+        "errors": [
+            {
+                "code": "DIRECT_SHIPMENT_NOT_FOUND",
+                "description": "Прямое отправление не найдено"
+            }
+        ]
+    },
+    "error": null
+}

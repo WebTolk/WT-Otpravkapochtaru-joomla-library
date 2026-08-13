@@ -1,0 +1,26 @@
+id: t07b-docs-account-orders
+title: "Russian docs draft: account, settings, orders"
+status: completed
+owner: worker
+worker_agent_id: "019ffa8c-b491-7c93-bebe-cffe423dc46f"
+model: "gpt-5.5"
+reasoning_effort: medium
+created_at: "2026-08-13T14:00:00+04:00"
+write_policy: "no direct file edits; return markdown draft"
+methods:
+  - getAccountInfo
+  - getShippingPoints
+  - getApiLimit
+  - getSettings
+  - createOrders
+  - editOrder
+  - findOrderById
+  - findOrderByShopId
+  - findOrderByRpo
+  - getRecipientReliability
+  - getRecipientsReliability
+  - deleteOrders
+  - returnOrdersToNew
+deliverable: "Markdown draft returned in subagent notification."
+integration_notes:
+  - "Main agent must adapt examples to sanitized public snapshot data."

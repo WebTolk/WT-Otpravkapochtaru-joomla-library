@@ -1,0 +1,20 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:07+00:00",
+    "method": "searchPostOfficeByAddress",
+    "group": "post-offices",
+    "side_effects": "read",
+    "input": [
+        "Саратов, Московская, 109",
+        3
+    ],
+    "status": "success",
+    "duration_ms": 329,
+    "result": {
+        "is-matched": false,
+        "postoffices": [
+            "410012"
+        ]
+    },
+    "error": null
+}

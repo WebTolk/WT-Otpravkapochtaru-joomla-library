@@ -1,0 +1,18 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:09+00:00",
+    "method": "getOperationsByTicket",
+    "group": "tracking",
+    "side_effects": "tracking-read",
+    "input": [
+        "DOCS-NONEXISTENT-TICKET"
+    ],
+    "status": "error",
+    "duration_ms": 44,
+    "result": null,
+    "error": {
+        "class": "LapayGroup\\RussianPost\\Exceptions\\TrackingException",
+        "code": 0,
+        "message": "Ответ по тикету DOCS-NONEXISTENT-TICKET еще не готов."
+    }
+}

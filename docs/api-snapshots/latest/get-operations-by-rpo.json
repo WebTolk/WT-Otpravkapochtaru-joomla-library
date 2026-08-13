@@ -1,0 +1,92 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:08+00:00",
+    "method": "getOperationsByRpo",
+    "group": "tracking",
+    "side_effects": "tracking-read",
+    "input": [
+        "80214523462306",
+        "RUS"
+    ],
+    "status": "success",
+    "duration_ms": 566,
+    "result": [
+        {
+            "AddressParameters": {
+                "DestinationAddress": {
+                    "Index": "455039",
+                    "Description": "Магнитогорск 39"
+                },
+                "OperationAddress": {
+                    "Index": "802145",
+                    "Description": "АО \"Почта России\""
+                },
+                "MailDirect": {
+                    "Id": 643,
+                    "Code2A": "RU",
+                    "Code3A": "RUS",
+                    "NameRU": "Российская Федерация",
+                    "NameEN": "Russian Federation"
+                },
+                "CountryFrom": {
+                    "Id": 643,
+                    "Code2A": "RU",
+                    "Code3A": "RUS",
+                    "NameRU": "Российская Федерация",
+                    "NameEN": "Russian Federation"
+                },
+                "CountryOper": {
+                    "Id": 643,
+                    "Code2A": "RU",
+                    "Code3A": "RUS",
+                    "NameRU": "Российская Федерация",
+                    "NameEN": "Russian Federation"
+                }
+            },
+            "FinanceParameters": {
+                "CustomDuty": 0
+            },
+            "ItemParameters": {
+                "Barcode": "80214523462306",
+                "ValidRuType": false,
+                "ValidEnType": false,
+                "ComplexItemName": "Посылка обыкновенная",
+                "MailRank": {
+                    "Id": 0,
+                    "Name": "Без разряда"
+                },
+                "PostMark": {
+                    "Id": 2048,
+                    "Name": "Нестандартная"
+                },
+                "MailType": {
+                    "Id": 4,
+                    "Name": "Посылка"
+                },
+                "MailCtg": {
+                    "Id": 3,
+                    "Name": "Обыкновенное"
+                }
+            },
+            "OperationParameters": {
+                "OperType": {
+                    "Id": 28,
+                    "Name": "Присвоение идентификатора"
+                },
+                "OperAttr": {
+                    "Id": 0
+                },
+                "OperDate": "2026-07-25T17:31:59.963+03:00"
+            },
+            "UserParameters": {
+                "SendCtg": {
+                    "Id": 5,
+                    "Name": "Корпоративный клиент"
+                },
+                "Sndr": "ФГУП \"ПОЧТА РОССИИ\"",
+                "Rcpn": "Иванов Иван Иванович"
+            }
+        }
+    ],
+    "error": null
+}

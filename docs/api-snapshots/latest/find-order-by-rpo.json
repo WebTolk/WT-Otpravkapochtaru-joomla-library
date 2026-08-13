@@ -1,0 +1,14 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:03+00:00",
+    "method": "findOrderByRpo",
+    "group": "orders",
+    "side_effects": "read",
+    "input": [
+        "80214523462306"
+    ],
+    "status": "success",
+    "duration_ms": 202,
+    "result": [],
+    "error": null
+}

@@ -1,0 +1,26 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:05+00:00",
+    "method": "createReturnShipments",
+    "group": "returns",
+    "side_effects": "safe-error",
+    "input": [
+        [
+            []
+        ]
+    ],
+    "status": "success",
+    "duration_ms": 259,
+    "result": [
+        {
+            "errors": [
+                {
+                    "code": "FREE_ER_ADDRESS_NOT_ENABLED",
+                    "description": "Свободный ввод адреса не доступен"
+                }
+            ],
+            "position": 0
+        }
+    ],
+    "error": null
+}

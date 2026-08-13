@@ -1,0 +1,18 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:04+00:00",
+    "method": "generateDocumentF103",
+    "group": "documents",
+    "side_effects": "safe-error",
+    "input": [
+        "DOCS-NONEXISTENT-BATCH"
+    ],
+    "status": "error",
+    "duration_ms": 171,
+    "result": null,
+    "error": {
+        "class": "LapayGroup\\RussianPost\\Exceptions\\RussianPostException",
+        "code": 500,
+        "message": "От сервера Почты России при вызове метода forms/DOCS-NONEXISTENT-BATCH/f103pdf получена ошибка: INTERNAL_ERROR (1002)"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:04+00:00",
+    "method": "getAllBatches",
+    "group": "batches",
+    "side_effects": "read",
+    "input": [],
+    "status": "success",
+    "duration_ms": 175,
+    "result": [],
+    "error": null
+}

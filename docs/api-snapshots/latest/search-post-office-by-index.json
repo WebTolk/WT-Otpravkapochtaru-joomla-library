@@ -1,0 +1,80 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:07+00:00",
+    "method": "searchPostOfficeByIndex",
+    "group": "post-offices",
+    "side_effects": "read",
+    "input": [
+        "410012"
+    ],
+    "status": "success",
+    "duration_ms": 188,
+    "result": {
+        "address-source": "Привокзальная пл, 1",
+        "is-closed": false,
+        "is-private-category": false,
+        "is-temporary-closed": false,
+        "latitude": 51.542476288,
+        "longitude": 46.000221185,
+        "postal-code": "410012",
+        "region": "Саратовская обл",
+        "settlement": "Саратов",
+        "type-code": "ГОПС",
+        "type-id": 8,
+        "working-hours": [
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 1
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 2
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 3
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 4
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 5
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 6
+            },
+            {
+                "begin-worktime": "08:00:00.000",
+                "end-worktime": "20:00:00.000",
+                "weekday-id": 7
+            }
+        ],
+        "works-on-saturdays": true,
+        "works-on-sundays": true,
+        "phones": "[redacted]",
+        "service-groups": [
+            {
+                "group-id": 2101,
+                "group-name": "Почтовые услуги"
+            },
+            {
+                "group-id": 2259,
+                "group-name": "Финансовые услуги"
+            },
+            {
+                "group-id": 2315,
+                "group-name": "Коммерческие услуги"
+            }
+        ]
+    },
+    "error": null
+}

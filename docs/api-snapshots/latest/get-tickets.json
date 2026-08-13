@@ -1,0 +1,22 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:09+00:00",
+    "method": "getTickets",
+    "group": "tracking",
+    "side_effects": "tracking-mutating",
+    "input": [
+        [
+            "80214523462306"
+        ],
+        "RUS"
+    ],
+    "status": "success",
+    "duration_ms": 98,
+    "result": {
+        "not_create": [
+            "80214523462306"
+        ],
+        "tickets": []
+    },
+    "error": null
+}

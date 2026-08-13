@@ -1,0 +1,26 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:04+00:00",
+    "method": "createBatch",
+    "group": "batches",
+    "side_effects": "safe-error",
+    "input": [
+        [
+            0
+        ],
+        null,
+        false
+    ],
+    "status": "success",
+    "duration_ms": 254,
+    "result": {
+        "errors": [
+            {
+                "error-code": "NOT_FOUND",
+                "error-description": "Отправление не найдено",
+                "position": 0
+            }
+        ]
+    },
+    "error": null
+}

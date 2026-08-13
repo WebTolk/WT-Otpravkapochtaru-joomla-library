@@ -1,0 +1,15 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:01+00:00",
+    "method": "getApiLimit",
+    "group": "account",
+    "side_effects": "read",
+    "input": [],
+    "status": "success",
+    "duration_ms": 637,
+    "result": {
+        "allowed-count": 1000,
+        "current-count": 154
+    },
+    "error": null
+}

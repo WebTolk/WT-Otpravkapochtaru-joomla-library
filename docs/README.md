@@ -1,26 +1,19 @@
 # WT Otpravkapochtaru: документация
 
-Документация относится к пакету `WT Otpravkapochtaru` версии 3.0.0 для Joomla 5+.
+Документация относится к Joomla-пакету `WT Otpravkapochtaru` 3.x. Основная публичная точка входа для разработчика - фасад `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
 
 ## Начало работы
 
-- [Корневой README](../README.md) - установка, настройка и быстрый старт.
-- [Пользовательская документация Joomla](joomla-user-guide.md) - параметры системного плагина и проверка подключения.
-- [Техническая документация](developer-api.md) - исторический developer manual, который требует отдельной ревизии после перехода на thin wrapper.
-- [Thin wrapper architecture](thin-wrapper-architecture.md) - актуальный контракт сборки Joomla-обертки и upstream SDK.
+- [Корневой файл README](../README.md) - системные требования, установка, быстрый старт и первый пример.
+- [Настройка пакета в Joomla](joomla-user-guide.md) - параметры системного плагина и проверка подключения.
+- [Архитектура тонкой обертки](thin-wrapper-architecture.md) - как Joomla-пакет использует `lapaygroup/russianpost`.
 
-## Публичный интерфейс 3.0
+## Интерфейс для разработчика
 
-- Основная точка входа: `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
-- Настройки хранятся в системном плагине `wtotpravkapochtaru`.
-- Joomla Form fields и web assets находятся в библиотеке.
-- Низкоуровневые классы старого форка больше не являются публичным API пакета; используйте фасад и upstream SDK.
-
-## Проверки
-
-- Contract checks: `tests/Unit/Architecture/ThinWrapperContractTest.php`.
-- Coverage сейчас статический: Composer requirements, installer SOAP policy, отсутствие удаленных namespace references в активных docs/runtime и smoke-check нового `dist/*.zip`, если он собран.
+- [Публичный API фасада](public-api.md) - актуальный русский справочник по всем публичным методам библиотеки.
+- [JSON-снимки ответов API](api-snapshots/README.md) - как были собраны реальные обезличенные ответы и ошибки.
+- [Индекс снимков](api-snapshots/latest/index.json) - машинно-читаемый список всех зафиксированных методов.
 
 ## Исторические материалы
 
-Файлы в `docs/api/*`, `docs/entities-reference.md` и `docs/low-level-api.md` пока могут содержать примеры старого fork API. Перед публикацией полного developer manual их нужно обновить отдельной задачей.
+Файлы `developer-api.md`, `facade-method-reference.md`, `low-level-api.md`, `entities-reference.md` и документы в `api/` оставлены как вспомогательные материалы. Перед публикацией или копированием примеров сверяйте их с актуальным справочником [public-api.md](public-api.md), потому что публичный контракт версии 3.x строится вокруг фасада и библиотеки `lapaygroup/russianpost`.

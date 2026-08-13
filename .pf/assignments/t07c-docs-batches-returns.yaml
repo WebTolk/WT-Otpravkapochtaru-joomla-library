@@ -1,0 +1,22 @@
+id: t07c-docs-batches-returns
+title: "Russian docs draft: batches, documents, return shipments"
+status: completed
+owner: worker
+worker_agent_id: "019ffa8c-d06a-7f20-881e-4ad9114e5c3b"
+model: "gpt-5.5"
+reasoning_effort: medium
+created_at: "2026-08-13T14:00:00+04:00"
+write_policy: "no direct file edits; return markdown draft"
+methods:
+  - createBatch
+  - getAllBatches
+  - getOrdersInBatch
+  - generateDocumentPackage
+  - generateDocumentF103
+  - createReturnShipment
+  - createReturnShipments
+  - editReturnShipment
+  - deleteReturnShipment
+deliverable: "Markdown draft returned in subagent notification."
+integration_notes:
+  - "Main agent must normalize wording and align code examples with final docs style."

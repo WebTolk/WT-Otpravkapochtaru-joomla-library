@@ -1,0 +1,283 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:06:59+00:00",
+    "runtime": {
+        "php": "8.4.19",
+        "joomla_root": "[local-path-redacted]",
+        "side_effect_mode": "safe-error-inputs"
+    },
+    "methods": [
+        {
+            "method": "getAccountInfo",
+            "file": "get-account-info.json",
+            "group": "account",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 1358
+        },
+        {
+            "method": "getShippingPoints",
+            "file": "get-shipping-points.json",
+            "group": "account",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 176
+        },
+        {
+            "method": "getApiLimit",
+            "file": "get-api-limit.json",
+            "group": "account",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 637
+        },
+        {
+            "method": "getSettings",
+            "file": "get-settings.json",
+            "group": "account",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 366
+        },
+        {
+            "method": "createOrders",
+            "file": "create-orders.json",
+            "group": "orders",
+            "side_effects": "safe-error",
+            "status": "error",
+            "duration_ms": 361
+        },
+        {
+            "method": "editOrder",
+            "file": "edit-order.json",
+            "group": "orders",
+            "side_effects": "safe-error",
+            "status": "error",
+            "duration_ms": 0
+        },
+        {
+            "method": "findOrderById",
+            "file": "find-order-by-id.json",
+            "group": "orders",
+            "side_effects": "read",
+            "status": "error",
+            "duration_ms": 165
+        },
+        {
+            "method": "findOrderByShopId",
+            "file": "find-order-by-shop-id.json",
+            "group": "orders",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 197
+        },
+        {
+            "method": "findOrderByRpo",
+            "file": "find-order-by-rpo.json",
+            "group": "orders",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 202
+        },
+        {
+            "method": "getRecipientReliability",
+            "file": "get-recipient-reliability.json",
+            "group": "orders",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 174
+        },
+        {
+            "method": "getRecipientsReliability",
+            "file": "get-recipients-reliability.json",
+            "group": "orders",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 176
+        },
+        {
+            "method": "deleteOrders",
+            "file": "delete-orders.json",
+            "group": "orders",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 182
+        },
+        {
+            "method": "returnOrdersToNew",
+            "file": "return-orders-to-new.json",
+            "group": "orders",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 193
+        },
+        {
+            "method": "createBatch",
+            "file": "create-batch.json",
+            "group": "batches",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 254
+        },
+        {
+            "method": "getAllBatches",
+            "file": "get-all-batches.json",
+            "group": "batches",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 175
+        },
+        {
+            "method": "getOrdersInBatch",
+            "file": "get-orders-in-batch.json",
+            "group": "batches",
+            "side_effects": "read",
+            "status": "error",
+            "duration_ms": 179
+        },
+        {
+            "method": "generateDocumentPackage",
+            "file": "generate-document-package.json",
+            "group": "documents",
+            "side_effects": "safe-error",
+            "status": "error",
+            "duration_ms": 174
+        },
+        {
+            "method": "generateDocumentF103",
+            "file": "generate-document-f103.json",
+            "group": "documents",
+            "side_effects": "safe-error",
+            "status": "error",
+            "duration_ms": 171
+        },
+        {
+            "method": "createReturnShipment",
+            "file": "create-return-shipment.json",
+            "group": "returns",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 172
+        },
+        {
+            "method": "createReturnShipments",
+            "file": "create-return-shipments.json",
+            "group": "returns",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 259
+        },
+        {
+            "method": "editReturnShipment",
+            "file": "edit-return-shipment.json",
+            "group": "returns",
+            "side_effects": "safe-error",
+            "status": "error",
+            "duration_ms": 12
+        },
+        {
+            "method": "deleteReturnShipment",
+            "file": "delete-return-shipment.json",
+            "group": "returns",
+            "side_effects": "safe-error",
+            "status": "success",
+            "duration_ms": 389
+        },
+        {
+            "method": "getTariff",
+            "file": "get-tariff.json",
+            "group": "tariffs",
+            "side_effects": "read",
+            "status": "error",
+            "duration_ms": 646
+        },
+        {
+            "method": "getTariffAndDeliveryPeriod",
+            "file": "get-tariff-and-delivery-period.json",
+            "group": "tariffs",
+            "side_effects": "read",
+            "status": "error",
+            "duration_ms": 321
+        },
+        {
+            "method": "getCountryList",
+            "file": "get-country-list.json",
+            "group": "dictionaries",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 648
+        },
+        {
+            "method": "searchPostOfficeByIndex",
+            "file": "search-post-office-by-index.json",
+            "group": "post-offices",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 188
+        },
+        {
+            "method": "searchPostOfficeByAddress",
+            "file": "search-post-office-by-address.json",
+            "group": "post-offices",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 329
+        },
+        {
+            "method": "searchPostOfficeByCoordinates",
+            "file": "search-post-office-by-coordinates.json",
+            "group": "post-offices",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 195
+        },
+        {
+            "method": "getPostOfficeServices",
+            "file": "get-post-office-services.json",
+            "group": "post-offices",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 186
+        },
+        {
+            "method": "getPostalCodesInLocality",
+            "file": "get-postal-codes-in-locality.json",
+            "group": "post-offices",
+            "side_effects": "read",
+            "status": "success",
+            "duration_ms": 260
+        },
+        {
+            "method": "getOperationsByRpo",
+            "file": "get-operations-by-rpo.json",
+            "group": "tracking",
+            "side_effects": "tracking-read",
+            "status": "success",
+            "duration_ms": 566
+        },
+        {
+            "method": "getNpayInfo",
+            "file": "get-npay-info.json",
+            "group": "tracking",
+            "side_effects": "tracking-read",
+            "status": "success",
+            "duration_ms": 36
+        },
+        {
+            "method": "getTickets",
+            "file": "get-tickets.json",
+            "group": "tracking",
+            "side_effects": "tracking-mutating",
+            "status": "success",
+            "duration_ms": 98
+        },
+        {
+            "method": "getOperationsByTicket",
+            "file": "get-operations-by-ticket.json",
+            "group": "tracking",
+            "side_effects": "tracking-read",
+            "status": "error",
+            "duration_ms": 44
+        }
+    ]
+}

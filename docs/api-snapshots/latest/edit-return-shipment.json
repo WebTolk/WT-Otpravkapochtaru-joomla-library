@@ -1,0 +1,33 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:05+00:00",
+    "method": "editReturnShipment",
+    "group": "returns",
+    "side_effects": "safe-error",
+    "input": [
+        {
+            "postoffice-code": "410012",
+            "address-from": {
+                "index": "410012",
+                "place": "Саратов",
+                "street": "Московская",
+                "house": "109"
+            },
+            "address-to": {
+                "index": "455001",
+                "place": "Магнитогорск",
+                "street": "Ленина",
+                "house": "1"
+            }
+        },
+        "00000000000000"
+    ],
+    "status": "error",
+    "duration_ms": 12,
+    "result": null,
+    "error": {
+        "class": "InvalidArgumentException",
+        "code": 0,
+        "message": "Не задан вид РПО!"
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:03+00:00",
+    "method": "getRecipientReliability",
+    "group": "orders",
+    "side_effects": "read",
+    "input": [
+        {
+            "index-to": "455001",
+            "region-to": "Челябинская область",
+            "place-to": "Магнитогорск",
+            "street-to": "Ленина",
+            "house-to": "1",
+            "recipient-name": "[redacted]",
+            "tel-address": "[redacted]"
+        }
+    ],
+    "status": "success",
+    "duration_ms": 174,
+    "result": {
+        "unreliability": "RELIABLE"
+    },
+    "error": null
+}

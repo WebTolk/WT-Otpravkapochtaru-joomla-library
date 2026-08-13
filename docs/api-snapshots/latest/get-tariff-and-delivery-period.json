@@ -1,0 +1,25 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:06+00:00",
+    "method": "getTariffAndDeliveryPeriod",
+    "group": "tariffs",
+    "side_effects": "read",
+    "input": [
+        27030,
+        {
+            "from-index": "410012",
+            "to-index": "455001",
+            "mail-type": "POSTAL_PARCEL",
+            "mail-category": "ORDINARY",
+            "mass": 1000
+        }
+    ],
+    "status": "error",
+    "duration_ms": 321,
+    "result": null,
+    "error": {
+        "class": "LapayGroup\\RussianPost\\Exceptions\\RussianPostException",
+        "code": 400,
+        "message": "От сервера Почты России при вызове метода calculate/tariff/delivery получена ошибка: HTTP 400 (400)"
+    }
+}

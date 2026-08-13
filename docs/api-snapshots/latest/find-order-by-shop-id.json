@@ -1,0 +1,14 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:02+00:00",
+    "method": "findOrderByShopId",
+    "group": "orders",
+    "side_effects": "read",
+    "input": [
+        "docs-nonexistent-20260813"
+    ],
+    "status": "success",
+    "duration_ms": 197,
+    "result": [],
+    "error": null
+}

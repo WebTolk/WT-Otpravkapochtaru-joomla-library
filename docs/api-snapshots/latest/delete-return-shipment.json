@@ -1,0 +1,17 @@
+{
+    "schema_version": 1,
+    "captured_at": "2026-08-13T10:07:05+00:00",
+    "method": "deleteReturnShipment",
+    "group": "returns",
+    "side_effects": "safe-error",
+    "input": [
+        "00000000000000"
+    ],
+    "status": "success",
+    "duration_ms": 389,
+    "result": {
+        "code": "RETURN_SHIPMENT_NOT_FOUND",
+        "description": "Возвратное отправление не найдено"
+    },
+    "error": null
+}

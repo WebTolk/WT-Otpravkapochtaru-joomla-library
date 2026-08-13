@@ -1,0 +1,25 @@
+id: t07d-docs-tariffs-postoffices-tracking
+title: "Russian docs draft: tariffs, dictionaries, post offices, tracking"
+status: completed
+owner: worker
+worker_agent_id: "019ffa8f-e728-7090-bc9a-35a37945b081"
+model: "gpt-5.5"
+reasoning_effort: medium
+created_at: "2026-08-13T14:00:00+04:00"
+write_policy: "no direct file edits; return markdown draft"
+methods:
+  - getTariff
+  - getTariffAndDeliveryPeriod
+  - getCountryList
+  - searchPostOfficeByIndex
+  - searchPostOfficeByAddress
+  - searchPostOfficeByCoordinates
+  - getPostOfficeServices
+  - getPostalCodesInLocality
+  - getOperationsByRpo
+  - getNpayInfo
+  - getTickets
+  - getOperationsByTicket
+deliverable: "Markdown draft returned in subagent notification."
+integration_notes:
+  - "Tariff snapshots currently document real HTTP 400 errors from safe sample input."
