@@ -1,6 +1,6 @@
 # Сущности LapayGroup
 
-Фасад `Otpravkapochtaru` больше не преобразует массивы в сущности SDK. Если метод `lapaygroup/russianpost` ожидает объект, вызывающий код должен создать этот объект самостоятельно и заполнить его через setter-ы SDK.
+Фасад `Otpravkapochtaru` не преобразует массивы в сущности SDK. Если метод `lapaygroup/russianpost` ожидает объект, вызывающий код должен создать этот объект самостоятельно и заполнить его через методы установки значений из SDK.
 
 ## Заказ
 
@@ -49,4 +49,4 @@ $result = $client->otpravkaApi()->untrustworthyRecipient($recipient);
 
 ## Возвратное Отправление
 
-Для отдельного возвратного отправления SDK использует `LapayGroup\RussianPost\Entity\ReturnShipment` и вложенные `AddressReturn`. Заполняйте их по setter-ам SDK и передавайте в методы `otpravkaApi()->createReturnShipment()` или `otpravkaApi()->editReturnShipment()`.
+Для отдельного возвратного отправления SDK использует `LapayGroup\RussianPost\Entity\ReturnShipment` и вложенные `AddressReturn`. Заполняйте их методами установки значений из SDK и передавайте в методы `otpravkaApi()->createReturnShipment()` или `otpravkaApi()->editReturnShipment()`.

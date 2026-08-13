@@ -72,7 +72,7 @@ final class MailtypesField extends LinkedSelectField
 
         try {
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
-            $shippingPoints = $apiClient->getShippingPoints();
+            $shippingPoints = $apiClient->otpravkaApi()->shippingPoints();
         } catch (\RuntimeException $e) {
             if ($this->isConfigurationError($e)) {
                 return [

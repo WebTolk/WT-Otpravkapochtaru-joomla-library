@@ -175,7 +175,6 @@ function buildCases(bool $includeLiveMutating): array
 
     return [
         caseDef('facade', 'account', 'getAccountInfo', 'read', []),
-        caseDef('facade', 'account', 'getShippingPoints', 'read', []),
         caseDef('facade', 'account', 'getApiLimit', 'read', []),
         caseDef('otpravka', 'account', 'settings', 'read', []),
         caseDef('otpravka', 'account', 'shippingPoints', 'read', []),

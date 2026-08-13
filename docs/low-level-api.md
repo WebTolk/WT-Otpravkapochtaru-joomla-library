@@ -4,7 +4,7 @@
 
 ## Авторизация
 
-`Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` читает параметры системного плагина `wtotpravkapochtaru` либо принимает явный массив, `Registry` или legacy-объект с методом `params()`. Он возвращает `AccessToken`, значение `X-User-Authorization`, логин и пароль SOAP-трекинга, а также таймаут HTTP-запросов.
+`Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` читает параметры системного плагина `wtotpravkapochtaru` либо принимает явный массив, `Registry` или совместимый объект с методом `params()`. Он возвращает `AccessToken`, значение `X-User-Authorization`, логин и пароль SOAP-трекинга, а также таймаут HTTP-запросов.
 
 ## Транспорт
 

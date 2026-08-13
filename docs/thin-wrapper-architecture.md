@@ -8,11 +8,11 @@
 
 ## Что Делает Фасад
 
-- Создает `CredentialsProvider` из параметров системного плагина, массива, `Registry` или явно переданного provider-объекта.
+- Создает `CredentialsProvider` из параметров системного плагина, массива, `Registry` или явно переданного объекта-поставщика.
 - Создает `Psr18Transport` через `Psr18TransportFactory`.
 - Создает `OtpravkaApi` и `Calculation` сразу при построении объекта.
 - Создает `Tracking` лениво, потому что SOAP нужен не всем установкам.
-- Оставляет `getAccountInfo()`, `getShippingPoints()` и `getApiLimit()` как helper-методы для Joomla Form полей.
+- Оставляет `getAccountInfo()` и `getApiLimit()` как вспомогательные методы для информационного поля аккаунта.
 
 ## Что Делает LapayGroup SDK
 

@@ -1,6 +1,6 @@
 # Заказы
 
-Заказы обрабатываются напрямую через `LapayGroup\RussianPost\Providers\OtpravkaApi`, который возвращает метод `Otpravkapochtaru::otpravkaApi()`. Фасад больше не принимает массивы заказов и не нормализует их в сущности SDK.
+Заказы обрабатываются напрямую через `LapayGroup\RussianPost\Providers\OtpravkaApi`, который возвращает метод `Otpravkapochtaru::otpravkaApi()`. Фасад не принимает массивы заказов и не нормализует их в сущности SDK.
 
 ## Создание Заказов
 

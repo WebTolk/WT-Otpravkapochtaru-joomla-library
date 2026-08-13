@@ -38,7 +38,7 @@ final class OpslistField extends ListField
     protected $type = 'opslist';
 
     /**
-     * Build select options from `getShippingPoints()` and return user-facing error options on failures.
+     * Build select options from upstream `shippingPoints()` and return user-facing error options on failures.
      *
      * @return  array<int, object>  Joomla select option objects.
      *
@@ -54,7 +54,7 @@ final class OpslistField extends ListField
 
         try {
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
-            $shippingPoints = $apiClient->getShippingPoints();
+            $shippingPoints = $apiClient->otpravkaApi()->shippingPoints();
         } catch (\RuntimeException $e) {
             if ($this->isConfigurationError($e)) {
                 return [

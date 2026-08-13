@@ -184,7 +184,7 @@ final class WtOtpravkapochtaru extends CMSPlugin implements SubscriberInterface
             }
 
             $apiClient      = new Otpravkapochtaru(new CredentialsProvider());
-            $shippingPoints = $apiClient->getShippingPoints();
+            $shippingPoints = $apiClient->otpravkaApi()->shippingPoints();
         } catch (\RuntimeException $exception) {
             if ($this->isConfigurationError($exception)) {
                 $app->setHeader('status', 403, true);

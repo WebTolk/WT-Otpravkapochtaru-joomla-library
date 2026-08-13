@@ -5,7 +5,7 @@
 ![API Почты России](https://img.shields.io/badge/API-%D0%9F%D0%BE%D1%87%D1%82%D0%B0%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8-c41230)
 ![lapaygroup/russianpost 2.0](https://img.shields.io/badge/SDK-lapaygroup%2Frussianpost%202.0-2f855a)
 
-Joomla-пакет `WT Otpravkapochtaru` подключает библиотеку `lapaygroup/russianpost` к Joomla, хранит параметры авторизации в системном плагине и предоставляет готовые Joomla Form поля для настроек расширений. Основная работа с API Почты России выполняется через методы LapayGroup SDK, а класс `Webtolk\Otpravkapochtaru\Otpravkapochtaru` остается тонким фасадом, который только подготавливает авторизацию, транспорт и несколько helper-методов для полей формы.
+Joomla-пакет `WT Otpravkapochtaru` подключает библиотеку `lapaygroup/russianpost` к Joomla, хранит параметры авторизации в системном плагине и предоставляет готовые Joomla Form поля для настроек расширений. Основная работа с API Почты России выполняется через методы LapayGroup SDK, а класс `Webtolk\Otpravkapochtaru\Otpravkapochtaru` остается тонким фасадом, который только подготавливает авторизацию, транспорт и несколько вспомогательных методов для полей формы.
 
 ## Системные Требования
 

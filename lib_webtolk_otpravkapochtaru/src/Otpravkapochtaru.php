@@ -200,20 +200,6 @@ final class Otpravkapochtaru
     }
 
     /**
-     * Load shipment points for Joomla Form list fields.
-     *
-     * @return  array<int, array<string, mixed>>
-     *
-     * @throws  \LapayGroup\RussianPost\Exceptions\RussianPostException
-     *
-     * @since   3.0.0
-     */
-    public function getShippingPoints(): array
-    {
-        return $this->otpravkaApi->shippingPoints();
-    }
-
-    /**
      * Load API request limits for Joomla Form information fields.
      *
      * @return  array<string, mixed>

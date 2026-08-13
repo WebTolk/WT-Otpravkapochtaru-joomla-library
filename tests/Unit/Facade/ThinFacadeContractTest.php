@@ -36,7 +36,6 @@ final class ThinFacadeContractTest extends TestCase
                 'credentialsProvider',
                 'getAccountInfo',
                 'getApiLimit',
-                'getShippingPoints',
                 'otpravkaApi',
                 'trackingApi',
                 'transport',
@@ -67,6 +66,7 @@ final class ThinFacadeContractTest extends TestCase
                 'findOrderById',
                 'getTariff',
                 'getTariffAndDeliveryPeriod',
+                'getShippingPoints',
                 'searchPostOfficeByIndex',
                 'getOperationsByRpo',
             ] as $method

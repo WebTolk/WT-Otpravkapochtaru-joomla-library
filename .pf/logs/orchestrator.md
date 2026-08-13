@@ -2101,3 +2101,69 @@
   - scan over `README.md`, `docs/*.md`, and `docs/api/*.md` found no `Чего Больше Нет В Фасаде`, `больше не являются методами`, `Предыдущая расширенная версия`, `старый фасад`, or `старого фасада`
   - `git diff --check` passed
   - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
+
+## 2026-08-13 17:30 +04:00 - Remove Shipping Points Facade Helper
+
+- agent/role: Codex / ProcessForge implementer
+- task: remove `getShippingPoints()` from the Joomla facade and use the upstream LapayGroup method in Joomla fields
+- files changed:
+  - `lib_webtolk_otpravkapochtaru/src/Otpravkapochtaru.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/OpslistField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/MailtypesField.php`
+  - `lib_webtolk_otpravkapochtaru/src/Fields/MailcategoriesField.php`
+  - `plg_system_wtotpravkapochtaru/src/Extension/WtOtpravkapochtaru.php`
+  - `plg_system_wtotpravkapochtaru/language/en-GB/plg_system_wtotpravkapochtaru.ini`
+  - `plg_system_wtotpravkapochtaru/language/ru-RU/plg_system_wtotpravkapochtaru.ini`
+  - `tests/Unit/Facade/ThinFacadeContractTest.php`
+  - `tools/capture-api-snapshots.php`
+  - `docs/public-api.md`
+  - `docs/facade-method-reference.md`
+  - `docs/thin-wrapper-architecture.md`
+  - `docs/api/account-and-configuration.md`
+- result:
+  - removed public `Otpravkapochtaru::getShippingPoints()`
+  - changed library fields and plugin AJAX handler to call `otpravkaApi()->shippingPoints()`
+  - changed plugin developer examples and docs to show the upstream SDK call
+  - removed the facade-level snapshot case for `getShippingPoints`
+- verification:
+  - active surface scan found no `getShippingPoints()` calls outside historical `.pf/artifacts`
+  - public facade methods are now constructor, `credentialsProvider`, `transport`, `otpravkaApi`, `calculation`, `trackingApi`, `getAccountInfo`, and `getApiLimit`
+  - `php -l` passed for changed PHP files
+  - PHPCS passed for changed PHP files
+  - PHPStan passed for changed PHP files with `--memory-limit=512M`
+  - PHPUnit full suite passed: 17 tests, 68 assertions
+  - PhpStorm `lint_files` with `min_severity=error` returned no items for changed PHP files
+  - plugin language INI files parse successfully
+  - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
+  - `git diff --check` passed
+
+## 2026-08-13 16:45 +04:00 - Documentation Cleanup Before Delivery
+
+- agent/role: Codex / ProcessForge documentation editor
+- task: bring Russian documentation in line with the thin facade contract before commit and push
+- files changed:
+  - `README.md`
+  - `docs/README.md`
+  - `docs/public-api.md`
+  - `docs/facade-method-reference.md`
+  - `docs/developer-api.md`
+  - `docs/entities-reference.md`
+  - `docs/low-level-api.md`
+  - `docs/thin-wrapper-architecture.md`
+  - `docs/api/account-and-configuration.md`
+  - `docs/api/orders.md`
+  - `docs/api-snapshots/README.md`
+- result:
+  - removed transition-era wording about previous facade behavior
+  - replaced avoidable English-Russian hybrids with Russian wording while preserving class, method, and protocol names
+  - kept `shippingPoints()` documented as an upstream LapayGroup call rather than a facade method
+- verification:
+  - documentation scan found no `getShippingPoints()` facade calls, transition-era facade wording, or avoidable `helper` / `legacy` / `bundled` terms outside technical identifiers
+  - PhpStorm `lint_files` with `min_severity=error` returned no items for changed PHP files
+  - `php -l` passed for changed PHP files
+  - PHPCS passed for changed PHP files
+  - PHPStan passed for changed PHP files with `--memory-limit=512M`
+  - PHPUnit full suite passed: 17 tests, 68 assertions
+  - plugin language INI files parse successfully
+  - 28 PHP snippets extracted from `README.md` and `docs/**/*.md` pass `php -l`
+  - `git diff --check` passed

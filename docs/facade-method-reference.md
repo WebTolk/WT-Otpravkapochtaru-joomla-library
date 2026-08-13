@@ -10,10 +10,9 @@
 - `calculation(): LapayGroup\RussianPost\Providers\Calculation`
 - `trackingApi(): LapayGroup\RussianPost\Providers\Tracking`
 
-## Joomla Form Helpers
+## Вспомогательные Методы Для Joomla Form
 
 - `getAccountInfo(): array`
-- `getShippingPoints(): array`
 - `getApiLimit(): array`
 
 Остальные операции вызываются у провайдеров LapayGroup, которые возвращают методы `otpravkaApi()`, `calculation()` и `trackingApi()`.
