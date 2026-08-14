@@ -4,6 +4,14 @@
 
 ## Создание клиента
 
+Конструктор фасада имеет сигнатуру:
+
+```php
+public function __construct(array|object|null $credentialsSource = null)
+```
+
+Без аргументов фасад читает параметры включенного системного плагина `wtotpravkapochtaru`.
+
 ```php
 <?php
 
@@ -16,7 +24,31 @@ defined('_JEXEC') or die;
 $client = new Otpravkapochtaru();
 ```
 
-Без аргументов фасад читает параметры включенного системного плагина `wtotpravkapochtaru`. Для явной конфигурации можно передать массив, `Joomla\Registry\Registry` или готовый `Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider`; текущий код оборачивает массивы и `Registry` в `CredentialsProvider`, поэтому прямой `new Otpravkapochtaru($registry)` допустим.
+Для явной конфигурации можно передать массив, `Joomla\Registry\Registry`, готовый `Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` или совместимый объект с методом `params()`, который возвращает `Registry`. Массив автоматически оборачивается в `CredentialsProvider`.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+$client = new Otpravkapochtaru([
+    'access_token' => 'ACCESS_TOKEN',
+    'auth_mode' => 'key',
+    'user_key' => 'USER_AUTH_KEY',
+    'tracking_login' => 'TRACKING_LOGIN',
+    'tracking_password' => 'TRACKING_PASSWORD',
+]);
+```
+
+Явная конфигурация поддерживает канонические ключи `access_token`, `auth_mode`, `user_key`, `user_login`, `user_password`, `tracking_login`, `tracking_password`, `http_timeout`. Для совместимости также читаются имена параметров системного плагина: `AccessToken`, `user_key_or_login_and_password`, `user_auth_key`.
+
+Канонические ключи имеют приоритет над именами параметров плагина. Например, если одновременно переданы `access_token` и `AccessToken`, будет использован `access_token`.
+
+Конструктор сразу создает REST- и tariff-провайдеры SDK, поэтому отсутствие REST-учетных данных может привести к `RuntimeException` уже при `new Otpravkapochtaru(...)`. SOAP-учетные данные трекинга проверяются лениво при вызове `trackingApi()`.
 
 ```php
 <?php
@@ -28,15 +60,11 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 defined('_JEXEC') or die;
 
-$config = new Registry([
-    'access_token' => 'ACCESS_TOKEN',
-    'auth_mode' => 'key',
-    'user_key' => 'USER_AUTH_KEY',
-    'tracking_login' => 'TRACKING_LOGIN',
-    'tracking_password' => 'TRACKING_PASSWORD',
-]);
-
-$client = new Otpravkapochtaru($config);
+$client = new Otpravkapochtaru(new Registry([
+    'AccessToken' => 'ACCESS_TOKEN',
+    'user_key_or_login_and_password' => 'key',
+    'user_auth_key' => 'USER_AUTH_KEY',
+]));
 ```
 
 ## Методы фасада
@@ -47,7 +75,7 @@ $client = new Otpravkapochtaru($config);
 
 ### `transport(): Psr18Transport`
 
-Возвращает транспорт LapayGroup, собранный через Joomla HTTP и PSR-7 фабрики. Обычно этот метод нужен только для углубленной диагностики или собственных низкоуровневых вызовов.
+Возвращает транспорт LapayGroup, собранный через Joomla HTTP и PSR-7 фабрики. Обычно этот метод нужен только для углубленной диагностики или собственных служебных вызовов.
 
 ### `otpravkaApi(): OtpravkaApi`
 

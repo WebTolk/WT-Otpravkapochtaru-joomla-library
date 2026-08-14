@@ -55,8 +55,9 @@ foreach ($shippingPoints as $point) {
 
 - [Индекс документации](docs/README.md)
 - [Публичный контракт фасада](docs/public-api.md)
-- [Архитектура тонкого фасада](docs/thin-wrapper-architecture.md)
+- [Архитектура тонкого фасада](docs/Joomla-wrapper-architecture.md)
 - [Настройка пакета в Joomla](docs/joomla-user-guide.md)
+- [Joomla Form поля](docs/joomla-form-fields.md)
 - [JSON-снимки ответов API](docs/api-snapshots/README.md)
 
 ## Устанавливаемые расширения

@@ -6,15 +6,15 @@
 
 - [Корневой README](../README.md) - системные требования, установка и первый пример.
 - [Настройка пакета в Joomla](joomla-user-guide.md) - параметры системного плагина и проверка подключения.
-- [Архитектура тонкого фасада](thin-wrapper-architecture.md) - границы ответственности Joomla-обертки и SDK LapayGroup.
+- [Архитектура Joomla-фасада](Joomla-wrapper-architecture.md) - границы ответственности Joomla-обертки и SDK LapayGroup.
 
 ## API для разработчика
 
 - [Публичный контракт фасада](public-api.md) - актуальные методы класса `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
 - [Справочник методов фасада](facade-method-reference.md) - короткая сводка по текущей публичной поверхности.
 - [Работа с SDK LapayGroup](developer-api.md) - примеры прямых вызовов через `otpravkaApi()`, `calculation()` и `trackingApi()`.
+- [Joomla Form поля](joomla-form-fields.md) - XML-синтаксис, параметры и связанные списки ОПС, типов и категорий отправлений.
 - [Сущности LapayGroup](entities-reference.md) - какие объекты SDK нужны для заказов, получателей и возвратов.
-- [Низкоуровневый слой](low-level-api.md) - как фасад собирает транспорт и авторизацию.
 
 ## Тематические разделы
 
@@ -30,4 +30,4 @@
 
 - [JSON-снимки ответов API](api-snapshots/README.md)
 
-Снимки в `api-snapshots/latest/` являются обезличенными примерами реальных ответов API. Они помогают понять форму данных, но не являются перечнем методов класса `Otpravkapochtaru`, потому что операции с API выполняются напрямую у провайдеров LapayGroup.
+JSON-снимки ответов API сервиса `Отправка` Почты России в `api-snapshots/latest/` обезличены и показывают структуру данных.
