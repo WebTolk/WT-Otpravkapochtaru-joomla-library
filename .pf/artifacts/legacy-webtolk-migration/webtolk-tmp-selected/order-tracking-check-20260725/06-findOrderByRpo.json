@@ -1,9 +1,0 @@
-{
-    "step": "06-findOrderByRpo",
-    "status": "ok",
-    "result": [],
-    "duration_ms": 564.42,
-    "context": {
-        "barcode": "80214523462306"
-    }
-}

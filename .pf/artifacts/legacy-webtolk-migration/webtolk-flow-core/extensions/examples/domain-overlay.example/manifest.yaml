@@ -1,9 +1,0 @@
-name: sample-domain
-type: domain
-loads_after:
-  - rules/base.md
-provides:
-  - domain-terms
-  - impact-hotspots
-files:
-  - rules/domain/sample-domain.md

@@ -1,9 +1,0 @@
-name: sample-platform
-type: platform
-loads_after:
-  - rules/base.md
-provides:
-  - runtime-constraints
-  - platform-checks
-files:
-  - rules/platform/sample-platform.md

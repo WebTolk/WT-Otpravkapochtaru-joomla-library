@@ -1,6 +1,0 @@
-overrides:
-  knowledge_packages:
-    -
-      target: docs.api.otpravka-pochta
-      mode: extension
-      reason: Connect Russian Post Otpravka REST API knowledge for linked OPS/category/type field design and AJAX endpoint security planning.

@@ -1,9 +1,0 @@
-{
-    "step": "08-getNpayInfo",
-    "status": "ok",
-    "result": [],
-    "duration_ms": 443.57,
-    "context": {
-        "barcode": "80214523462306"
-    }
-}

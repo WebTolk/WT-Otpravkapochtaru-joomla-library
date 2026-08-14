@@ -20,10 +20,6 @@ dist/
 *.zip
 Thumbs.db
 .DS_Store
-.pf/process-forge.local.yaml
-.pf/runtime/
-.pf/tmp/
-.pf/private-notes/
-.pf/cache/
+.pf
 .secrets/
 *.bak
