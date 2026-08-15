@@ -21,28 +21,31 @@ $shippingPoints = $api->shippingPoints();
 $orders = $api->findOrderByShopId('ORDER-1001');
 ```
 
-## Расчет тарифа
+## Расчет тарифа через API «Отправка»
 
 ```php
 <?php
 
 declare(strict_types=1);
 
+use LapayGroup\RussianPost\Enum\MailCategory;
+use LapayGroup\RussianPost\Enum\MailType;
+use LapayGroup\RussianPost\Enum\PaymentMethods;
+use LapayGroup\RussianPost\ParcelInfo;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 defined('_JEXEC') or die;
 
 $client = new Otpravkapochtaru();
+$parcel = new ParcelInfo();
+$parcel->setIndexFrom(410000);
+$parcel->setIndexTo(685000);
+$parcel->setMailType(MailType::PARCEL_POSTAL);
+$parcel->setMailCategory(MailCategory::ORDINARY);
+$parcel->setWeight(1000);
+$parcel->setPaymentMethod(PaymentMethods::CASHLESS);
 
-$result = $client->calculation()->getTariffAndDeliveryPeriod(
-    27030,
-    [
-        'from' => 410012,
-        'to' => 455001,
-        'weight' => 1000,
-    ],
-    []
-);
+$tariff = $client->otpravkaApi()->getDeliveryTariff($parcel);
 ```
 
 ## Трекинг

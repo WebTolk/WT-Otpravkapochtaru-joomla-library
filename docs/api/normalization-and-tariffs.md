@@ -1,28 +1,43 @@
 # Тарифы и расчет доставки
 
-Тонкий фасад не нормализует параметры тарифа. Передавайте в `LapayGroup\RussianPost\Providers\Calculation` те ключи, которые ожидает SDK и API Почты России.
+Для тарифа настроенного аккаунта используйте API «Отправка» и `ParcelInfo`. Он собирает тело запроса для `OtpravkaApi::getDeliveryTariff()` и возвращает `TariffInfo` с суммами в копейках и минимальным/максимальным сроком доставки.
 
 ```php
 <?php
 
 declare(strict_types=1);
 
+use LapayGroup\RussianPost\AddressList;
+use LapayGroup\RussianPost\Enum\MailCategory;
+use LapayGroup\RussianPost\Enum\MailType;
+use LapayGroup\RussianPost\Enum\PaymentMethods;
+use LapayGroup\RussianPost\ParcelInfo;
 use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 
 defined('_JEXEC') or die;
 
 $client = new Otpravkapochtaru();
-$calculation = $client->calculation();
+$api = $client->otpravkaApi();
 
-$params = [
-    'from' => 410012,
-    'to' => 455001,
-    'weight' => 1000,
-];
+$addresses = new AddressList();
+$addresses->add('410000, Саратов, Московская улица, 1');
+$normalizedAddress = $api->clearAddress($addresses);
 
-$tariff = $calculation->getTariff(27030, $params, []);
-$period = $calculation->getTariffAndDeliveryPeriod(27030, $params, []);
-$countries = $calculation->getCountryList();
+$parcel = new ParcelInfo();
+$parcel->setIndexFrom(410000);
+$parcel->setIndexTo(685000);
+$parcel->setMailType(MailType::PARCEL_POSTAL);
+$parcel->setMailCategory(MailCategory::ORDINARY);
+$parcel->setWeight(1000);
+$parcel->setPaymentMethod(PaymentMethods::CASHLESS);
+
+$tariff = $api->getDeliveryTariff($parcel);
+
+// Amounts are in kopecks.
+$totalRate = $tariff->getTotalRate();
+$totalVat = $tariff->getTotalNds();
+$minDays = $tariff->getDeliveryMinDays();
+$maxDays = $tariff->getDeliveryMaxDays();
 ```
 
-Дополнительные услуги передаются третьим аргументом массивом; внутри SDK они преобразуются в строку параметра `service`.
+Набор допустимых `mail-type` и `mail-category` зависит от аккаунта и точки приема: получите его из `otpravkaApi()->shippingPoints()` перед построением формы отправки.

@@ -15,8 +15,14 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 defined('_JEXEC') or die;
 
 $order = new Order();
+$order->setOrderNum('ORDER-10001');
+$order->setPostOfficeCode('410000');
 $order->setIndexTo('455001');
-$order->setRecipientName('Иванов Иван');
+$order->setRegionTo('Челябинская область');
+$order->setPlaceTo('Магнитогорск');
+$order->setStreetTo('Ленина');
+$order->setHouseTo('1');
+$order->setRecipientName('Иванов Иван Иванович');
 $order->setTelAddress('79000000000');
 $order->setMailType('POSTAL_PARCEL');
 $order->setMailCategory('ORDINARY');
@@ -25,6 +31,8 @@ $order->setMass(1000);
 $client = new Otpravkapochtaru();
 $result = $client->otpravkaApi()->editOrder($order, 123456);
 ```
+
+`123456` здесь означает реальный ID уже созданного заказа, а `postoffice-code`, вид и категория отправления должны быть разрешены в вашем аккаунте.
 
 ## Получатель
 

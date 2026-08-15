@@ -1,6 +1,6 @@
 # Возвраты
 
-Возвратные отправления создаются методами `LapayGroup\RussianPost\Providers\OtpravkaApi`, полученного через `otpravkaApi()`. Для отдельного возврата без прямого ШПИ SDK ожидает массив объектов `ReturnShipment`.
+Возвратные отправления создаются методами `LapayGroup\RussianPost\Providers\OtpravkaApi`, полученного через `otpravkaApi()`. Для отдельного возврата без прямого ШПИ сериализуйте каждый `ReturnShipment` в массив через `asArr()`.
 
 ```php
 <?php
@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 
 $from = new AddressReturn();
 $from->setIndex('410012');
+$from->setRegion('Саратовская область');
 $from->setPlace('Саратов');
 $from->setStreet('Московская');
 $from->setHouse('109');
@@ -29,6 +30,8 @@ $shipment->setPostofficeCode('410012');
 $client = new Otpravkapochtaru();
 $result = $client->otpravkaApi()->createReturnShipment([$shipment->asArr()]);
 ```
+
+`AddressReturn::asArr()` требует как минимум индекс, регион и населенный пункт. Создание отдельного возврата меняет состояние аккаунта; используйте реальные данные и разрешенную для аккаунта точку приема.
 
 Для возврата ранее созданного отправления используйте прямой метод SDK:
 

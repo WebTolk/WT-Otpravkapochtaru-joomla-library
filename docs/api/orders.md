@@ -4,7 +4,7 @@
 
 ## Создание заказов
 
-В поставляемом коде LapayGroup метод `createOrders($orders)` передает массив дальше в общий вызов API, поэтому передавайте данные в форме, которую ожидает SDK и API Почты России; если вы строите заказ через `Order`, преобразуйте его в массив самостоятельно через `asArr()`.
+В поставляемом коде LapayGroup метод `createOrders($orders)` сериализует переданный массив как есть. Поэтому, если вы строите заказ через `Order`, обязательно преобразуйте его в массив через `asArr()` до вызова API. Перед созданием заказа выберите доступные для своего аккаунта точку приема, `mail-type` и `mail-category` из `shippingPoints()`.
 
 ```php
 <?php
@@ -17,8 +17,14 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 defined('_JEXEC') or die;
 
 $order = new Order();
+$order->setOrderNum('ORDER-10001');
+$order->setPostOfficeCode('410000'); // Select an account-enabled operator postcode.
 $order->setIndexTo('455001');
-$order->setRecipientName('Иванов Иван');
+$order->setRegionTo('Челябинская область');
+$order->setPlaceTo('Магнитогорск');
+$order->setStreetTo('Ленина');
+$order->setHouseTo('1');
+$order->setRecipientName('Иванов Иван Иванович');
 $order->setTelAddress('79000000000');
 $order->setMailType('POSTAL_PARCEL');
 $order->setMailCategory('ORDINARY');
@@ -27,6 +33,8 @@ $order->setMass(1000);
 $client = new Otpravkapochtaru();
 $created = $client->otpravkaApi()->createOrders([$order->asArr()]);
 ```
+
+`createOrders()` меняет состояние аккаунта: не запускайте пример с демонстрационным `order-num` на production. Подставьте уникальный номер заказа и допустимые для вашей точки приема значения.
 
 ## Поиск и изменение
 

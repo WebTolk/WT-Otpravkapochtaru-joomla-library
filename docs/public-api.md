@@ -24,48 +24,13 @@ defined('_JEXEC') or die;
 $client = new Otpravkapochtaru();
 ```
 
-Для явной конфигурации можно передать массив, `Joomla\Registry\Registry`, готовый `Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` или совместимый объект с методом `params()`, который возвращает `Registry`. Массив автоматически оборачивается в `CredentialsProvider`.
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
-
-defined('_JEXEC') or die;
-
-$client = new Otpravkapochtaru([
-    'access_token' => 'ACCESS_TOKEN',
-    'auth_mode' => 'key',
-    'user_key' => 'USER_AUTH_KEY',
-    'tracking_login' => 'TRACKING_LOGIN',
-    'tracking_password' => 'TRACKING_PASSWORD',
-]);
-```
+Для явной конфигурации можно передать массив, `Joomla\Registry\Registry`, готовый `Webtolk\Otpravkapochtaru\Joomla\CredentialsProvider` или совместимый объект с методом `params()`, который возвращает `Registry`. Массив автоматически оборачивается в `CredentialsProvider`, но в прикладных примерах используйте Joomla-способ: настройки хранятся в включенном системном плагине, а клиент создается без массива секретов.
 
 Явная конфигурация поддерживает канонические ключи `access_token`, `auth_mode`, `user_key`, `user_login`, `user_password`, `tracking_login`, `tracking_password`, `http_timeout`. Для совместимости также читаются имена параметров системного плагина: `AccessToken`, `user_key_or_login_and_password`, `user_auth_key`.
 
 Канонические ключи имеют приоритет над именами параметров плагина. Например, если одновременно переданы `access_token` и `AccessToken`, будет использован `access_token`.
 
 Конструктор сразу создает REST- и tariff-провайдеры SDK, поэтому отсутствие REST-учетных данных может привести к `RuntimeException` уже при `new Otpravkapochtaru(...)`. SOAP-учетные данные трекинга проверяются лениво при вызове `trackingApi()`.
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Joomla\Registry\Registry;
-use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
-
-defined('_JEXEC') or die;
-
-$client = new Otpravkapochtaru(new Registry([
-    'AccessToken' => 'ACCESS_TOKEN',
-    'user_key_or_login_and_password' => 'key',
-    'user_auth_key' => 'USER_AUTH_KEY',
-]));
-```
 
 ## Методы фасада
 
@@ -95,9 +60,37 @@ $settings = $client->otpravkaApi()->settings();
 $points = $client->otpravkaApi()->shippingPoints();
 ```
 
+Расчет тарифа для настроенного аккаунта также выполняйте через API «Отправка». `ParcelInfo` формирует корректное тело запроса, а метод возвращает `LapayGroup\RussianPost\TariffInfo`.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use LapayGroup\RussianPost\Enum\MailCategory;
+use LapayGroup\RussianPost\Enum\MailType;
+use LapayGroup\RussianPost\Enum\PaymentMethods;
+use LapayGroup\RussianPost\ParcelInfo;
+use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
+
+defined('_JEXEC') or die;
+
+// Библиотека читает параметры из включенного системного плагина Joomla.
+$client = new Otpravkapochtaru();
+$parcel = new ParcelInfo();
+$parcel->setIndexFrom(410000);
+$parcel->setIndexTo(685000);
+$parcel->setMailType(MailType::PARCEL_POSTAL);
+$parcel->setMailCategory(MailCategory::ORDINARY);
+$parcel->setWeight(1000);
+$parcel->setPaymentMethod(PaymentMethods::CASHLESS);
+
+$tariff = $client->otpravkaApi()->getDeliveryTariff($parcel);
+```
+
 ### `calculation(): Calculation`
 
-Возвращает настроенный `LapayGroup\RussianPost\Providers\Calculation`. Через него выполняются расчет тарифа, расчет срока доставки и запросы справочников тарифного сервиса.
+Возвращает настроенный `LapayGroup\RussianPost\Providers\Calculation`. Это низкоуровневый тарификатор `delivery.pochta.ru`: для каждого `object_id` набор обязательных параметров нужно сначала получить из его справочника. Для тарифов аккаунта из обычного Joomla-расширения используйте `otpravkaApi()->getDeliveryTariff()` из предыдущего примера.
 
 ```php
 <?php
@@ -109,16 +102,7 @@ use Webtolk\Otpravkapochtaru\Otpravkapochtaru;
 defined('_JEXEC') or die;
 
 $client = new Otpravkapochtaru();
-
-$tariff = $client->calculation()->getTariff(
-    27030,
-    [
-        'from' => 410012,
-        'to' => 455001,
-        'weight' => 1000,
-    ],
-    []
-);
+$countries = $client->calculation()->getCountryList();
 ```
 
 ### `trackingApi(): Tracking`

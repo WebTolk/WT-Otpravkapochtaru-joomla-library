@@ -16,10 +16,12 @@ defined('_JEXEC') or die;
 $client = new Otpravkapochtaru();
 $api = $client->otpravkaApi();
 
-$batch = $api->createBatch([123456], new DateTimeImmutable('tomorrow'), false);
+$batch = $api->createBatch([123456], new \DateTimeImmutable('tomorrow'), false);
 $batches = $api->getAllBatches(size: 20, sort: 'ask', page: 0);
 $orders = $api->getOrdersInBatch('BATCH-NAME', 50, 'ask', 0);
 ```
+
+Идентификатор заказа и имя партии должны существовать в вашем аккаунте. `createBatch()` переносит заказы в партию и потому меняет состояние аккаунта.
 
 ## Документы
 

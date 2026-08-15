@@ -12,7 +12,7 @@
 
 - [Публичный контракт фасада](public-api.md) - актуальные методы класса `Webtolk\Otpravkapochtaru\Otpravkapochtaru`.
 - [Справочник методов фасада](facade-method-reference.md) - короткая сводка по текущей публичной поверхности.
-- [Работа с SDK LapayGroup](developer-api.md) - примеры прямых вызовов через `otpravkaApi()`, `calculation()` и `trackingApi()`.
+- [Работа с SDK LapayGroup](developer-api.md) - примеры прямых вызовов через `otpravkaApi()` и `trackingApi()`; для тарифов аккаунта используется `OtpravkaApi::getDeliveryTariff()`.
 - [Joomla Form поля](joomla-form-fields.md) - XML-синтаксис, параметры и связанные списки ОПС, типов и категорий отправлений.
 - [Сущности LapayGroup](entities-reference.md) - какие объекты SDK нужны для заказов, получателей и возвратов.
 
